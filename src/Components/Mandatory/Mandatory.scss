@@ -1,0 +1,32 @@
+.mandatory-container {
+	position: relative;
+	display: inline;
+	margin-left: 0.1em;
+
+	.form-popover-container {
+		position: absolute;
+		inset: auto auto 0px 0px;
+		transform: translate(-50px, -30px);
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 0.5rem;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		z-index: 1000;
+		max-width: 276px;
+		width: max-content;
+
+		.form-popover-body {
+			font-size: 14px;
+			color: #677788;
+			padding: 1rem;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 1.5;
+			word-wrap: break-word;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
+}

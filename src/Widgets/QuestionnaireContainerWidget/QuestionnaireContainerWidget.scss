@@ -1,0 +1,252 @@
+.pisa-questionnaire-widgets.questionnaire-container-widget {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  &.fixed-container-height {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4px;
+  }
+
+  &.no-overscroll-y {
+    overscroll-behavior-y: none;
+  }
+
+  &.thin-scrollbar {
+    scrollbar-width: thin;
+  }
+
+  &.hidden-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  .form-control {
+    font-size: 1rem;
+  }
+
+  .text-mandatory {
+    font-weight: 700;
+    color: var(--bs-danger, #f03a47); //$secondary;
+    cursor: default;
+  }
+
+  .rating-icon.bs-icon {
+    color: grey;
+  }
+
+  .winnie-the-pooh {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+  }
+
+  .form-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
+
+    .step-counter {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .review-button {
+      margin-right: 1em;
+    }
+
+    .edit-mode-margin {
+      margin-right: 1em;
+    }
+  }
+
+  .hide {
+    display: none;
+  }
+
+  &.form-border {
+    border: black 1px dotted;
+    padding: 0.5em;
+  }
+
+
+  .form-submission-submitting .rotate-form-submitting-icon {
+    display: inline-block;
+    animation: rotate-form-submitting-icon 2s linear 0s infinite;
+  }
+  
+  .form-submission-failed .retry-button {
+    margin-top: 1em;
+  }
+
+  // edit-mode
+  &.edit-mode {
+
+    .form-check,
+    .rating-title,
+    .select-title,
+    .dropdown-label,
+    .signature-title,
+    .input-label,
+    .date-title {
+
+      label,
+      span {
+        display: ruby;
+      }
+    }
+
+    .fr-wrapper {
+      display: inline;
+
+      .fr-element {
+        display: inline;
+      }
+    }
+  }
+
+  // popover
+  // .mandatory-container,
+  // .helptext-container {
+  //   position: relative;
+  //   display: inline;
+  //   margin-left: 0.1em;
+
+  //   .form-popover-container {
+  //     position: absolute;
+  //     inset: auto auto 0px 0px;
+  //     transform: translate(-50px, -30px);
+  //     background-color: #fff;
+  //     border: 1px solid #ccc;
+  //     border-radius: 0.5rem;
+  //     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  //     z-index: 1000;
+  //     max-width: 276px;
+  //     width: max-content;
+
+  //     .form-popover-body {
+  //       font-size: 14px;
+  //       color: #677788;
+  //       padding: 1rem;
+  //       font-style: normal;
+  //       font-weight: 400;
+  //       line-height: 1.5;
+  //       word-wrap: break-word;
+
+  //       p {
+  //         margin: 0;
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Bootstrap Icons - Sizes Add-on
+  .bs-icon {
+    &.bs-icon-1x {
+      font-size: 1em;
+      line-height: 1;
+    }
+
+    &.bs-icon-default {
+      font-size: 1.3em;
+      line-height: 1;
+    }
+
+    &.bs-icon-2x {
+      font-size: 2em;
+      line-height: 1;
+    }
+
+    &.bs-icon-3x {
+      font-size: 3em;
+      line-height: 1;
+    }
+
+    &.bs-icon-4x {
+      font-size: 4em;
+      line-height: 1;
+    }
+
+    &.bs-icon-5x {
+      font-size: 5em;
+      line-height: 1;
+    }
+  }
+}
+
+@keyframes rotate-form-submitting-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.bg-dark-image,
+.bg-brand-primary,
+.bg-brand-secondary,
+.bg-grey,
+.bg-greydark,
+.bg-greymiddle {
+
+  .missing-id,
+  .missing-site-key,
+  .pisa-questionnaire-widgets.questionnaire-container-widget .linear-scale-container,
+  .pisa-questionnaire-widgets.questionnaire-container-widget .reset-label span,
+  .pisa-questionnaire-widgets.questionnaire-container-widget label,
+  .pisa-questionnaire-widgets.questionnaire-container-widget .text-mandatory,
+  .pisa-questionnaire-widgets.questionnaire-container-widget .bs-icon,
+  .card.card-theme .pisa-questionnaire-widgets.questionnaire-container-widget label,
+  .card.card-theme .pisa-questionnaire-widgets.questionnaire-container-widget .text-mandatory,
+  .card.card-theme .pisa-questionnaire-widgets.questionnaire-container-widget .bs-icon {
+    color: #fff;
+  }
+
+  // hardcoded for now
+  .card .pisa-questionnaire-widgets.questionnaire-container-widget label {
+    color: #495054
+      /*$theme-grey */
+      !important;
+  }
+
+  .card .pisa-questionnaire-widgets.questionnaire-container-widget .text-mandatory {
+    color: red !important;
+  }
+
+  .card .pisa-questionnaire-widgets.questionnaire-container-widget .bs-icon {
+    color: #ccc !important;
+  }
+}
+
+.bg-dark-image,
+.bg-brand-primary,
+.bg-brand-secondary,
+.bg-grey,
+.bg-greydark,
+.bg-greymiddle {
+  .pisa-questionnaire-widgets.questionnaire-container-widget .reset-label:hover {
+    background-color: unset;
+  }
+}
+
+// Overwrite Scrivito styles
+.pisa-questionnaire-widgets.questionnaire-container-widget.edit-mode [data-scrivito-private-structure-widget] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
