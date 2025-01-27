@@ -114,10 +114,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       })
       convertAndSetAnswers(answers);
     }
-
-
     loadAnswers();
-  }, []);
+  }, [isOnline]);
 
   const extractAnswerData = (answerItem: DataItem) => {
     const questionId = answerItem.get("questionId");
