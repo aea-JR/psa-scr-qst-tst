@@ -6,6 +6,7 @@ import { isQuestionnaireCreationValid } from "../../utils/isQuestionnaireCreatio
 import { QuestionnaireMessageBlock } from "../QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import "./QuestionnaireFormFooter.scss";
 import { usePisaStatusContext } from "../../contexts/PisaStatusContext";
+import { isRestricted } from "../../utils/isRestricted";
 
 interface FormFooterSingleStepProps {
 	widget: Scrivito.Widget;
@@ -16,11 +17,12 @@ export const QuestionnaireFormFooter: React.FC<FormFooterSingleStepProps> =
 	Scrivito.connect(({ widget, isCreated }) => {
 		const { onSubmit } = useFormContext();
 		const { isOnline } = usePisaStatusContext();
-
+		const restricted = isRestricted(widget)
 		const isValid = isQuestionnaireCreationValid(widget);
 
 		const getMessageType = () => {
 			if (!isOnline) { return "pisaOffline"; }
+			if (restricted) { return "restricted"; }
 			if (isCreated) { return null; }
 			if (!Scrivito.isInPlaceEditingActive() && !isCreated) { return "warningCreationPending"; }
 			if (Scrivito.isInPlaceEditingActive() && !isValid) { return "invalidAttributes"; }
