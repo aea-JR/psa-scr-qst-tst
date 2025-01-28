@@ -44,6 +44,19 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_ORG_PIC | Image display            |❌ Not Needed            |
 |                     | PSA_QST_TPL_HEA     | Heading                 |❌ Not Needed             |
 
+## Supported Questionnaire Input Types
+
+The `psa-scr-qst-tst` package supports multiple questionnaire input types, determining how answers are retrieved, submitted, and managed during usage. These modes are defined as follows:
+
+### **Repeatable (`PSA_QST_INP_TYP_REP`)**
+- **Behavior**: A new set of answers is created every time the questionnaire is filled. Existing answers are not retrieved or edited.
+
+### **Once with Updates (`PSA_QST_INP_TYP_ONC_UPD`)**
+- **Behavior**: A single instance of the questionnaire is associated with the context. The user can view and modify their previous answers.
+
+### **Once Only (`PSA_QST_INP_TYP_ONC`)** *(Not yet supported)*
+- **Behavior**: A single instance of the questionnaire is associated with the context. Once the questionnaire is submitted, it cannot be edited or resubmitted.
+
 ## Installation
 
 Install the package into your scrivito portal app:
