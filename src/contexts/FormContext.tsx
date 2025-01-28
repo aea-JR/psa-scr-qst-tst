@@ -15,6 +15,7 @@ interface FormContextProps {
 }
 
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
+const REPEATABLE = "repeatable";
 
 export const useFormContext = () => {
   const context = React.useContext(FormContext);
@@ -29,6 +30,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   const projectId = qstContainerWidget.get("projectId") as string;
   const contactId = qstContainerWidget.get("contactId") as string;
   const questionnaireId = qstContainerWidget.get("questionnaireId") as string;
+  const inputType = qstContainerWidget.get("inputType") as string;
   const showSubmittingPreview = qstContainerWidget.get("previewSubmittingMessage") || false;
   const showSubmittedPreview = qstContainerWidget.get("previewSubmittedMessage") || false;
   const showFailedPreview = qstContainerWidget.get("previewFailedMessage") || false;
@@ -82,6 +84,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       }
       if (!isOnline) {
         console.log("not loading answers")
+        return;
+      }
+      if (inputType == REPEATABLE) {
+        console.log("repeatable mode, not loading answers");
         return;
       }
       const answers = await load(() => {

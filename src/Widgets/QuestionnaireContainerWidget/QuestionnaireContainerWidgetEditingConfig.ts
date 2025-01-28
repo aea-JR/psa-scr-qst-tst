@@ -166,6 +166,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     const fixedHeght = widget.get("fixedFormHeight") as boolean || false;
 
     return ["title",
+      "inputType",
       "customClassNames",
       "fixedFormHeight",
       ["formHeight", { enabled: fixedHeght }],
@@ -329,6 +330,17 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
 
         if (externalId.match(/^[0-9a-zA-Z]{20}$/) === null) {
           return "Specify a valid external ID (20 characters).";
+        }
+      },
+    ],
+    [
+      "inputType",
+      (inputType: string) => {
+        if (inputType == "once_only") {
+          return "This Input type is not supported yet.";
+        }
+        if (isEmpty(inputType)) {
+          return "Specify an Input type."
         }
       },
     ],
