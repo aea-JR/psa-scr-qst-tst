@@ -70,10 +70,10 @@ export const QuestionnaireCreationTab: React.FC<
 			}
 
 			console.log("Creating questionnaire...");
-			const qst = await QuestionnaireDataClass().create(
+			const qstDataItem = await QuestionnaireDataClass().create(
 				extractQuestionnaireMeta(widget)
 			);
-			const qstId = qst.id();
+			const qstId = qstDataItem.id();
 
 			const newFailedItems = [];
 			for (const question of questions) {
@@ -146,7 +146,7 @@ export const QuestionnaireCreationTab: React.FC<
 			}
 
 			setFailedItems(newFailedItems);
-			await qst.update({ forms: true });
+			await qstDataItem.update({ forms: true });
 			widget.update({ questionnaireId: qstId });
 		} catch (error) {
 			console.error("Error creating questionnaire:", error);
