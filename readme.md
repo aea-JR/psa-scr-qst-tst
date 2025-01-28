@@ -3,8 +3,7 @@
 ## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments. A proper release with an updated package name will follow.
 
 ## Overview
-
-	The psa-scr-qst-tst package provides a collection of questionnaire builder widgets for creating and using PisaSales questionnaires within the Scrivito CMS. These questionnaires can only be used on restricted sites.
+The psa-scr-qst-tst package provides a collection of questionnaire builder widgets for creating and using PisaSales questionnaires within the Scrivito CMS. These questionnaires can only be used on restricted sites.
 
 ## Features
 - **Questionnaire Creation**: Build questionnaires directly from the Scrivito CMS editor.
