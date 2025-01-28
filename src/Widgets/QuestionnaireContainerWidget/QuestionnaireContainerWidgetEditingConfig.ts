@@ -7,7 +7,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
 import { QuestionnaireCreationTab } from "../../Components/QuestionnaireCreationTab/QuestionnaireCreationTab";
 import { defaultValidations } from "../defaultQuestionEditingConfig";
-import { isRestricted } from "../../utils/isRestricted";
+import { isUsageRestricted } from "../../utils/isRestricted";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
@@ -287,8 +287,8 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       if (!hasQuestion) {
         return "The questionnaie must include at least one question.";
       }
-      if (isRestricted(widget)) {
-        return "This questionnaire can not be used on a public site. Please move it to a restricted site or change the input type to repeatable.";
+      if (isUsageRestricted(widget)) {
+        return "This questionnaire can not be used on a public site. Please move it to a restricted sitee.";
       }
 
     },
