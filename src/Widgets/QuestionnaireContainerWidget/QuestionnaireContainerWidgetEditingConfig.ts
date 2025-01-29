@@ -337,10 +337,10 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       "inputType",
       (inputType: string) => {
         if (inputType == "once_only") {
-          return "This Input type is not supported yet.";
+          return "This input type is not supported yet.";
         }
         if (isEmpty(inputType)) {
-          return "Specify an Input type."
+          return "Specify an input type."
         }
       },
     ],
