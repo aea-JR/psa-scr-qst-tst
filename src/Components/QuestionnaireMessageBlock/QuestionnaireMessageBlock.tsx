@@ -6,6 +6,7 @@ const messages = {
 	invalidAttributes: { prefix: "Editor's info:", content: "Some attributes are invalid!" },
 	warningCreationPending: { prefix: "Warning:", content: "This questionnaire has not been created yet in PisaSales!" },
 	pisaOffline: { prefix: "Warning:", content: "PisaSales is not reachable. Please check your configuration or contact your administrator." },
+	updatePending: { prefix: "Editor's info:", content: "There are unsyned changes. Please update the questionnaire or revert these changes from the properties tab." }
 };
 
 interface Props {
