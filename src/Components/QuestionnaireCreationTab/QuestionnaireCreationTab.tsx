@@ -7,10 +7,16 @@ import {
 	QuestionDataClass,
 	QuestionnaireDataClass
 } from "../../config/scrivitoConfig";
-import { isEmpty } from "lodash-es";
+import { isEmpty, isString } from "lodash-es";
 import { Description } from "../QuestionnaireCreationDescription/QuestionnaireCreationDescription";
 import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
+import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
+import { convertWidgetToQuestion } from "../../utils/convertoQuestion";
+import { convertWidgetToAnswerOption } from "../../utils/convertoAnswerOptions";
+import { getQuestionnaireItem } from "../../Data/Questionnaire/QuestionnaireDataClassUtils";
+import { getQuestionItem } from "../../Data/Question/QuestionDataClassUtils";
+import { getOptionItem } from "../../Data/AnswerOption/AnswerOptionDataClassUtils";
 
 interface QuestionnaireCreationTabProps {
 	widget: Scrivito.Widget;
@@ -56,6 +62,14 @@ export const QuestionnaireCreationTab: React.FC<
 
 	//TODO: refactor && move to hook
 	const handleCreateQuestionnaire = async () => {
+		const createdItems: QuestionnaireMetaSnapshot = {
+			qstMeta: {
+				title: "",
+				inputType: ""
+			},
+			questions: {},
+			options: {}
+		};
 		try {
 			setIsCreating(true);
 			setFailedItems([]);
@@ -70,11 +84,10 @@ export const QuestionnaireCreationTab: React.FC<
 			}
 
 			console.log("Creating questionnaire...");
-			const qstDataItem = await QuestionnaireDataClass().create(
-				extractQuestionnaireMeta(widget)
-			);
+			const qstMeta = extractQuestionnaireMeta(widget);
+			const qstDataItem = await QuestionnaireDataClass().create(qstMeta);
 			const qstId = qstDataItem.id();
-
+			createdItems.qstMeta = qstMeta;
 			const newFailedItems = [];
 			for (const question of questions) {
 				try {
@@ -88,6 +101,7 @@ export const QuestionnaireCreationTab: React.FC<
 					);
 					if (questionWidget) {
 						questionWidget.update({ questionId });
+						createdItems.questions[questionId] = question;
 						console.log(
 							"Updated question " + question.externalId + " with: " + questionId
 						);
@@ -111,6 +125,10 @@ export const QuestionnaireCreationTab: React.FC<
 										" with: " +
 										optionItem.id()
 									);
+									if (!createdItems.options[questionId]) {
+										createdItems.options[questionId] = {};
+									}
+									createdItems.options[questionId][optionItem.id()] = option;
 									optionWidget.update({ answerOptionId: optionItem.id() });
 								}
 							} catch (error) {
@@ -147,7 +165,8 @@ export const QuestionnaireCreationTab: React.FC<
 
 			setFailedItems(newFailedItems);
 			await qstDataItem.update({ forms: true });
-			widget.update({ questionnaireId: qstId });
+			//TODO: handle/add failed items
+			widget.update({ questionnaireId: qstId, creationData: JSON.stringify(createdItems) });
 		} catch (error) {
 			console.error("Error creating questionnaire:", error);
 		} finally {
