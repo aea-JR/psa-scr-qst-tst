@@ -8,6 +8,7 @@ import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetC
 import { QuestionnaireCreationTab } from "../../Components/QuestionnaireCreationTab/QuestionnaireCreationTab";
 import { defaultValidations } from "../defaultQuestionEditingConfig";
 import { isUsageRestricted } from "../../utils/isRestricted";
+import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
@@ -176,6 +177,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   },
   propertiesGroups: (widget): any[] => {
     const isCreated = !isEmpty(widget.get("questionnaireId"));
+    // const hasUpdates = compareQuestionnaireMeta(widget as unknown as Scrivito.Widget)
     const showSubmittingMessage = widget.get("submittingMessageType") !== "widget-list";
     const showSubmittedMessage = widget.get("submittedMessageType") !== "widget-list";
     const showFailedMessage = widget.get("failedMessageType") !== "widget-list";
@@ -228,9 +230,9 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       },
     ];
 
-    if (isCreated) {
-      groups.pop()
-    }
+    // if (isCreated && !hasUpdates) {
+    //   groups.pop()
+    // }
     return groups;
   },
 
@@ -273,14 +275,14 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       }
     },
     (widget: Scrivito.Widget) => {
-      const content = widget.get("content") as Scrivito.Widget[];
+      const allWidgets = widget.widgets();
       const title = widget.get("title");
       //TODO: improve
-      if (content.length <= 0) {
+      if (allWidgets.length <= 0) {
         return "The questionnaie must include at least one question.";
       }
       const hasQuestion = some(
-        content,
+        allWidgets,
         (c) =>
           c.objClass() == "InputQuestionWidget" ||
           c.objClass() == "DropdownQuestionWidget",
