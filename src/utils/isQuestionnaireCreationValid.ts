@@ -8,16 +8,16 @@ export const isQuestionnaireCreationValid = (widget: Widget): boolean => {
   if (isEmpty(title)) {
     return false;
   }
-  const content = widget.get("content") as Widget[];
-  if (isNil(content)) {
+  const allWidgets = widget.widgets();
+  if (isNil(allWidgets)) {
     return false;
   }
-  if (content.length <= 0) {
+  if (allWidgets.length <= 0) {
     return false;
   }
   //TODO: improve
   const questions = filter(
-    content,
+    allWidgets,
     (c) =>
       c.objClass() == "InputQuestionWidget" ||
       c.objClass() == "DropdownQuestionWidget",
