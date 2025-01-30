@@ -6,6 +6,7 @@ export const defaultAttributes = {
 	identifier: { title: "Identifier" },
 	helpText: { title: "Help text" },
 	defaultValue: { title: "Default Value" },
+	position: { title: "Position" },
 	externalId: { title: "External ID" },
 	questionId: { title: "QuestionId ID (GID)" },
 
@@ -14,7 +15,7 @@ export const defaultAttributes = {
 export const defaultInitialContent = {
 	questionId: null,
 	externalId: null,
-
+	position: null,
 	title: "Question title",
 	required: false,
 	helpText: "",
@@ -27,7 +28,8 @@ export const defaultProperties = [
 	"helpText",
 	"defaultValue",
 	"identifier",
-	"required"
+	"required",
+	["position", { enabled: false }]
 ] as const;
 
 export const defaultValidations = [

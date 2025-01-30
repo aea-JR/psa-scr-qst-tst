@@ -6,6 +6,7 @@ export const AnswerOptionWidget = provideWidgetClass("AnswerOptionWidget", {
     identifier: "string",
     externalId: "string",
     answerOptionId: "string",
+    position: "integer",
     type: ["enum", { values: ["dropdown", "radio", "checkbox"] }],
   },
   onlyInside: ["DropdownQuestionWidget"],

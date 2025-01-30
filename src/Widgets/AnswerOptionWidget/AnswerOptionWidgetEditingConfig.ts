@@ -27,15 +27,18 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
   attributes: {
     text: { title: "Answer" },
     identifier: { title: "Identifier" },
+    position: { title: "Position" }
   },
   initialContent: {
     answerOptionId: null,
+    externalId: () => generateId(),
     text: "",
     identifier: "",
     type: null,
+    position: null
   },
   properties: (widget) => {
-    return ["text", "identifier", ["externalId", { enabled: false }], ["answerOptionId", { enabled: false }]];
+    return ["text", "identifier", ["position", { enabled: false }], ["externalId", { enabled: false }], ["answerOptionId", { enabled: false }]];
   },
   validations: [
     [

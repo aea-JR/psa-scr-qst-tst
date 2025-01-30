@@ -48,8 +48,8 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
     required: false,
     emptyOption: true,
     options: [
-      new AnswerOptionWidget({ text: "First Option", externalId: generateId() }),
-      new AnswerOptionWidget({ text: "Second Option", externalId: generateId() })
+      new AnswerOptionWidget({ text: "First Option" }),
+      new AnswerOptionWidget({ text: "Second Option" })
     ]
   },
   properties: (widget) => {

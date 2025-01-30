@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useEffect, useMemo } from "react";
 import * as Scrivito from "scrivito";
 import "./DropdownQuestionWidget.scss";
 import { DropdownQuestionWidget } from "./DropdownQuestionWidgetClass";
-import { find, isEmpty } from "lodash-es";
+import { each, find, isEmpty } from "lodash-es";
 import { DropdownOption } from "../../Components/DropdownOption";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../Components/HelpText/HelpText";
@@ -46,12 +46,15 @@ Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
     if (!Scrivito.isInPlaceEditingActive()) {
       return;
     }
-    for (const option of options) {
+    each(options, (option, index) => {
       if (!option.get("type")) {
         option.update({ type: "dropdown" });
       }
-    }
-  }, [options.length]);
+      if (option.get("position") !== (index + 1) * 10) {
+        option.update({ position: (index + 1) * 10 });
+      }
+    })
+  }, [options]);
 
 
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {

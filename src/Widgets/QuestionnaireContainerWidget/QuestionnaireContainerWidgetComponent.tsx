@@ -8,9 +8,23 @@ import { useQuestionnaireWidgetAttributes } from "../../hooks/useQuestionnaireWi
 import { Questionnaire } from "../../Components/Questionnaire/Questionnaire";
 import "./QuestionnaireContainerWidget.scss";
 import { PisaStatusProvider } from "../../contexts/PisaStatusContext";
+import { useEffect } from "react";
+import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
+import { each } from "lodash-es";
 
 provideComponent(QuestionnaireContainerWidget, ({ widget }) => {
   const values = useQuestionnaireWidgetAttributes(widget);
+
+  const { questionWidgets } = extractQuestionsAndOptions(widget);
+  useEffect(() => {
+    if (!isInPlaceEditingActive()) {
+      return;
+    }
+    each(questionWidgets, (question, index) => {
+      const isDifferent = question.get("position") as number !== (index + 1) * 10;
+      isDifferent && question.update({ position: (index + 1) * 10 })
+    });
+  }, [widget.get("content")]);
 
   return (
     <QuestionnaireWidgetAttributesProvider values={values}>

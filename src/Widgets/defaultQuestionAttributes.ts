@@ -5,5 +5,6 @@ export const defaultQuestionAttributes = {
 	externalId: "string",
 	defaultValue: "string",
 	identifier: "string",
+	position: "integer",
 	questionId: "string"
 } as const;

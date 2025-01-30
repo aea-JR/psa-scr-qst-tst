@@ -2,7 +2,8 @@ export interface Question {
 	externalId: string;
 	text?: string;
 	type?: string;
-	required?: boolean;
+	mandatory?: boolean;
+	position: number;
 	help?: string;
 	defaultValue?: string;
 	identifier?: string;
@@ -14,6 +15,7 @@ export interface AnswerOption {
 	identifier: string;
 	//type: string;
 	externalId: string;
+	position: number;
 }
 
 export interface QuestionnaireMeta {
@@ -33,4 +35,13 @@ export interface Answer {
 	value: string[];
 	valueIdentifier: string[];
 	updatedAt: string;
+}
+
+export interface QuestionnaireMetaSnapshot {
+	qstMeta: {
+		title: string;
+		inputType: string;
+	};
+	questions: { [key: string]: Question };
+	options: { [questionId: string]: { [optionId: string]: AnswerOption } };
 }

@@ -1,5 +1,5 @@
 import { Widget } from "scrivito";
-import { AnswerOption } from "../types/questionnaire";
+import { Answer, AnswerOption } from "../types/questionnaire";
 import { isEmpty } from "lodash-es";
 
 export const convertWidgetsToAnswerOptions = (
@@ -16,12 +16,17 @@ export const convertWidgetsToAnswerOptions = (
       );
       continue;
     }
-    const option: AnswerOption = {
-      text: widget.get("text") as string,
-      identifier: widget.get("identifier") as string,
-      externalId: widget.get("externalId") as string,
-    };
+    const option = convertWidgetToAnswerOption(widget);
     answerOptions.push(option);
   }
   return answerOptions;
 };
+
+export const convertWidgetToAnswerOption = (widget: Widget): AnswerOption => {
+  return {
+    text: widget.get("text") as string,
+    identifier: widget.get("identifier") as string,
+    externalId: widget.get("externalId") as string,
+    position: widget.get("position") as number
+  }
+}
