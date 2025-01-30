@@ -84,6 +84,7 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
           values: ["default", "thin", "none"]
         }
       ],
+      creationData: "string",
 
     },
     extractTextAttributes: ["content"],
