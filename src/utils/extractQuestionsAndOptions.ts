@@ -11,14 +11,14 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		questionWidgets: [],
 		optionWidgets: []
 	}
-	const content = widget.get("content") as Widget[];
-	if (isEmpty(content)) {
+	const allWidgets = widget.widgets();
+	if (isEmpty(allWidgets)) {
 		return questionsAndOptions;
 	}
 
 	//TODO: improve
 	const questionWidgets = filter(
-		content,
+		allWidgets,
 		(c) =>
 			c.objClass() == "InputQuestionWidget" ||
 			c.objClass() == "DropdownQuestionWidget",
