@@ -31,11 +31,11 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
   },
   title: "PisaSales Dropdown Question",
   attributes: {
-    title: { title: "Question title" },
-    required: { title: "Mandatory" },
+    text: { title: "Question title" },
+    mandatory: { title: "Mandatory" },
 
     identifier: { title: "Identifier" },
-    helpText: { title: "Help text" },
+    help: { title: "Help text" },
     defaultValue: { title: "Default value" },
     emptyOption: {
       title: "Use empty option",
@@ -45,7 +45,7 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
   initialContent: {
     ...defaultInitialContent,
     type: "string_dropdown",
-    required: false,
+    mandatory: false,
     emptyOption: true,
     options: [
       new AnswerOptionWidget({ text: "First Option" }),

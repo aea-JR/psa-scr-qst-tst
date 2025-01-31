@@ -1,10 +1,10 @@
 import { titleValidation } from "../utils/validations/titleValidation";
 
 export const defaultAttributes = {
-	title: { title: "Question title" },
-	required: { title: "Mandatory" },
+	text: { title: "Question title" },
+	mandatory: { title: "Mandatory" },
 	identifier: { title: "Identifier" },
-	helpText: { title: "Help text" },
+	help: { title: "Help text" },
 	defaultValue: { title: "Default Value" },
 	position: { title: "Position" },
 	externalId: { title: "External ID" },
@@ -16,19 +16,19 @@ export const defaultInitialContent = {
 	questionId: null,
 	externalId: null,
 	position: null,
-	title: "Question title",
-	required: false,
-	helpText: "",
+	text: "Question title",
+	mandatory: false,
+	help: "",
 	defaultValue: "",
 	identifier: "",
 } as const;
 
 export const defaultProperties = [
-	"title",
-	"helpText",
+	"text",
+	"help",
 	"defaultValue",
 	"identifier",
-	"required",
+	"mandatory",
 	["position", { enabled: false }]
 ] as const;
 

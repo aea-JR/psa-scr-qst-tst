@@ -1,7 +1,7 @@
 export const defaultQuestionAttributes = {
-	title: 'string',
-	required: "boolean",
-	helpText: "string",
+	text: 'string',
+	mandatory: "boolean",
+	help: "string",
 	externalId: "string",
 	defaultValue: "string",
 	identifier: "string",

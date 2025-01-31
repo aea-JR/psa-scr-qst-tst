@@ -58,10 +58,10 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 		// Compare relevant attributes
 		if (
-			storedQuestion.text !== question.get("title") ||
+			storedQuestion.text !== question.get("text") ||
 			storedQuestion.identifier !== question.get("identifier") ||
-			storedQuestion.mandatory !== question.get("required") ||
-			storedQuestion.help !== question.get("helpText") ||
+			storedQuestion.mandatory !== question.get("mandatory") ||
+			storedQuestion.help !== question.get("help") ||
 			storedQuestion.defaultValue !== question.get("defaultValue") ||
 			storedQuestion.type !== question.get("type") ||
 			storedQuestion.position !== question.get("position")

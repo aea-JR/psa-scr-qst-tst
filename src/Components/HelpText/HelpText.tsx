@@ -27,7 +27,7 @@ export const HelpText: React.FC<HelpTextProps> = ({ widget }) => {
 			{showPopover && (
 				<div className="form-popover-container">
 					<div className="form-popover-body">
-						<Scrivito.ContentTag content={widget} attribute="helpText" />
+						<Scrivito.ContentTag content={widget} attribute="help" />
 					</div>
 				</div>
 			)}

@@ -12,9 +12,9 @@ import { useAnswer } from "../../hooks/useAnswer";
 Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
   const id = `questionnaire_dropdown_widget_${widget.id()}`;
   const externalId = widget.get("externalId");
-  const required = widget.get("required");
-  const title = widget.get("title");
-  const helpText = widget.get("helpText");
+  const required = widget.get("mandatory");
+  const title = widget.get("text");
+  const helpText = widget.get("help");
   const defaultValue = widget.get("defaultValue");
   const addEmptyOption = widget.get("emptyOption");
   const options = widget.get("options");
@@ -71,7 +71,7 @@ Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
         {title && (
           <label htmlFor={id} className="dropdown-label">
             <Scrivito.ContentTag
-              attribute="title"
+              attribute="text"
               content={widget}
               tag="span"
             />

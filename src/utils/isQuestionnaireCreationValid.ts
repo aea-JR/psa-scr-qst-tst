@@ -27,7 +27,7 @@ export const isQuestionnaireCreationValid = (widget: Widget): boolean => {
   }
   // check questions & options
   for (const question of questions) {
-    if (isEmpty(question.get("title"))) {
+    if (isEmpty(question.get("text"))) {
       return false;
     }
     if (question.objClass() == "DropdownQuestionWidget") {
