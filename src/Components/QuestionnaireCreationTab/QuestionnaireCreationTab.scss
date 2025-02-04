@@ -6,6 +6,11 @@
 		padding: 0 0 10px;
 	}
 
+	.note {
+		padding: 1em;
+	}
+
+
 	&.scrivito-dark {
 		background: #1d2229;
 
@@ -14,6 +19,10 @@
 			margin: 0;
 			padding: 15px;
 			font-family: "Manrope", Helvetica, Arial, sans-serif;
+
+			label {
+				color: #aaa;
+			}
 		}
 
 		.notice-body {
