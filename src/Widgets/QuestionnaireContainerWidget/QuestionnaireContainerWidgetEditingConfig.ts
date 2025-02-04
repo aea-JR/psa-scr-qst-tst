@@ -24,10 +24,11 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     },
 
     inputType: {
-      title: "Input Type",
+      title: "Response Mode",
+      description: "Defines how answers are handled. “Multiple Submissions” creates a new answer set for each submission, while “Single Submission with Edits” allows modifying a single answer set.",
       values: [
-        { value: "repeatable", title: "Repeatable" },
-        { value: "once_updatable", title: "Once but updatable" },
+        { value: "repeatable", title: "Multiple Submissions" },
+        { value: "once_updatable", title: "Single Submission with Edits" },
       ],
     },
     activityId: { title: "Activity ID" },
