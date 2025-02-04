@@ -27,7 +27,6 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       title: "Input Type",
       values: [
         { value: "repeatable", title: "Repeatable" },
-        { value: "once_only", title: "Once only" },
         { value: "once_updatable", title: "Once but updatable" },
       ],
     },
@@ -241,7 +240,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     externalId: () => generateId(),
     questionnaireId: null,
     title: "Scrivito PisaSales Questionnaire",
-    inputType: "once_updatable",
+    inputType: "repeatable",
     isBeingCopied: false,
     singleSubmitButtonAlignment: "text-center",
     forwardButtonText: "Forward",
@@ -332,17 +331,6 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
 
         if (externalId.match(/^[0-9a-zA-Z]{20}$/) === null) {
           return "Specify a valid external ID (20 characters).";
-        }
-      },
-    ],
-    [
-      "inputType",
-      (inputType: string) => {
-        if (inputType == "once_only") {
-          return "This input type is not supported yet.";
-        }
-        if (isEmpty(inputType)) {
-          return "Specify an input type."
         }
       },
     ],
