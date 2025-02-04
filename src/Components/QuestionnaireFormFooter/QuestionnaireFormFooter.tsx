@@ -21,10 +21,10 @@ export const QuestionnaireFormFooter: React.FC<FormFooterSingleStepProps> =
 		const hasChanges = isCreated && compareQuestionnaireMeta(widget);
 		const getMessageType = () => {
 			if (!isOnline) { return "pisaOffline"; }
+			if (Scrivito.isInPlaceEditingActive() && !isValid) { return "invalidAttributes"; }
 			if (hasChanges) { return "updatePending" }
 			if (isCreated) { return null; }
 			if (!Scrivito.isInPlaceEditingActive() && !isCreated) { return "warningCreationPending"; }
-			if (Scrivito.isInPlaceEditingActive() && !isValid) { return "invalidAttributes"; }
 			{ return "creationPending"; }
 		};
 
@@ -41,7 +41,7 @@ export const QuestionnaireFormFooter: React.FC<FormFooterSingleStepProps> =
 						: ""
 						}`}
 					onClick={onSubmit}
-					disabled={isSubmitDisabled(widget)}
+					disabled={!isCreated || hasChanges || !isOnline || !isValid}
 				>
 					{widget.get("submitButtonText") as string || "Submit"}
 				</button>
