@@ -1,6 +1,13 @@
-.description {
-
-	.message {
-		margin-right: 0.3em;
+.questionnaire-creation-tab-container {
+	padding-top: 1em;
+	.detail-content-inner {
+		display: flex;
+		flex-direction: column;
+		button {
+			margin: 0.5em;
+		}
+		.description {
+			padding: 1em;
+		}
 	}
 }
