@@ -24,14 +24,15 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_STR_MUL |Multi-line text input  |✅ Implemented           |
 |                     | PSA_QST_TPL_CLB   | Multi-line text input | Planned                 |
 |                     | PSA_QST_TPL_BLB  | Multi-line text input  | Planned                 |
-|                     | PSA_QST_TPL_FLO  | Float (decimal number input)| Planned              |
+|                     | PSA_QST_TPL_INT  | Integer (numeric number input)| ✅ Implemented                |
+|                     | PSA_QST_TPL_FLO  | Float (decimal number input)| ✅ Implemented                |
+|                     | PSA_QST_TPL_DAT_TIM  | Date and time input| ✅ Implemented                |
+|                     | PSA_QST_TPL_DAT  |Date-only input| ✅ Implemented                |
 |                     | PSA_QST_TPL_MON   | Money input field      | Planned                 |
 | **Dropdown Widget** | PSA_QST_TPL_CHC  | Regular dropdown   |✅ Implemented             |
 |                     | PSA_QST_TPL_CTY   | Countries dropdown   |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LNG   | Languages dropdown    |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LOB   | Business dropdown         |❌ Rejected (requires API) |
-| **Date/Time Widget**| PSA_QST_TPL_DAT_TIM | Date and time input    | Planned               |
-|                     | PSA_QST_TPL_DAT     | Date-only input       | Planned               |
 | **Select Widget**   | PSA_QST_TPL_RAD     | Single-select radios    | Planned               |
 |                     | PSA_QST_TPL_LOG      | Single-select checkbox  | Planned               |
 |                     | PSA_QST_TPL_LOG_NUL  | Tri-state single-select checkbox  | Planned      |
