@@ -1,12 +1,18 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
 import { isEmpty } from "lodash-es";
 import { InputQuestionWidget } from "./InputQuestionWidgetClass";
-import { ContentTag, provideComponent } from "scrivito";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import "./InputQuestionWidget.scss";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useAnswer } from "../../hooks/useAnswer";
+import { StringSingleLineInput } from "./Inputs/StringSingleLineInput";
+import { StringMultiLineInput } from "./Inputs/StringMultiLineInput";
+import { NumberInput } from "./Inputs/NumberInput";
+import { DateInput } from "./Inputs/DateInput";
+import { DateTimeInput } from "./Inputs/DateTimeInput";
+
 provideComponent(InputQuestionWidget, ({ widget }) => {
   const id = `questionnaire_input_widget_${widget.id()}`;
   const externalId = widget.get("externalId");
@@ -22,16 +28,27 @@ provideComponent(InputQuestionWidget, ({ widget }) => {
 
   useExternalId(widget);
 
+  useEffect(() => {
+    if (isInPlaceEditingActive()) {
+      handleChange([defaultValue]);
+    }
+  }, [defaultValue]);
 
-  const handleInputChange = (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-  ) => {
-    handleChange([event.currentTarget.value], [""])
-  };
+  const inputComponents = {
+    string_single_line: StringSingleLineInput,
+    string_multi_line: StringMultiLineInput,
+    integer: NumberInput,
+    float: NumberInput,
+    date: DateInput,
+    date_time: DateTimeInput,
+  } as const;
 
+  type InputType = keyof typeof inputComponents;
+
+  const InputComponent = inputComponents[type as InputType] || StringSingleLineInput;
 
   return (
-    <div className={`mb-3 form-input-container`}>
+    <div className={`mb-3 form-input-container ${type}`}>
       {!isEmpty(title) && (
         <label htmlFor={id} className="input-label">
           <ContentTag attribute="text" content={widget} tag="span" />
@@ -39,32 +56,16 @@ provideComponent(InputQuestionWidget, ({ widget }) => {
           {helpText && <HelpText widget={widget} />}
         </label>
       )}
-
-      {type === "string_multi_line" ? (
-        <textarea
-          className="form-control"
-          id={id}
-          name={externalId}
-          maxLength={2000}
-          placeholder={placeholder}
-          value={values[0]}
-          required={required}
-          onChange={handleInputChange}
-          rows={3}
-        />
-      ) : (
-        <input
-          className="form-control"
-          id={id}
-          name={externalId}
-          maxLength={2000}
-          placeholder={placeholder}
-          value={values[0]}
-          required={required}
-          onChange={handleInputChange}
-          type={"text"}
-        />
-      )}
+      <InputComponent
+        id={id}
+        externalId={externalId}
+        placeholder={placeholder}
+        value={values[0]}
+        type={type}
+        defaultValue={defaultValue}
+        required={required}
+        onInputChange={handleChange}
+      />
     </div>
   );
 });

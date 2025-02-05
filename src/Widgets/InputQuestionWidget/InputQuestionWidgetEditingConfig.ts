@@ -2,8 +2,9 @@ import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
 import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
-import { isEmpty } from "lodash-es";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
+import { isPisaDate } from "../../utils/isPisaDate";
+import { isUTCDate } from "../../utils/isUTCDate";
 
 Scrivito.provideEditingConfig("InputQuestionWidget", {
   initialize: (obj) => {
@@ -37,6 +38,10 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
       values: [
         { value: "string_single_line", title: "Single-line (String)" },
         { value: "string_multi_line", title: "Multi-line (String)" },
+        { value: "integer", title: "Integer (Number)" },
+        { value: "floating_point", title: "Float (Number)" },
+        { value: "date", title: "Date only (Date)" },
+        { value: "date_time", title: "Date & Time (Date)" },
       ],
     },
   },
@@ -71,6 +76,36 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
         }
       },
     ],
+    [
+      "defaultValue",
+      (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {
+        const type = widget.get("type")
+        if (!defaultValue) {
+          return null;
+        }
+        if (type == "date" || type == "date_time") {
+          if (isPisaDate(defaultValue)) {
+            return null;
+          }
+          if (isUTCDate(defaultValue)) {
+            return null;
+          }
+          return "Specify a valid date value. Must be in UTC format (YYYY-MM-DDTHH:MM:SSZ) or PisaCubes format.";
+        }
+        if (type === "integer") {
+          if (/^-?\d+$/.test(defaultValue)) {
+            return null;
+          }
+          return "Specify a valid integer value. Must be a whole number (e.g., -10, 0, 42).";
+        }
+        if (type == "floating_point") {
+          if (/^-?\d+(\.\d+)?$/.test(defaultValue)) {
+            return null;
+          }
+          return "Specify a valid floating-point value. Must be a number with optional decimal places (e.g., -10.5, 0.0, 42.99).";
+        }
+      },
+    ]
 
   ],
 });
