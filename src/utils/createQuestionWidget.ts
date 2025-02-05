@@ -15,7 +15,9 @@ export const createNewQuestionWidget = (question: Question, questionId: string):
 		case "string_single_line":
 		case "string_multi_line":
 		case "integer":
+		case "floating_point":
 		case "date":
+		case "date_time":
 			return new InputQuestionWidget({ ...question, questionId: questionId });
 		case "string_dropdown":
 			return new DropdownQuestionWidget({ ...question, questionId: questionId, options: [] });
