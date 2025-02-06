@@ -3,6 +3,7 @@ import { AnswersDataClass } from "../config/scrivitoConfig";
 import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
 import { isEmpty } from "lodash-es";
 import { usePisaStatusContext } from "./PisaStatusContext";
+import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;
@@ -42,6 +43,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     new Map()
   );
   const { isOnline } = usePisaStatusContext();
+  const { validateCurrentStep } = useQuestionnaireStepsContext()
   React.useEffect(() => {
     if (!isInPlaceEditingActive()) {
       return;
@@ -173,7 +175,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
   const onSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-
+    const isValid = validateCurrentStep();
+    if (!isValid) {
+      return;
+    }
     try {
       indicateProgress();
       //TODO: refactor

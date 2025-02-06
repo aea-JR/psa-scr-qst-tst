@@ -3,7 +3,7 @@ import { Widget, ContentTag } from "scrivito";
 import { useFormContext } from "../../contexts/FormContext";
 import { useQuestionnaireWidgetAttributesContext } from "../../contexts/QuestionnaireWidgetAttributesContext";
 import { FormSubmissionStatesRenderer } from "../FormSubmissionStates/FormSubmissionStatesRenderer";
-import { QuestionnaireFormFooter } from "../QuestionnaireFormFooter/QuestionnaireFormFooter";
+import { QuestionnaireFooter } from "../QuestionnaireFormFooter/QuestionnaireFormFooter";
 
 
 
@@ -18,10 +18,7 @@ export const Questionnaire: FC<QuestionnaireProps> = ({
 
 	const { isSubmitting, submissionFailed, successfullySent } = useFormContext();
 
-	const {
-		isCreated,
-
-	} = useQuestionnaireWidgetAttributesContext();
+	const { isCreated } = useQuestionnaireWidgetAttributesContext();
 	if (isSubmitting || successfullySent || submissionFailed) {
 		return <FormSubmissionStatesRenderer widget={widget} />;
 	}
@@ -32,9 +29,9 @@ export const Questionnaire: FC<QuestionnaireProps> = ({
 				method="post"
 				id={widget.get("externalId") as string}
 			>
-				<ContentTag content={widget} attribute="content" />
+				<ContentTag content={widget} attribute="steps" />
 			</form>
-			<QuestionnaireFormFooter
+			<QuestionnaireFooter
 				widget={widget}
 				isCreated={isCreated}
 			/>

@@ -5,7 +5,7 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
   {
     attributes: {
       title: "string",
-      content: "widgetlist",
+      steps: ["widgetlist", { only: "QuestionnaireStepWidget" }],
       externalId: "string",
       questionnaireId: "string",
       inputType: [
@@ -87,6 +87,6 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
       creationData: "string",
 
     },
-    extractTextAttributes: ["content"],
+    extractTextAttributes: ["steps"],
   },
 );

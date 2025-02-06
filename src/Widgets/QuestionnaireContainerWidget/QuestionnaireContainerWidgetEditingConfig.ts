@@ -1,14 +1,13 @@
 import * as Scrivito from "scrivito";
 
 import generateId from "../../utils/idGenerator";
-import { QuestionnaireExternalIdComponent } from "../../Components/QuestionnaireExternalId/QuestionnaireExternalId";
 import { isEmpty, some } from "lodash-es";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
 import { QuestionnaireCreationTab } from "../../Components/QuestionnaireCreationTab/QuestionnaireCreationTab";
 import { defaultValidations } from "../defaultQuestionEditingConfig";
 import { isUsageRestricted } from "../../utils/isRestricted";
-import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
+import { QuestionnaireStepWidget } from "../QuestionnaireStepWidget/QuestionnaireStepWidgetClass";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
@@ -175,7 +174,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       ["overscrollBehavior", { enabled: fixedHeght }]
     ];
   },
-  propertiesGroups: (widget): any[] => {
+  propertiesGroups: (widget) => {
     const isCreated = !isEmpty(widget.get("questionnaireId"));
     // const hasUpdates = compareQuestionnaireMeta(widget as unknown as Scrivito.Widget)
     const showSubmittingMessage = widget.get("submittingMessageType") !== "widget-list";
@@ -218,9 +217,15 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         ] as any
       },
       {
+        title: "Steps",
+        key: "QuestionnaireSteps",
+        properties: ["steps"]
+
+      },
+      {
         title: "Navigation area",
-        key: "FormNavigationButtons",
-        properties: ["submitButtonText", "singleSubmitButtonAlignment"]
+        key: "QuestionnaireNavigationButtons",
+        properties: getNavigationProperties(widget as any)
       },
       {
         title: "Create PisaSales Questionnaire",
@@ -237,7 +242,12 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   },
 
   initialContent: {
-    content: [new InputQuestionWidget({})],
+    steps: [new QuestionnaireStepWidget({
+      isSingleStep: true,
+      content: [
+        new InputQuestionWidget({})
+      ]
+    })],
     externalId: () => generateId(),
     questionnaireId: null,
     title: "Scrivito PisaSales Questionnaire",
@@ -352,22 +362,22 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
  * @param {*} widget
  * @returns an array of strings containing the properties to be shown
  */
-// function getNavigationProperties(widget: Scrivito.Widget): string[] {
-//   const singleStepNavigationProps = [
-//     "submitButtonText",
-//     "singleSubmitButtonAlignment"
-//   ];
-//   const MultiStepNavigationProps = [
-//     "forwardButtonText",
-//     "backwardButtonText",
-//     "submitButtonText"
-//   ];
-//   if (widget.get("formType") == "single-step") {
-//     return singleStepNavigationProps;
-//   } else {
-//     return MultiStepNavigationProps;
-//   }
-// }
+const getNavigationProperties = (widget: Scrivito.Widget): string[] => {
+  const singleStepNavigationProps = [
+    "submitButtonText",
+    "singleSubmitButtonAlignment"
+  ];
+  const MultiStepNavigationProps = [
+    "forwardButtonText",
+    "backwardButtonText",
+    "submitButtonText"
+  ];
+  if (widget.get("formType") == "single-step") {
+    return singleStepNavigationProps;
+  } else {
+    return MultiStepNavigationProps;
+  }
+}
 
 
 const initializeQstContainerCopy = (qstContainerWidget: Scrivito.Obj) => {
