@@ -20,7 +20,6 @@ export const StringMultiLineInput: FC<StringMultiLineInputProps> = ({ id, extern
 			className="form-control"
 			id={id}
 			name={externalId}
-			maxLength={2000}
 			placeholder={placeholder}
 			value={value}
 			required={required}
