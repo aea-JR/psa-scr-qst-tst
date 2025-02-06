@@ -3,6 +3,7 @@ import { QuestionnaireWidgetAttributes } from "../contexts/QuestionnaireWidgetAt
 
 export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireWidgetAttributes => ({
 	isCreated: !!widget.get("questionnaireId"),
+	formType: widget.get("formType") as string,
 	showSubmittedPreview: widget.get("previewSubmittedMessage") as boolean || false,
 	showSubmittingPreview: widget.get("previewSubmittingMessage") as boolean || false,
 	showFailedPreview: widget.get("previewFailedMessage") as boolean || false,
@@ -24,4 +25,9 @@ export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireW
 	failedMessageWidgets: widget.get("failedMessageWidgets") as Widget[],
 	submittedMessageWidgets: widget.get("submittedMessageWidgets") as Widget[],
 	submittingMessageWidgets: widget.get("submittingMessageWidgets") as Widget[],
+	backwardButtonText: widget.get("backwardButtonText") as string || "Back",
+	forwardButtonText: widget.get("forwardButtonText") as string || "Forward",
+	submitButtonText: widget.get("submitButtonText") as string || "Submit",
+	singleSubmitButtonAlignment: widget.get("singleSubmitButtonAlignment") as string || "text-center"
+
 });

@@ -2,6 +2,7 @@ import React, { createContext, useContext, ReactNode } from "react";
 import { Widget } from "scrivito";
 
 export interface QuestionnaireWidgetAttributes {
+	formType: string;
 	submissionFailureText: string;
 	retryButtonText: string;
 	showRetryButton: boolean;
@@ -24,6 +25,10 @@ export interface QuestionnaireWidgetAttributes {
 	failedMessageWidgets: Widget[],
 	submittedMessageWidgets: Widget[],
 	submittingMessageWidgets: Widget[],
+	submitButtonText: string,
+	forwardButtonText: string,
+	backwardButtonText: string,
+	singleSubmitButtonAlignment: string,
 }
 
 const QuestionnaireWidgetAttributesContext = createContext<QuestionnaireWidgetAttributes | null>(
