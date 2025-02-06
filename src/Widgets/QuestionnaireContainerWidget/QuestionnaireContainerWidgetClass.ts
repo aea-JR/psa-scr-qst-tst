@@ -11,7 +11,7 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
       inputType: [
         "enum",
         {
-          values: ["repeatable", "once_updatable"],
+          values: ["PSA_QST_INP_TYP_REP", "PSA_QST_INP_TYP_ONC_UPD"],
         },
       ],
       activityId: "string",
