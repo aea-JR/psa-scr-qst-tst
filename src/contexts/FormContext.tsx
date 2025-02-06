@@ -15,7 +15,7 @@ interface FormContextProps {
 }
 
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
-const REPEATABLE = "repeatable";
+const REPEATABLE = "PSA_QST_INP_TYP_REP";
 
 export const useFormContext = () => {
   const context = React.useContext(FormContext);

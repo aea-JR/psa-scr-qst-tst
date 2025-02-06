@@ -335,6 +335,15 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         }
       },
     ],
+    [
+      "inputType",
+      (inputType: string) => {
+        if (!inputType) {
+          return "Specify the Input type.";
+        }
+
+      },
+    ],
   ],
 });
 
