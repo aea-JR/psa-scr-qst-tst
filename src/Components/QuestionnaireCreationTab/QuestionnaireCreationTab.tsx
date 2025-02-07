@@ -28,7 +28,6 @@ export const QuestionnaireCreationTab: React.FC<
 	QuestionnaireCreationTabProps
 > = ({ widget }) => {
 	const [isCreating, setIsCreating] = React.useState(false);
-	const [failedItems, setFailedItems] = React.useState<any[]>([]);
 	const [status, setStatus] = React.useState<QuestionnaireStatus>("void");
 	const isCreated = !isEmpty(widget.get("questionnaireId") as string);
 	const uiContext = Scrivito.uiContext();
@@ -53,36 +52,12 @@ export const QuestionnaireCreationTab: React.FC<
 	if (!uiContext) return null;
 
 
-	//TODO: test, improve & use
-	//TODO: remove retry, if the qst itself got created, 
+
+	//TODO:  if the qst itself got created, 
 	// show error to user that some items failed (maybe list them)
 	// and let user simply retry whith the update functionality instead 
 	// as the json is only updated for succeeded items
-	const handleRetryFailedItems = async () => {
-		if (failedItems.length === 0) return;
 
-		const retryResults = [];
-		for (const failedItem of failedItems) {
-			try {
-				if (failedItem.type === "question") {
-					const questionItem = await QuestionDataClass().create({
-						...failedItem.data,
-					});
-					failedItem.widget.update({ questionId: questionItem.id() });
-				} else if (failedItem.type === "option") {
-					const optionItem = await AnswerOptionDataClass().create({
-						...failedItem.data,
-					});
-					failedItem.widget.update({ answerOptionId: optionItem.id() });
-				}
-				console.log(`Retried ${failedItem.type} successfully`);
-			} catch (error) {
-				console.error(`Retry failed for ${failedItem.type}:`, error);
-				retryResults.push(failedItem);
-			}
-		}
-		setFailedItems(retryResults);
-	};
 
 	//TODO: refactor && move to hook
 	const handleCreateQuestionnaire = async () => {
@@ -97,7 +72,6 @@ export const QuestionnaireCreationTab: React.FC<
 		try {
 			setStatus("inCreation")
 			setIsCreating(true);
-			setFailedItems([]);
 
 			const { questions, answerOptions, questionWidgets, optionWidgets } =
 				extractQuestionsAndOptions(widget);
@@ -188,17 +162,11 @@ export const QuestionnaireCreationTab: React.FC<
 				}
 			}
 
-			setFailedItems(newFailedItems);
 			await qstDataItem.update({ forms: true });
-			//TODO: handle/add failed items
 			widget.update({ questionnaireId: qstId, creationData: JSON.stringify(createdItems) });
-			setStatus("void")
+			setStatus("void");
 		} catch (error) {
 			console.error("Error creating questionnaire:", error);
-			// add error/retry status
-			//setStatus("")
-		} finally {
-			//setIsCreating(false);
 		}
 	};
 
