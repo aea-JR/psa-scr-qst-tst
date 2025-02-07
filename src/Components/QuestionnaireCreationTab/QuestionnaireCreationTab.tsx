@@ -39,16 +39,20 @@ export const QuestionnaireCreationTab: React.FC<
 			setStatus("invalid");
 			return;
 		}
+		if (!isCreated) {
+			setStatus("creationPending");
+			return;
+		}
 		if (hasChanges) {
-			setStatus("pendingUpdate")
+			setStatus("pendingUpdate");
 			return;
 		}
 		if (isCreated) {
 			setStatus("void");
 		}
 
-	}, [isValid, hasChanges])
-	console.log(status)
+	}, [isValid, hasChanges, isCreated])
+
 	if (!uiContext) return null;
 
 
