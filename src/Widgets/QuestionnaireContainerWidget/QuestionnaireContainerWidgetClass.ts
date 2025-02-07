@@ -14,8 +14,32 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
           values: ["PSA_QST_INP_TYP_REP", "PSA_QST_INP_TYP_ONC_UPD"],
         },
       ],
+      activityIdSource: [
+        "enum",
+        {
+          values: ["manual", "data-item",],
+        },
+      ],
+      activityIdDataItemField: "string",
+      activityIdDataItemFieldValue: "string",
       activityId: "string",
+      projectIdSource: [
+        "enum",
+        {
+          values: ["manual", "data-item",],
+        },
+      ],
+      projectIdDataItemField: "string",
+      projectIdDataItemFieldValue: "string",
       projectId: "string",
+      contactIdSource: [
+        "enum",
+        {
+          values: ["manual", "data-item"],
+        },
+      ],
+      contactIdDataItemField: "string",
+      contactIdDataItemFieldValue: "string",
       contactId: "string",
       customClassNames: "string",
       isBeingCopied: "boolean",

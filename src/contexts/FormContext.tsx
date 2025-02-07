@@ -4,6 +4,7 @@ import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
 import { isEmpty } from "lodash-es";
 import { usePisaStatusContext } from "./PisaStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
+import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;
@@ -27,9 +28,6 @@ export const useFormContext = () => {
 };
 
 export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWidget: Widget }> = ({ children, qstContainerWidget }) => {
-  const activityId = qstContainerWidget.get("activityId") as string;
-  const projectId = qstContainerWidget.get("projectId") as string;
-  const contactId = qstContainerWidget.get("contactId") as string;
   const questionnaireId = qstContainerWidget.get("questionnaireId") as string;
   const inputType = qstContainerWidget.get("inputType") as string;
   const showSubmittingPreview = qstContainerWidget.get("previewSubmittingMessage") || false;
@@ -42,8 +40,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   const [answers, setAnswers] = React.useState<Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>>(
     new Map()
   );
+  const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
   const { isOnline } = usePisaStatusContext();
-  const { validateCurrentStep } = useQuestionnaireStepsContext()
+  const { validateCurrentStep } = useQuestionnaireStepsContext();
   React.useEffect(() => {
     if (!isInPlaceEditingActive()) {
       return;
@@ -123,7 +122,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       convertAndSetAnswers(answers);
     }
     loadAnswers();
-  }, [isOnline]);
+  }, [isOnline, activityId, contactId, projectId]);
 
   const extractAnswerData = (answerItem: DataItem) => {
     const questionId = answerItem.get("questionId");

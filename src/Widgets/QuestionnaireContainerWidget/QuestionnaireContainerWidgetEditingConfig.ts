@@ -21,6 +21,9 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       title: "External ID",
       description: "The external id reference to the PisaSales Questionnaire GID.",
     },
+    questionnaireId: {
+      title: "Questionnaire ID (GID)",
+    },
 
     inputType: {
       title: "Response Mode",
@@ -160,7 +163,52 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       title: "Scrollbar width",
       description: 'The width of the scrollbar. "None" will hide the scrollbar.',
       values: [{ value: "default", title: "Default" }, { value: "thin", title: "Thin" }, { value: "none", title: "None" }]
-    }
+    },
+    activityIdDataItemField: {
+      title: 'Name of the data attribute in question',
+    },
+    contactIdDataItemField: {
+      title: 'Name of the data attribute in question',
+    },
+    projectIdDataItemField: {
+      title: 'Name of the data attribute in question',
+    },
+    activityIdSource: {
+      title: "Activity ID Source",
+      description: "Hi there :)",
+      values: [
+        { value: "manual", title: "Manual" },
+        { value: "data-item", title: "DataItem" },
+      ],
+    },
+    projectIdSource: {
+      title: "Project ID Source",
+      description: "Choose between manually specifying the Project ID or using a DataItem attribute.",
+      values: [
+        { value: "manual", title: "Manual" },
+        { value: "data-item", title: "DataItem" },
+      ],
+    },
+    contactIdSource: {
+      title: "Contact ID Source",
+      description: "Select whether to manually enter the Contact ID or retrieve it from a DataItem attribute. ",
+      values: [
+        { value: "manual", title: "Manual" },
+        { value: "data-item", title: "DataItem" },
+      ],
+    },
+    activityIdDataItemFieldValue: {
+      title: "Activity ID data attribute value"
+    },
+    contactIdDataItemFieldValue: {
+      title: "Contact ID data attribute value"
+    },
+    projectIdDataItemFieldValue: {
+      title: "Project ID data attribute value"
+    },
+
+
+
   },
   properties: (widget) => {
     const fixedHeght = widget.get("fixedFormHeight") as boolean || false;
@@ -194,7 +242,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         title: "Answer Context",
 
         key: "QuestionnaireAnswerContext",
-        properties: ["activityId", "contactId", "projectId"],
+        properties: getContextProperties(widget as any),
       },
 
       {
@@ -288,6 +336,9 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     reviewButtonText: "Review",
     reviewHeaderTitle: "Review",
     reviewCloseButtonText: "Close",
+    activityIdSource: "manual",
+    contactIdSource: "manual",
+    projectIdSource: "manual",
   },
   validations: [
     ...defaultValidations as any,
@@ -412,6 +463,32 @@ function getReviewProperties(widget: Scrivito.Widget): string[] | any[] {
   return widget.get("showReview") ? reviewPropsEnabled : reviewPropsDisabled;
 }
 
+const getContextProperties = (widget: Scrivito.Widget) => {
+  const activityIdSource = widget.get("activityIdSource");
+  const projectIdSource = widget.get("projectIdSource");
+  const contactIdSource = widget.get("contactIdSource");
+  const activityIdProps = ["activityIdSource"];
+  const projectIdProps = ["projectIdSource"];
+  const contactIdProps = ["contactIdSource"];
+  if (activityIdSource == "manual") {
+    activityIdProps.push("activityId");
+  } else {
+    activityIdProps.push("activityIdDataItemField", ["activityIdDataItemFieldValue", { enabled: false }] as any);
+  }
+  if (projectIdSource == "manual") {
+    projectIdProps.push("projectId");
+  } else {
+    projectIdProps.push("projectIdDataItemField", ["projectIdDataItemFieldValue", { enabled: false }] as any);
+  }
+  if (contactIdSource == "manual") {
+    contactIdProps.push("contactId");
+  } else {
+    contactIdProps.push("contactIdDataItemField", ["contactIdDataItemFieldValue", { enabled: false }] as any);
+  }
+
+  const props = [...activityIdProps, ...contactIdProps, ...projectIdProps]
+  return props;
+}
 
 const initializeQstContainerCopy = (qstContainerWidget: Scrivito.Obj) => {
   console.log("Copying container");
