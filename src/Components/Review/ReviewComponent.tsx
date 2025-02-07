@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { ReviewContent, ReviewItemContent } from "../../types/review";
 import { useQuestionnaireWidgetAttributesContext } from "../../contexts/QuestionnaireWidgetAttributesContext";
+import "./review.scss";
 
 interface ReviewProps {
   reviewContent: ReviewContent;
@@ -44,7 +45,7 @@ export const Review: FC<ReviewProps> = ({
     <div
       onClick={(e) => handleOnClickContainer(e)}
       hidden={!show}
-      className="scrivito-neoletter-review-form-modal"
+      className="questionnaire-review-form-modal"
     >
       <div className="review-modal-dialog">
         <div className="review-modal-content">
