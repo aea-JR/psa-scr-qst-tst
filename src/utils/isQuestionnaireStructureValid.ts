@@ -1,13 +1,15 @@
 import { filter, isEmpty, isNil, some } from "lodash-es";
 import { Widget } from "scrivito";
+import { isUTCDate } from "./isUTCDate";
+import { isPisaDate } from "./isPisaDate";
 
-export const isQuestionnaireStructureValid = (widget: Widget): boolean => {
-  const title = widget.get("title") as string;
+export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
+  const title = qstMainWidget.get("title") as string;
 
   if (isEmpty(title)) {
     return false;
   }
-  const allWidgets = widget.widgets();
+  const allWidgets = qstMainWidget.widgets();
   if (isNil(allWidgets)) {
     return false;
   }
@@ -42,12 +44,32 @@ export const isQuestionnaireStructureValid = (widget: Widget): boolean => {
       //TODO: check default value against identifier
     } else if (question.objClass() == "InputQuestionWidget") {
 
+      // check defaultValue
       const type = question.get("type") as string;
-      //TODO check defaultvalues
-
+      const defaultValue = question.get("defaultValue") as string || "";
+      if (isEmpty((defaultValue.trim()))) {
+        continue;
+      }
+      if (type == "string_single_line" || type == "string_multi_line") {
+        continue;
+      }
+      if (type == "date" || type == "date_time") {
+        if (!(isUTCDate(defaultValue) || isPisaDate(defaultValue))) {
+          return false;
+        }
+      }
+      if (type == "integer") {
+        if (!/^-?\d+$/.test(defaultValue)) {
+          return false;
+        }
+      }
+      if (type == "floating_point") {
+        if (!/^-?\d+(\.\d+)?$/.test(defaultValue)) {
+          return false;
+        }
+      }
     }
+
   }
-
-
   return true;
 };
