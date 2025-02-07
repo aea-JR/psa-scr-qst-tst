@@ -1,7 +1,7 @@
 import "./QuestionnaireManagementTab.scss";
 import { isQuestionnaireCreationValid } from "../../utils/isQuestionnaireCreationValid";
 import { isEmpty } from "lodash-es";
-import { Description } from "../QuestionnaireCreationDescription/QuestionnaireCreationDescription";
+import { Description } from "../QuestionnaireManagementTabDescription/QuestionnaireManagementTabDescription";
 import { QuestionnaireStatus } from "../../types/questionnaire";
 import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
 import { useCreateQuestionnaire } from "./useCreateQuestionnaire";
