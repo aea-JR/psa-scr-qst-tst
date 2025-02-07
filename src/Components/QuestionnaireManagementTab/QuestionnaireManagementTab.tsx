@@ -56,7 +56,7 @@ export const QuestionnaireManagementTab: FC<
 
 	return (
 		<div
-			className={`questionnaire-creation-tab-container scrivito-${context.theme}`}
+			className={`questionnaire-management-tab-container scrivito-${context.theme}`}
 		>
 			<div className="detail-content">
 				<div className="detail-content-inner">

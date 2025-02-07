@@ -8,7 +8,7 @@ export const defaultAttributes = {
 	defaultValue: { title: "Default Value" },
 	position: { title: "Position" },
 	externalId: { title: "External ID" },
-	questionId: { title: "QuestionId ID (GID)" },
+	questionId: { title: "Question ID (GID)" },
 
 } as const;
 

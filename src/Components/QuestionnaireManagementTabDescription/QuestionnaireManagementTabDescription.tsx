@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./QuestionnaireCreationDescription.scss";
+import "./QuestionnaireManagementTabDescription.scss";
 import { QuestionnaireStatus } from "../../types/questionnaire";
 
 
