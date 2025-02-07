@@ -2,6 +2,8 @@ import { Widget } from "scrivito";
 import { QuestionnaireWidgetAttributes } from "../contexts/QuestionnaireWidgetAttributesContext";
 
 export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireWidgetAttributes => ({
+	externalId: widget.get("externalId") as string || "",
+	steps: widget.get("steps") as Widget[] || [],
 	isCreated: !!widget.get("questionnaireId"),
 	formType: widget.get("formType") as string,
 	showSubmittedPreview: widget.get("previewSubmittedMessage") as boolean || false,
@@ -28,6 +30,13 @@ export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireW
 	backwardButtonText: widget.get("backwardButtonText") as string || "Back",
 	forwardButtonText: widget.get("forwardButtonText") as string || "Forward",
 	submitButtonText: widget.get("submitButtonText") as string || "Submit",
-	singleSubmitButtonAlignment: widget.get("singleSubmitButtonAlignment") as string || "text-center"
-
+	singleSubmitButtonAlignment: widget.get("singleSubmitButtonAlignment") as string || "text-center",
+	showReview: widget.get("showReview") as boolean || false,
+	includeEmptyAnswers: widget.get("includeEmptyAnswers") as boolean || false,
+	showStepsInReview: widget.get("showStepsInReview") as boolean || false,
+	showReviewHeader: widget.get("showReviewHeader") as boolean || false,
+	showReviewFooter: widget.get("showReviewFooter") as boolean || false,
+	reviewButtonText: widget.get("reviewButtonText") as string || "Review",
+	reviewHeaderTitle: widget.get("reviewHeaderTitle") as string || "Review",
+	reviewCloseButtonText: widget.get("reviewCloseButtonText") as string || "Close",
 });
