@@ -4,7 +4,7 @@ import generateId from "../../utils/idGenerator";
 import { isEmpty, some } from "lodash-es";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
-import { QuestionnaireCreationTab } from "../../Components/QuestionnaireCreationTab/QuestionnaireCreationTab";
+import { QuestionnaireManagementTab } from "../../Components/QuestionnaireManagementTab/QuestionnaireManagementTab";
 import { defaultValidations } from "../defaultQuestionEditingConfig";
 import { isUsageRestricted } from "../../utils/isRestricted";
 import { QuestionnaireStepWidget } from "../QuestionnaireStepWidget/QuestionnaireStepWidgetClass";
@@ -235,7 +235,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         title: "Create PisaSales Questionnaire",
         key: "QuestionnaireBuilder",
         // properties: ["externalId"],
-        component: QuestionnaireCreationTab,
+        component: QuestionnaireManagementTab,
       },
     ];
 

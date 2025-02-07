@@ -1,4 +1,4 @@
-import "./QuestionnaireCreationTab.scss";
+import "./QuestionnaireManagementTab.scss";
 import { isQuestionnaireCreationValid } from "../../utils/isQuestionnaireCreationValid";
 import { isEmpty } from "lodash-es";
 import { Description } from "../QuestionnaireCreationDescription/QuestionnaireCreationDescription";
@@ -10,12 +10,12 @@ import { FC, useEffect, useState } from "react";
 import { registerComponent, uiContext, Widget } from "scrivito";
 
 
-interface QuestionnaireCreationTabProps {
+interface QuestionnaireManagementTabProps {
 	widget: Widget;
 }
 //TODO: show error to user for creation/update failure?
-export const QuestionnaireCreationTab: FC<
-	QuestionnaireCreationTabProps
+export const QuestionnaireManagementTab: FC<
+	QuestionnaireManagementTabProps
 > = ({ widget }) => {
 	const [status, setStatus] = useState<QuestionnaireStatus>("void");
 	const isCreated = !isEmpty(widget.get("questionnaireId") as string);
@@ -87,6 +87,6 @@ export const QuestionnaireCreationTab: FC<
 };
 
 registerComponent(
-	"QuestionnaireCreationTab",
-	QuestionnaireCreationTab
+	"QuestionnaireManagementTab",
+	QuestionnaireManagementTab
 );
