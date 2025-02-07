@@ -16,7 +16,7 @@ import { QuestionnaireStepsProvider } from "../../contexts/QuestionnaireStepsCon
 provideComponent(QuestionnaireContainerWidget, ({ widget }) => {
   const values = useQuestionnaireWidgetAttributes(widget);
   const isSingleStep = values.formType == "single-step";
-  const stepsLength = widget.get("steps").length
+  const stepsLength = widget.get("steps").length;
   const { questionWidgets } = extractQuestionsAndOptions(widget);
 
   useEffect(() => {

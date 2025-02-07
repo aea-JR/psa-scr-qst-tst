@@ -213,14 +213,18 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
           ["retryButtonText", { enabled: showRetryButton }],
           ["retryButtonAlignment", { enabled: showRetryButton }],
           "previewFailedMessage"
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ] as any
+        ]
       },
       {
         title: "Steps",
         key: "QuestionnaireSteps",
         properties: ["steps"]
 
+      },
+      {
+        title: "Review",
+        key: "FormReview",
+        properties: getReviewProperties(widget as any)
       },
       {
         title: "Navigation area",
@@ -276,6 +280,14 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     formHeight: 35,
     scrollbarWidth: "default",
     overscrollBehavior: "default",
+    showReview: false,
+    includeEmptyAnswers: false,
+    showStepsInReview: false,
+    showReviewHeader: false,
+    showReviewFooter: false,
+    reviewButtonText: "Review",
+    reviewHeaderTitle: "Review",
+    reviewCloseButtonText: "Close",
   },
   validations: [
     ...defaultValidations as any,
@@ -377,6 +389,27 @@ const getNavigationProperties = (widget: Scrivito.Widget): string[] => {
   } else {
     return MultiStepNavigationProps;
   }
+}
+
+/**
+ * Retrieves the properties for the review tab
+ * @param {*} widget
+ * @returns
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getReviewProperties(widget: Scrivito.Widget): string[] | any[] {
+  const reviewPropsDisabled = ["showReview"];
+  const reviewPropsEnabled = [
+    "showReview",
+    "reviewButtonText",
+    "showStepsInReview",
+    "includeEmptyAnswers",
+    "showReviewHeader",
+    ["reviewHeaderTitle", { enabled: widget.get("showReviewHeader") }],
+    "showReviewFooter",
+    ["reviewCloseButtonText", { enabled: widget.get("showReviewFooter") }]
+  ];
+  return widget.get("showReview") ? reviewPropsEnabled : reviewPropsDisabled;
 }
 
 
