@@ -1,5 +1,5 @@
 import "./QuestionnaireManagementTab.scss";
-import { isQuestionnaireCreationValid } from "../../utils/isQuestionnaireCreationValid";
+import { isQuestionnaireStructureValid } from "../../utils/isQuestionnaireStructureValid";
 import { isEmpty } from "lodash-es";
 import { Description } from "../QuestionnaireManagementTabDescription/QuestionnaireManagementTabDescription";
 import { QuestionnaireStatus } from "../../types/questionnaire";
@@ -20,7 +20,7 @@ export const QuestionnaireManagementTab: FC<
 	const [status, setStatus] = useState<QuestionnaireStatus>("void");
 	const isCreated = !isEmpty(widget.get("questionnaireId") as string);
 	const context = uiContext();
-	const isValid = isQuestionnaireCreationValid(widget);
+	const isValid = isQuestionnaireStructureValid(widget);
 	const hasChanges = compareQuestionnaireMeta(widget);
 	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
 	const { updateQuestionnaire, isUpdating } = useUpdateQuestionnaire(widget);

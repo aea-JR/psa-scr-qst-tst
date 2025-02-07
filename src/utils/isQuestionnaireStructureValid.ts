@@ -1,10 +1,9 @@
-import { each, filter, find, isEmpty, isNil, some } from "lodash-es";
+import { filter, isEmpty, isNil, some } from "lodash-es";
 import { Widget } from "scrivito";
 
-export const isQuestionnaireCreationValid = (widget: Widget): boolean => {
+export const isQuestionnaireStructureValid = (widget: Widget): boolean => {
   const title = widget.get("title") as string;
-  //TODO: check id if we stick to let user change it before creation.
-  const externalId = widget.get("externalId") as string;
+
   if (isEmpty(title)) {
     return false;
   }
@@ -41,6 +40,11 @@ export const isQuestionnaireCreationValid = (widget: Widget): boolean => {
         return false;
       }
       //TODO: check default value against identifier
+    } else if (question.objClass() == "InputQuestionWidget") {
+
+      const type = question.get("type") as string;
+      //TODO check defaultvalues
+
     }
   }
 

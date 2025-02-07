@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
-import { isQuestionnaireCreationValid } from "../../utils/isQuestionnaireCreationValid";
+import { isQuestionnaireStructureValid } from "../../utils/isQuestionnaireStructureValid";
 import { QuestionnaireMessageBlock } from "../QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import "./QuestionnaireFormFooter.scss";
 import { usePisaStatusContext } from "../../contexts/PisaStatusContext";
@@ -18,7 +18,7 @@ export const QuestionnaireFooter: React.FC<QuestionnaireFooterProps> =
 	Scrivito.connect(({ widget, isCreated }) => {
 		const { isSingleStep } = useQuestionnaireStepsContext();
 		const { isOnline } = usePisaStatusContext();
-		const isValid = isQuestionnaireCreationValid(widget);
+		const isValid = isQuestionnaireStructureValid(widget);
 		const hasChanges = isCreated && compareQuestionnaireMeta(widget);
 		const getMessageType = () => {
 			if (!isOnline) { return "pisaOffline"; }
