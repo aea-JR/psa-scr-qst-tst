@@ -232,7 +232,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         properties: getNavigationProperties(widget as any)
       },
       {
-        title: "Create PisaSales Questionnaire",
+        title: "PisaSales Questionnaire Management",
         key: "QuestionnaireBuilder",
         // properties: ["externalId"],
         component: QuestionnaireManagementTab,
