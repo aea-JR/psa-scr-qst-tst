@@ -5,6 +5,11 @@ import { extractQuestionsAndOptions } from "./extractQuestionsAndOptions";
 
 export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 	const jsonMeta = widget.get("creationData") as string;
+	const qstId = widget.get("questionnaireId") as string;
+	if (isEmpty(qstId)) {
+		// not created yet!
+		return false;
+	}
 	if (isEmpty(jsonMeta) || !isString(jsonMeta)) {
 		console.log("Invalid questionnaire meta.");
 		return false;
