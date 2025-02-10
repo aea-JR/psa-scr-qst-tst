@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { Widget } from "scrivito";
+import { isInPlaceEditingActive, Widget } from "scrivito";
 import { scrollIntoView } from "../utils/scrollIntoView";
 
 interface QuestionnaireStepsContextProps {
@@ -55,6 +55,10 @@ export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; q
 	};
 
 	const onPageChange = (nextPage: boolean) => {
+		if (isInPlaceEditingActive()) {
+			console.log("Navigation buttons do not work in edit mode.");
+			return;
+		}
 		if (nextPage && !validateCurrentStep()) return;
 
 		const newStep = nextPage
