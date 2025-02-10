@@ -7,7 +7,7 @@ import { getFormClassNames } from "../../utils/getFormClassNames";
 import { useQuestionnaireWidgetAttributes } from "../../hooks/useQuestionnaireWidgetAttributes";
 import { Questionnaire } from "../../Components/Questionnaire/Questionnaire";
 import "./QuestionnaireContainerWidget.scss";
-import { PisaStatusProvider, usePisaStatusContext } from "../../contexts/PisaStatusContext";
+import { PisaConnectionStatusProvider, usePisaConnectionStatusContext } from "../../contexts/PisaConnectionStatusContext";
 import { QuestionnaireStepsProvider } from "../../contexts/QuestionnaireStepsContext";
 import { useEditModeSync } from "./useEditModeSync";
 import { useEffect } from "react";
@@ -21,13 +21,13 @@ provideComponent(QuestionnaireContainerWidget, ({ widget }) => {
 
   return (
     <QuestionnaireWidgetAttributesProvider values={values}>
-      <PisaStatusProvider>
+      <PisaConnectionStatusProvider>
         <QuestionnaireStepsProvider qstContainerWidget={widget}>
           <QuestionnaireContainerContent
             widget={widget}
           />
         </QuestionnaireStepsProvider>
-      </PisaStatusProvider>
+      </PisaConnectionStatusProvider>
     </QuestionnaireWidgetAttributesProvider>
   );
 });
@@ -38,7 +38,7 @@ const QuestionnaireContainerContent: React.FC<{
   const { questionnaireId, fixedFormHeight, formHeight, formOverscrollBehavior, formScrollbarWidth, containerClassNames } = useQuestionnaireWidgetAttributesContext();
   const isValid = isQuestionnaireStructureValid(widget);
   const hasChanges = compareQuestionnaireMeta(widget);
-  const { isOnline } = usePisaStatusContext();
+  const { isOnline } = usePisaConnectionStatusContext();
   const isCreated = !!questionnaireId;
 
   useEffect(() => {

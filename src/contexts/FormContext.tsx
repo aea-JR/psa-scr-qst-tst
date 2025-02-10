@@ -2,7 +2,7 @@ import * as React from "react";
 import { AnswersDataClass } from "../config/scrivitoConfig";
 import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
 import { isEmpty } from "lodash-es";
-import { usePisaStatusContext } from "./PisaStatusContext";
+import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
 
@@ -41,7 +41,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     new Map()
   );
   const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
-  const { isOnline } = usePisaStatusContext();
+  const { isOnline } = usePisaConnectionStatusContext();
   const { validateCurrentStep } = useQuestionnaireStepsContext();
   React.useEffect(() => {
     if (!isInPlaceEditingActive()) {

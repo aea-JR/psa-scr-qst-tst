@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { isPisaConnected } from "../utils/isPisaConnected";
 
-export const usePisaStatus = () => {
+export const usePisaConnectionStatus = () => {
 	const [isOnline, setIsOnline] = useState<boolean>(true);
 	const hasFetched = useRef(false);
 
@@ -14,7 +14,7 @@ export const usePisaStatus = () => {
 			const online = await isPisaConnected();
 			setIsOnline(online);
 		} catch (err) {
-			console.error("Failed to check Pisa status:", err);
+			console.error("Failed to check Pisa connection status:", err);
 			setIsOnline(false);
 		}
 	}, []);
