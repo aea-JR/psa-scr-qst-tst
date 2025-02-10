@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { isPisaConnected } from "../utils/isPisaConnected";
 
 export const usePisaStatus = () => {
-	const [isOnline, setIsOnline] = useState<boolean | null>(null);
+	const [isOnline, setIsOnline] = useState<boolean>(true);
 	const hasFetched = useRef(false);
 
 	const checkPisaStatus = useCallback(async () => {

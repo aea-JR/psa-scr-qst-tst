@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { usePisaStatus } from "../hooks/usePisaStatus";
 
-const PisaStatusContext = createContext<{ isOnline: boolean | null; refresh: () => void } | undefined>(undefined);
+const PisaStatusContext = createContext<{ isOnline: boolean; refresh: () => void } | undefined>(undefined);
 
 export const PisaStatusProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const pisaStatus = usePisaStatus();
