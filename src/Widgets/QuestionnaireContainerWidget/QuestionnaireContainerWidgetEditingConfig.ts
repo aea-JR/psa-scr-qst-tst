@@ -175,7 +175,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     },
     activityIdSource: {
       title: "Activity ID Source",
-      description: "Hi there :)",
+      description: "Select whether to manually enter the Activity ID or retrieve it from a DataItem attribute.",
       values: [
         { value: "manual", title: "Manual" },
         { value: "data-item", title: "DataItem" },
@@ -183,7 +183,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     },
     projectIdSource: {
       title: "Project ID Source",
-      description: "Choose between manually specifying the Project ID or using a DataItem attribute.",
+      description: "Select whether to manually enter the Project ID or retrieve it from a DataItem attribute.",
       values: [
         { value: "manual", title: "Manual" },
         { value: "data-item", title: "DataItem" },
