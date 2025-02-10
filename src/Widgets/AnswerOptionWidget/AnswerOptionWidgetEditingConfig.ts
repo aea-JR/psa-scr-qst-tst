@@ -21,7 +21,7 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
       return;
     }
     console.log("Copying child widget");
-    child.update({ externalId: generateId() });
+    child.update({ externalId: generateId(), answerOptionId: null });
   },
   title: "PisaSales Answer Option",
   attributes: {

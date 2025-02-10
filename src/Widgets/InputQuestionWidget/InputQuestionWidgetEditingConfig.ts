@@ -26,7 +26,7 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
     }
     const id = generateId();
     console.log("Copying child widget for InputQuestionWidget w: " + id);
-    child.update({ externalId: id });
+    child.update({ externalId: id, questionId: null });
   },
 
   title: "PisaSales Input Field Question",

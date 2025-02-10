@@ -27,7 +27,7 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
       return;
     }
     console.log("Copying child widget");
-    child.update({ externalId: generateId() });
+    child.update({ externalId: generateId(), questionId: null });
   },
   title: "PisaSales Dropdown Question",
   attributes: {
