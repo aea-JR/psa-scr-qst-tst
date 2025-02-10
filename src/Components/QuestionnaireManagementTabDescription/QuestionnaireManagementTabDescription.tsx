@@ -1,16 +1,14 @@
-import * as React from "react";
-import "./QuestionnaireManagementTabDescription.scss";
+import { FC } from "react";
 import { QuestionnaireStatus } from "../../types/questionnaire";
+import "./QuestionnaireManagementTabDescription.scss";
 
 
 
 interface DescriptionProps {
-	isValid: boolean;
-	status: QuestionnaireStatus;
+	status: QuestionnaireStatus
 }
 //TODO: refactor
-export const Description: React.FC<DescriptionProps> = ({ isValid, status }) => {
-
+export const Description: FC<DescriptionProps> = ({ status }) => {
 	const getMessage = (): string => {
 		switch (status) {
 			case "creationPending":

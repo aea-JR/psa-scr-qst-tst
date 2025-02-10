@@ -1,13 +1,10 @@
-import "./QuestionnaireManagementTab.scss";
-import { isQuestionnaireStructureValid } from "../../utils/isQuestionnaireStructureValid";
-import { isEmpty } from "lodash-es";
+import { FC } from "react";
+import { registerComponent, uiContext, Widget } from "scrivito";
 import { Description } from "../QuestionnaireManagementTabDescription/QuestionnaireManagementTabDescription";
-import { QuestionnaireStatus } from "../../types/questionnaire";
-import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
 import { useCreateQuestionnaire } from "./useCreateQuestionnaire";
 import { useUpdateQuestionnaire } from "./useUpdateQuestionnaire";
-import { FC, useEffect, useState } from "react";
-import { registerComponent, uiContext, Widget } from "scrivito";
+import { QuestionnaireStatus } from "../../types/questionnaire";
+import "./QuestionnaireManagementTab.scss";
 
 
 interface QuestionnaireManagementTabProps {
@@ -17,40 +14,14 @@ interface QuestionnaireManagementTabProps {
 export const QuestionnaireManagementTab: FC<
 	QuestionnaireManagementTabProps
 > = ({ widget }) => {
-	const [status, setStatus] = useState<QuestionnaireStatus>("void");
-	const isCreated = !isEmpty(widget.get("questionnaireId") as string);
+	const questionnaireId = widget.get("questionnaireId") as string;
 	const context = uiContext();
-	const isValid = isQuestionnaireStructureValid(widget);
-	const hasChanges = compareQuestionnaireMeta(widget);
 	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
 	const { updateQuestionnaire, isUpdating } = useUpdateQuestionnaire(widget);
+	const status = widget.get("questionnaireStatus") as QuestionnaireStatus;
 
-	useEffect(() => {
-		if (!isValid) {
-			setStatus("invalid");
-			return;
-		}
-		if (isCreating) {
-			setStatus("inCreation");
-			return;
-		}
-		if (!isCreated) {
-			setStatus("creationPending");
-			return;
-		}
-		if (isUpdating) {
-			setStatus("updating");
-			return;
-		}
-		if (hasChanges) {
-			setStatus("pendingUpdate");
-			return;
-		}
-		if (isCreated) {
-			setStatus("void");
-			return;
-		}
-	}, [isValid, hasChanges, isCreated, isUpdating, isCreating])
+	const isCreated = !!questionnaireId;
+
 
 	if (!context) return null;
 
@@ -60,15 +31,15 @@ export const QuestionnaireManagementTab: FC<
 		>
 			<div className="detail-content">
 				<div className="detail-content-inner">
-					<Description status={status} isValid={isValid} />
+					<Description status={status} />
 					{!isCreated && <button
 						className="btn btn-primary"
-						disabled={!isValid || isCreating}
+						disabled={status == "invalid" || isCreating}
 						onClick={createQuestionnaire}
 					>
 						Create
 					</button>}
-					{(isCreated && status == "pendingUpdate") &&
+					{(status == "pendingUpdate") &&
 						<>
 							<button
 								className="btn btn-primary"

@@ -3,6 +3,7 @@ import { Widget } from "scrivito";
 
 export interface QuestionnaireWidgetAttributes {
 	externalId: string,
+	questionnaireId: string,
 	steps: Widget[],
 	formType: string;
 	submissionFailureText: string;

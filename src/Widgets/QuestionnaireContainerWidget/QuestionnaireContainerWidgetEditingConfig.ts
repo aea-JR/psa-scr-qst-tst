@@ -339,6 +339,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     activityIdSource: "manual",
     contactIdSource: "manual",
     projectIdSource: "manual",
+    questionnaireStatus: "void"
   },
   validations: [
     ...defaultValidations as any,

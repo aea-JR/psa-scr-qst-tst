@@ -116,6 +116,7 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
         }
       ],
       creationData: "string",
+      questionnaireStatus: "string",
 
     },
     extractTextAttributes: ["steps"],

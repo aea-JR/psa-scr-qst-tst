@@ -3,6 +3,7 @@ import { QuestionnaireWidgetAttributes } from "../contexts/QuestionnaireWidgetAt
 
 export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireWidgetAttributes => ({
 	externalId: widget.get("externalId") as string || "",
+	questionnaireId: widget.get("questionnaireId") as string || "",
 	steps: widget.get("steps") as Widget[] || [],
 	isCreated: !!widget.get("questionnaireId"),
 	formType: widget.get("formType") as string,

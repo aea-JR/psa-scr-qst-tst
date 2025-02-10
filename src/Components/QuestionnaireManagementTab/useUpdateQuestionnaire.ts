@@ -12,11 +12,13 @@ import { convertWidgetToAnswerOption } from "../../utils/convertoAnswerOptions";
 import { getQuestionnaireItem } from "../../Data/Questionnaire/QuestionnaireDataClassUtils";
 import { getQuestionItem } from "../../Data/Question/QuestionDataClassUtils";
 import { getOptionItem } from "../../Data/AnswerOption/AnswerOptionDataClassUtils";
+import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
 
 export const useUpdateQuestionnaire = (widget: Widget) => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	const updateQuestionnaire = async (): Promise<boolean> => {
+		let hasFailures = false;
 		const updates = {
 			deleteQuestions: [] as string[],
 			deleteOptions: [] as string[],
@@ -34,7 +36,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 
 		try {
 			setIsUpdating(true);
-
+			setQuestionnaireStatus("updating", widget);
 			const qstId = widget.get("questionnaireId") as string;
 			if (!qstId) throw new Error("Unable to update. Questionnaire ID not found.");
 
@@ -119,6 +121,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 					const questionItem = await getQuestionItem(questionId);
 					if (questionItem) await questionItem.delete();
 				} catch (error) {
+					hasFailures = true;
 					console.error(`Failed to delete question ${questionId}:`, error);
 				}
 			}
@@ -129,6 +132,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 					const optionItem = await getOptionItem(optionId);
 					if (optionItem) await optionItem.delete();
 				} catch (error) {
+					hasFailures = true;
 					console.error(`Failed to delete option ${optionId}:`, error);
 				}
 			}
@@ -148,6 +152,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 					updatedQstMeta.questions[newQuestionId] = question;
 					newQuestionIdMap.set(widget.get("externalId") as string, newQuestionId);
 				} catch (error) {
+					hasFailures = true;
 					console.error("Failed to create question:", error);
 				}
 			}
@@ -175,6 +180,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 						}
 						updatedQstMeta.options[questionId][optionItem.id()] = option;
 					} catch (error) {
+						hasFailures = true;
 						console.error("Failed to create option:", error);
 					}
 				}
@@ -192,6 +198,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 						updatedQstMeta.questions[questionId] = question;
 					}
 				} catch (error) {
+					hasFailures = true;
 					console.error(`Failed to update question ${questionId}:`, error);
 				}
 			}
@@ -212,16 +219,19 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 						updatedQstMeta.options[questionId][optionId] = option;
 					}
 				} catch (error) {
+					hasFailures = true;
 					console.error(`Failed to update option ${optionId}:`, error);
 				}
 			}
 
 			widget.update({ creationData: JSON.stringify(updatedQstMeta) });
 		} catch (error) {
+			//TODO: Add error status or show error?
 			console.error("Error updating questionnaire:", error);
 			return false;
 		} finally {
 			setIsUpdating(false);
+			setQuestionnaireStatus(hasFailures ? "pendingUpdate" : "void", widget);
 			return true;
 		}
 	};

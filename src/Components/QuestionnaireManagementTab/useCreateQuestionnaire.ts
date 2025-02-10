@@ -8,11 +8,13 @@ import {
 import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
+import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
 
 export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 	const [isCreating, setIsCreating] = useState(false);
 
 	const createQuestionnaire = async (): Promise<boolean> => {
+		let hasFailures = false;
 		const createdItems: QuestionnaireMetaSnapshot = {
 			qstMeta: { title: "", inputType: "" },
 			questions: {},
@@ -21,7 +23,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 
 		try {
 			setIsCreating(true);
-
+			setQuestionnaireStatus("inCreation", widget);
 			const { questions, answerOptions, questionWidgets, optionWidgets } =
 				extractQuestionsAndOptions(widget);
 
@@ -74,11 +76,13 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 									optionWidget.update({ answerOptionId: optionItem.id() });
 								}
 							} catch (error) {
+								hasFailures = true;
 								console.error("Error creating option:", error);
 							}
 						}
 					}
 				} catch (error) {
+					hasFailures = true;
 					console.error("Error creating question:", error);
 				}
 			}
@@ -91,6 +95,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 			return false;
 		} finally {
 			setIsCreating(false);
+			setQuestionnaireStatus(hasFailures ? "pendingUpdate" : "void", widget);
 			return true;
 		}
 	};
