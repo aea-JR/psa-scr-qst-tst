@@ -1,7 +1,7 @@
 import { provideEditingConfig } from "scrivito";
 
 provideEditingConfig("QuestionnaireStepWidget", {
-  title: "Questionnaire Step",
+  title: "PisaSales Questionnaire Step",
   titleForContent: widget => {
     if (widget.get("isSingleStep")) {
       return "Single Step";
