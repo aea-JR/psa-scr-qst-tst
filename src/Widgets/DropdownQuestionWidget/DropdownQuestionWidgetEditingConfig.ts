@@ -102,10 +102,11 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
         const options = widget.get("options") as Widget[];
         const allowedValues = compact(
           map(options, (option) => option.get("identifier") as string),
-        ); //(widget.get("options2") as Widget[]).map((option) => option.get("identifier") as string)
+        );
 
-        if (!some(allowedValues, (value) => defaultValue.includes(value))) {
-          return "Default value must start with # and match identifier.";
+        const realDefaultValue = defaultValue.slice(1);
+        if (!allowedValues.includes(realDefaultValue)) {
+          return "Default value must match one of the option identifiers (after #).";
         }
       },
     ],
