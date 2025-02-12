@@ -2,10 +2,11 @@
   .select-container {
     width: 100%;
     position: relative;
-
-    .input-label {
-      p {
-        display: inline;
+ 
+    .select-label {
+      margin-left: 4px;
+      span {
+        padding-left: 0.3em;
       }
     }
   }

@@ -33,10 +33,20 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
   attributes: {
     text: { title: "Question title" },
     mandatory: { title: "Mandatory" },
-
+    type: {
+      title: "Input Type",
+      values: [
+        { title: "Dropdown", value: "string_dropdown" },
+        { title: "Radio", value: "string_radio" },
+        { title: "Checkboxes", value: "string_checkboxes" }
+      ],
+    },
     identifier: { title: "Identifier" },
     help: { title: "Help text" },
-    defaultValue: { title: "Default value" },
+    defaultValue: {
+      title: "Default value",
+      description: "Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B)."
+    },
     emptyOption: {
       title: "Use empty option",
       description: "Adds an empty option to the top of the options.",
@@ -55,6 +65,7 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
   properties: (widget) => {
     return [
       ...defaultProperties,
+      "type",
       "placeholder",
       "emptyOption",
       ["externalId", { enabled: false }],
@@ -99,11 +110,23 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
         if (!defaultValue.startsWith("#")) {
           return "Default value must start with #.";
         }
+        const type = widget.get("type");
+        const isMultiCheckboxes = type == "string_checkboxes";
         const options = widget.get("options") as Widget[];
         const allowedValues = compact(
           map(options, (option) => option.get("identifier") as string),
         );
 
+        if (isMultiCheckboxes) {
+          const defaultValues = defaultValue.split(",").map((v) => v.trim().slice(1)); // Split and remove `#`
+          const invalidValues = defaultValues.filter(
+            (val) => !allowedValues.includes(val)
+          );
+          if (invalidValues.length > 0) {
+            return `Invalid default values: ${invalidValues.join(", ")}. Provide a comma-separated list of identifiers, each starting with # (e.g., #A,#B).`;
+          }
+          return;
+        }
         const realDefaultValue = defaultValue.slice(1);
         if (!allowedValues.includes(realDefaultValue)) {
           return "Default value must match one of the option identifiers (after #).";

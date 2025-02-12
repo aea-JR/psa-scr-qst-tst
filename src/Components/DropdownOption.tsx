@@ -1,17 +1,17 @@
 import * as React from "react";
 interface DropdownOptionProps {
   value: string;
-  id: string;
+  externalId: string;
   identifier: string;
 }
 
 export const DropdownOption: React.FC<DropdownOptionProps> = ({
   value,
-  id,
+  externalId,
   identifier,
 }) => {
   return (
-    <option value={value} id={id} data-identifier={identifier}>
+    <option value={value} id={externalId} data-identifier={identifier}>
       {value}
     </option>
   );

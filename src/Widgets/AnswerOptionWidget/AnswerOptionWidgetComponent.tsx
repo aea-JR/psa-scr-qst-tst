@@ -27,7 +27,7 @@ Scrivito.provideComponent(AnswerOptionWidget, ({ widget }) => {
 		console.log("retruning dropdpwn")
 		return (
 			//	<span> An Answer Option of type:  </span>
-			<DropdownOption value={text} id={identifier} key={identifier} identifier={identifier} />
+			<DropdownOption value={text} externalId={identifier} key={identifier} identifier={identifier} />
 
 		);
 	}
