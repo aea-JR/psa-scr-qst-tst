@@ -8,6 +8,7 @@ import { AnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClas
 //import { OptionsComponent } from "../../Components/AnswerOptionsTab/OptionsComponent";
 import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
+import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 
 Scrivito.provideEditingConfig("DropdownQuestionWidget", {
   initialize: (obj) => {
@@ -29,7 +30,14 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
     console.log("Copying child widget");
     child.update({ externalId: generateId(), questionId: null });
   },
-  title: "PisaSales Dropdown Question",
+  title: "PisaSales Select Question",
+  titleForContent: (obj) => {
+    if (obj.get("enableConditionals")) {
+      return "PisaSales Conditional Select Question";
+    }
+    return "PisaSales Select Question";
+  },
+
   attributes: {
     text: { title: "Question title" },
     mandatory: { title: "Mandatory" },
@@ -51,12 +59,17 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
       title: "Use empty option",
       description: "Adds an empty option to the top of the options.",
     },
+    enableConditionals: {
+      title: "Use as Conditional Container",
+      description: "Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met. Disable this feature only after ensuring there are no nested questions or widgets under the conditions."
+    }
   },
   initialContent: {
     ...defaultInitialContent,
     type: "string_dropdown",
     mandatory: false,
     emptyOption: true,
+    enableConditionals: false,
     options: [
       new AnswerOptionWidget({ text: "First Option" }),
       new AnswerOptionWidget({ text: "Second Option" })
@@ -68,21 +81,23 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
       "type",
       "placeholder",
       "emptyOption",
+      "enableConditionals",
       ["externalId", { enabled: false }],
       ["questionId", { enabled: false }]
     ];
   },
   propertiesGroups: (widget) => {
-    return [
+    const groups = [
       {
         title: "Options",
         key: "QuestionnaireDropdownOptions",
         properties: ["options"],
         //  component: OptionsComponent
       },
-
-
     ];
+
+    return groups;
+
   },
   validations: [
     ...defaultValidations as any,
@@ -138,6 +153,16 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
       (options: Widget[]) => {
         if (options.length < 2) {
           return "Question must include at least two options.";
+        }
+      },
+    ],
+    [
+      "enableConditionals",
+      (enableConditionals: boolean, { widget }: { widget: Scrivito.Widget }) => {
+        const { questions } = extractQuestionsAndOptions(widget);
+
+        if (!enableConditionals && !isEmpty(questions)) {
+          return "This question was used as a conditional container and has nested questions. Disable this feature only after removing or relocating the nested questions to prevent submission inconsistencies."
         }
       },
     ],

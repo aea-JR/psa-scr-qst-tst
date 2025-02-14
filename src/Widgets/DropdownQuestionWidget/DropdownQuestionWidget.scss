@@ -2,12 +2,31 @@
   .select-container {
     width: 100%;
     position: relative;
- 
+
     .select-label {
       margin-left: 4px;
       span {
         padding-left: 0.3em;
       }
+    }
+  }
+
+  &.edit-mode {
+    .header-info {
+      font-weight: bolder;
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translate(-50%);
+      padding: 0 10px;
+      z-index: 1;
+      border-top: dotted green 2px;
+      border-left: dotted green 2px;
+      border-right: dotted green 2px;
+    }
+
+    .conditional-header-border {
+      border: dotted green 2px;
     }
   }
 }

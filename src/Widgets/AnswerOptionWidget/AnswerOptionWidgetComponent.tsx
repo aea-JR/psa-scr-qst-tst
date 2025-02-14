@@ -1,41 +1,56 @@
-import * as React from "react";
-import * as Scrivito from "scrivito";
 import "./AnswerOptionWidget.scss";
-import { useFormContext } from "../../contexts/FormContext";
 import { AnswerOptionWidget } from "./AnswerOptionWidgetClass";
-import { isEmpty } from "lodash-es";
-//import { useQuestionnaireCreation } from "../../contexts/QuestionnaireCreationContext";
-import { useEffect } from "react";
-import { useExternalId } from "../../hooks/useExternalId";
-import { Question } from "../../types/questionnaire";
-import { DropdownOption } from "../../Components/DropdownOption";
+import { useConditionContext } from "../../contexts/ConditionContext";
+import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
+import { useEffect, useState } from "react";
+import { useDynamicBackground } from "../../hooks/useDynamicBackground";
+import { useFormContext } from "../../contexts/FormContext";
 
-Scrivito.provideComponent(AnswerOptionWidget, ({ widget }) => {
-	const id = `questionnaire_dropdown_widget_${widget.id()}`;
+provideComponent(AnswerOptionWidget, ({ widget }) => {
 
-	const text = widget.get("text");
-	const identifier = widget.get("identifier");
-	const type = widget.get("type");
+	const { getConditionData } = useConditionContext();
 	const { onChange } = useFormContext();
-	//const { registerOrUpdateQuestion, unregisterQuestion } = useQuestionnaireCreation();
+	const data = getConditionData(widget.get("externalId"));
+	const titleBgColor = useDynamicBackground(".condition-info");
 
-	useExternalId(widget);
-
-
-
-	if (type == "dropdown") {
-		console.log("retruning dropdpwn")
-		return (
-			//	<span> An Answer Option of type:  </span>
-			<DropdownOption value={text} externalId={identifier} key={identifier} identifier={identifier} />
-
-		);
+	if (!data.isActive && !isInPlaceEditingActive()) {
+		// reset all questios inside content attr. 
+		// getall with widget.get("content").widgets()
+		//or try extractQuestions with it. 
+		//	onChange()
+		return null;
 	}
+	//   const resetFieldsInConditions = (conditions: Scrivito.Widget[]) => {
+	//     // const resetFields = conditions
+	//     //   .flatMap(condition => condition.get("content") as Scrivito.Widget[])
+	//     //   .map(widget => getFieldName(widget))
+	//     //   .filter(fieldName => !isEmpty(fieldName))
+	//     //   .reduce((acc, fieldName) => {
+	//     //     acc[fieldName] = "";
+	//     //     return acc;
+	//     //   }, {} as StringMap<string>);
 
+	//     // onInputChange(resetFields);
+	//   };
 	return (
-		<p>
-			<span> An Answer Option of type:  </span>
-			{type}
-		</p>
+		<>
+			<div className="condition-container">
+				{isInPlaceEditingActive() && (
+					<>
+						{/* <QuestionnaireMessageBlock status="updating" /> */}
+						<span className="condition-info" style={{ backgroundColor: titleBgColor || "transparent" }}>
+							{"Condition: " + widget.get("text")}
+						</span>
+					</>
+				)}
+				<ContentTag
+					content={widget}
+					attribute="content"
+					className={"condition-content"}
+				/>
+
+			</div>
+		</>
 	);
 });

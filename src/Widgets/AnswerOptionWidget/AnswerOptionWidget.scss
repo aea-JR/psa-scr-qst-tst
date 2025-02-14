@@ -9,4 +9,33 @@
       }
     }
   }
+
+ 
+  &.edit-mode {
+    .condition-container {
+      position: relative;
+      border: dotted orange 2px;
+      padding-top: 5px;
+      margin-bottom: 25px;
+    }
+    
+    .condition-info {
+      position: absolute;
+      top: -1.85em;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0 10px;
+      font-weight: bolder;
+     
+     border-top: dotted orange 2px;
+      border-left: dotted orange 2px;
+      border-right: dotted orange 2px;
+    }
+    
+    .condition-content {
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+  }
 }

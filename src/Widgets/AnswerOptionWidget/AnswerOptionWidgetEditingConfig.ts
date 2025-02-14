@@ -24,10 +24,17 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
     child.update({ externalId: generateId(), answerOptionId: null });
   },
   title: "PisaSales Answer Option",
+  titleForContent: (obj) => {
+    if (obj.get("isCondition")) {
+      return "PisaSales Answer Option Condition";
+    }
+    return "PisaSales Answer Option";
+  },
   attributes: {
     text: { title: "Answer" },
     identifier: { title: "Identifier" },
-    position: { title: "Position" }
+    position: { title: "Position" },
+    content: { title: "Condition Content" }
   },
   initialContent: {
     answerOptionId: null,
@@ -35,10 +42,15 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
     text: "",
     identifier: "",
     type: null,
-    position: null
+    position: null,
+    isCondition: false,
   },
   properties: (widget) => {
-    return ["text", "identifier", ["position", { enabled: false }], ["externalId", { enabled: false }], ["answerOptionId", { enabled: false }]];
+    const props: any[] = ["text", "identifier", ["position", { enabled: false }], ["externalId", { enabled: false }], ["answerOptionId", { enabled: false }]];
+    if ((widget.get("content") as Scrivito.Widget[]).length > 0) {
+      props.push("content");
+    }
+    return props;
   },
   validations: [
     [

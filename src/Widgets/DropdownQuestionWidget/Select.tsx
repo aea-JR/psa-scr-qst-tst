@@ -3,26 +3,24 @@ import * as Scrivito from "scrivito";
 interface SelectProps {
 	type: string;
 	required: boolean;
-	widget: Scrivito.Widget;
-	externalId: string;
+	externalId: string; // externalId of the question
 	values: string[];
 	options: Scrivito.Widget[];
-	onChange: (newValues: string[], identifiers?: string[]) => void
+	onChange: (externalIds: string[], newValues: string[], identifiers?: string[]) => void
 }
 interface SelectItemProps {
-
 	value: string;
 	identifier: string;
-	externalId: string;
+	externalQuestionId: string;
 	required: boolean;
 	type: string;
+	externalId: string;
 	onChange: () => void;
-	isChecked: boolean
-
+	isChecked: boolean;
 }
 
 export const Select: React.FC<SelectProps> = Scrivito.connect(
-	({ type, options, values, required, widget, externalId, onChange }) => {
+	({ type, options, values, required, externalId, onChange }) => {
 		const ref = React.useRef<HTMLDivElement>(null);
 
 		const onChangeSelect = () => {
@@ -31,14 +29,16 @@ export const Select: React.FC<SelectProps> = Scrivito.connect(
 			const inputArray = Array.from(inputs);
 			const selectedValues: string[] = [];
 			const selectedIdentifiers: string[] = [];
+			const selectedExternalIds: string[] = [];
 			inputArray.forEach((input) => {
 				if (input.checked) {
-					selectedValues.push(input.value)
+					selectedValues.push(input.value);
 					selectedIdentifiers.push(input.dataset.identifier || "");
+					selectedExternalIds.push(input.id);
 				}
 			});
 
-			onChange(selectedValues, selectedIdentifiers);
+			onChange(selectedExternalIds, selectedValues, selectedIdentifiers);
 		}
 
 		return (
@@ -46,9 +46,10 @@ export const Select: React.FC<SelectProps> = Scrivito.connect(
 				{options.map((option, index) => (
 					<SelectItem
 						type={type}
-						externalId={externalId}
+						externalQuestionId={externalId}
 						value={option.get("text") as string}
 						identifier={option.get("identifier") as string}
+						externalId={option.get("externalId") as string}
 						required={required}
 						key={index}
 						onChange={onChangeSelect}
@@ -62,10 +63,11 @@ export const Select: React.FC<SelectProps> = Scrivito.connect(
 
 );
 
-export const SelectItem: React.FC<SelectItemProps> = ({
+const SelectItem: React.FC<SelectItemProps> = ({
 	value,
 	identifier,
 	type,
+	externalQuestionId,
 	externalId,
 	required,
 	onChange,
@@ -75,7 +77,8 @@ export const SelectItem: React.FC<SelectItemProps> = ({
 		<label className={`select-label ${type}`}>
 			<input
 				className="form-check-input"
-				name={externalId}
+				name={externalQuestionId}
+				id={externalId}
 				required={required}
 				type={
 					type == "string_radio"

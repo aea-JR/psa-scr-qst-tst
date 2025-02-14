@@ -8,6 +8,8 @@ export const AnswerOptionWidget = provideWidgetClass("AnswerOptionWidget", {
     answerOptionId: "string",
     position: "integer",
     type: ["enum", { values: ["dropdown", "radio", "checkbox"] }],
+    content: "widgetlist",
+    isCondition: "boolean",
   },
   onlyInside: ["DropdownQuestionWidget"],
 });

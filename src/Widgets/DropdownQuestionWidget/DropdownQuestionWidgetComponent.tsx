@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import * as Scrivito from "scrivito";
-import "./DropdownQuestionWidget.scss";
+import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
 import { DropdownQuestionWidget } from "./DropdownQuestionWidgetClass";
 import { each, find, isEmpty } from "lodash-es";
-import { DropdownOption } from "../../Components/DropdownOption";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useAnswer } from "../../hooks/useAnswer";
 import { Dropdown } from "./Dropdown";
 import { Select } from "./Select";
+import { ConditionProvider } from "../../contexts/ConditionContext";
+import { useDynamicBackground } from "../../hooks/useDynamicBackground";
+import "./DropdownQuestionWidget.scss";
 
 
-Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
-  const id = `questionnaire_dropdown_widget_${widget.id()}`;
+provideComponent(DropdownQuestionWidget, ({ widget }) => {
   const externalId = widget.get("externalId");
   const required = widget.get("mandatory");
   const text = widget.get("text");
@@ -24,9 +24,13 @@ Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
   const questionId = widget.get("questionId");
   const type = widget.get("type") || "string_dropdown";
   const isMultiSelect = type == "string_checkboxes";
+  const useAsCondtionals = widget.get("enableConditionals") as boolean || false;
 
+  const [selectedConditionIds, setSelectedConditionIds] = useState<string[]>([]);
 
   //TODO: move to hook
+  //TODO: handle initial selection for conditions
+  //TODO: hamdle answer reset after condition change
   const getInitialValueAndIdentifiers = useCallback(() => {
     if (isEmpty(defaultValue)) {
       return { values: [""], identifiers: [""] };
@@ -56,13 +60,12 @@ Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
 
   const initialValues = useMemo(() => getInitialValueAndIdentifiers(), [getInitialValueAndIdentifiers]);
 
-
   const { values, handleChange } = useAnswer(questionId, initialValues.values, initialValues.identifiers);
-
+  const titleBgColor = useDynamicBackground(".header-info");
   useExternalId(widget);
 
   useEffect(() => {
-    if (!Scrivito.isInPlaceEditingActive()) {
+    if (!isInPlaceEditingActive()) {
       return;
     }
     each(options, (option, index) => {
@@ -76,53 +79,72 @@ Scrivito.provideComponent(DropdownQuestionWidget, ({ widget }) => {
     })
   }, [options]);
 
+  useEffect(() => {
+    each(options, o => o.update({ isCondition: useAsCondtionals }))
+  }, [useAsCondtionals]);
 
-  const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption =
-      event.target.options[event.target.selectedIndex];
-    const value = selectedOption.value;
-    const identifier = selectedOption.dataset.identifier || "";
-    handleChange([value], [identifier])
+  const onChangeSelect = (externalIds: string[], newValues: string[], identifiers?: string[]) => {
+    setSelectedConditionIds(externalIds);
+    handleChange(newValues, identifiers);
+  }
+
+  const getConditionData = (externalId: string) => {
+    let isActive = false;
+    options.some(condition => {
+      if (condition.get("externalId") === externalId) {
+        isActive = selectedConditionIds.includes(externalId);
+        return true;
+      }
+      return false;
+    });
+    return { isActive };
   };
 
   return (
-
-      <div className="select-container mb-3">
-        {type == "string_dropdown" ?
-          (<Dropdown
-            widget={widget}
-            externalId={externalId}
-            required={required}
-            id={id}
-            onChange={handleChange}
-            title={text}
-            value={values[0]}
-            addEmptyOption={addEmptyOption}
-          />)
-          :
-          (<>
-            {text && <div className="select-title">
-              <Scrivito.ContentTag
-                attribute="text"
-                content={widget}
-                tag="span"
-              />
-              {!isMultiSelect && required && <Mandatory />}
-              {helpText && <HelpText widget={widget} />}
-            </div>
-            }
-            <Select
-              type={type}
-              options={options}
-              required={required}
+    <ConditionProvider value={{ getConditionData }}>
+      <>
+        {useAsCondtionals && isInPlaceEditingActive() && (
+          <span className="header-info" style={{ backgroundColor: titleBgColor || "transparent" }}>Conditional Header</span>
+        )}
+        <div className={`select-container mb-3 ${useAsCondtionals ? "conditional-header-border" : ""}`} >
+          {type == "string_dropdown" ?
+            (<Dropdown
               widget={widget}
               externalId={externalId}
-              values={values}
-              onChange={handleChange}
-            />
-          </>)
+              required={required}
+              onChange={onChangeSelect}
+              title={text}
+              value={values[0]}
+              addEmptyOption={addEmptyOption}
+            />)
+            :
+            (<>
+              {text && <div className="select-title">
+                <ContentTag
+                  attribute="text"
+                  content={widget}
+                  tag="span"
+                />
+                {!isMultiSelect && required && <Mandatory />}
+                {helpText && <HelpText widget={widget} />}
+              </div>
+              }
+              <Select
+                type={type}
+                options={options}
+                required={required}
+                externalId={externalId}
+                values={values}
+                onChange={onChangeSelect}
+              />
+            </>)
+          }
+        </div>
+        {useAsCondtionals &&
+          <ContentTag content={widget} attribute="options" />
         }
-      </div>
+      </>
 
+    </ConditionProvider >
   );
 });
