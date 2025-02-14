@@ -21,7 +21,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     allWidgets,
     (c) =>
       c.objClass() == "InputQuestionWidget" ||
-      c.objClass() == "DropdownQuestionWidget",
+      c.objClass() == "SelectQuestionWidget",
   );
   if (isEmpty(questions)) {
     return false;
@@ -31,7 +31,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     if (isEmpty(question.get("text"))) {
       return false;
     }
-    if (question.objClass() == "DropdownQuestionWidget") {
+    if (question.objClass() == "SelectQuestionWidget") {
       const options = question.get("options") as Widget[];
 
       const hasEmptyOption = some(options, (option) =>

@@ -76,7 +76,7 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 		}
 
 		// Compare associated answer options if there are some
-		if (question.objClass() != "DropdownQuestionWidget") {
+		if (question.objClass() != "SelectQuestionWidget") {
 			continue;
 		}
 		const currentOptions = question.get("options") as Widget[];

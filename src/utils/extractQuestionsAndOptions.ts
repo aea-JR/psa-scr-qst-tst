@@ -21,7 +21,7 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		allWidgets,
 		(c) =>
 			c.objClass() == "InputQuestionWidget" ||
-			c.objClass() == "DropdownQuestionWidget",
+			c.objClass() == "SelectQuestionWidget",
 	);
 	if (isEmpty(questionWidgets)) {
 		return questionsAndOptions;
@@ -32,7 +32,7 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		const question = convertWidgetToQuestion(questionWidget);
 		questionsAndOptions.questions.push(question);
 
-		if (questionWidget.objClass() == "DropdownQuestionWidget") {
+		if (questionWidget.objClass() == "SelectQuestionWidget") {
 			const optionWidgets = questionWidget.get("options") as Widget[];
 			const options = convertWidgetsToAnswerOptions(optionWidgets)
 			if (!isEmpty(options)) {

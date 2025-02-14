@@ -11,5 +11,5 @@ export const AnswerOptionWidget = provideWidgetClass("AnswerOptionWidget", {
     content: "widgetlist",
     isCondition: "boolean",
   },
-  onlyInside: ["DropdownQuestionWidget"],
+  onlyInside: ["SelectQuestionWidget"],
 });

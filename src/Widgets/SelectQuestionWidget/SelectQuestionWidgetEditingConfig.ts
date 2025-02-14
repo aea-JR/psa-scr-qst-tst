@@ -10,7 +10,7 @@ import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 
-Scrivito.provideEditingConfig("DropdownQuestionWidget", {
+Scrivito.provideEditingConfig("SelectQuestionWidget", {
   initialize: (obj) => {
     if (!obj.get("externalId")) {
       console.log("setting externalId fron initialize");
@@ -104,7 +104,7 @@ Scrivito.provideEditingConfig("DropdownQuestionWidget", {
     [
       "identifier",
       (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
-        if (!isIdentifierUnique(widget, "DropdownQuestionWidget")) {
+        if (!isIdentifierUnique(widget, "SelectQuestionWidget")) {
           return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
         }
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
-import { DropdownQuestionWidget } from "./DropdownQuestionWidgetClass";
+import { SelectQuestionWidget } from "./SelectQuestionWidgetClass";
 import { each, find, isEmpty } from "lodash-es";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../Components/HelpText/HelpText";
@@ -10,10 +10,10 @@ import { Dropdown } from "./Dropdown";
 import { Select } from "./Select";
 import { ConditionProvider } from "../../contexts/ConditionContext";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
-import "./DropdownQuestionWidget.scss";
+import "./SelectQuestionWidget.scss";
 
 
-provideComponent(DropdownQuestionWidget, ({ widget }) => {
+provideComponent(SelectQuestionWidget, ({ widget }) => {
   const externalId = widget.get("externalId");
   const required = widget.get("mandatory");
   const text = widget.get("text");
