@@ -23,8 +23,8 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
   const options = widget.get("options");
   const questionId = widget.get("questionId");
   const type = widget.get("type") || "string_dropdown";
-  const isMultiSelect = type == "string_checkboxes";
-  const useAsCondtionals = widget.get("enableConditionals") as boolean || false;
+  const isMultiSelect = type == "string_checkboxes" || false;
+  const useAsCondtionals = widget.get("enableConditionals");
 
   const [selectedConditionIds, setSelectedConditionIds] = useState<string[]>([]);
 

@@ -80,7 +80,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       ...defaultProperties,
       "type",
       "placeholder",
-      "emptyOption",
+      ["emptyOption", { enabled: widget.get("type") == "string_dropdown" }],
       "enableConditionals",
       ["externalId", { enabled: false }],
       ["questionId", { enabled: false }]
