@@ -19,7 +19,6 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
   const text = widget.get("text");
   const helpText = widget.get("help");
   const defaultValue = widget.get("defaultValue");
-  const addEmptyOption = widget.get("emptyOption");
   const options = widget.get("options");
   const questionId = widget.get("questionId");
   const type = widget.get("type") || "string_dropdown";
@@ -115,7 +114,6 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
               onChange={onChangeSelect}
               title={text}
               value={values[0]}
-              addEmptyOption={addEmptyOption}
             />)
             :
             (<>

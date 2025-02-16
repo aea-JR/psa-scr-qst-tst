@@ -10,11 +10,10 @@ interface DropdownProps {
 	externalId: string;
 	required: boolean;
 	value: string;
-	addEmptyOption: boolean;
 	onChange: (externalIds: string[], newValues: string[], identifiers?: string[]) => void;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, required, onChange, addEmptyOption }) => {
+export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, required, onChange }) => {
 	const helpText = widget.get("help");
 	const options = widget.get("options") as Widget[];
 
@@ -48,14 +47,13 @@ export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, 
 				onChange={onChangeDropdown}
 				value={value}
 			>
-				{addEmptyOption && (
-					<DropdownOption
-						value=""
-						externalId="empty-option"
-						key="empty-option"
-						identifier=""
-					/>
-				)}
+				<DropdownOption
+					value=""
+					externalId="empty-option"
+					key="empty-option"
+					identifier=""
+				/>
+
 				{options.map((option) => (
 					<DropdownOption
 						value={option.get("text") as string}

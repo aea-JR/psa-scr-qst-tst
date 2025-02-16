@@ -55,10 +55,6 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       title: "Default value",
       description: "Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B)."
     },
-    emptyOption: {
-      title: "Use empty option",
-      description: "Adds an empty option to the top of the options.",
-    },
     enableConditionals: {
       title: "Use as Conditional Container",
       description: "Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met. Disable this feature only after ensuring there are no nested questions or widgets under the conditions."
@@ -68,7 +64,6 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
     ...defaultInitialContent,
     type: "string_dropdown",
     mandatory: false,
-    emptyOption: true,
     enableConditionals: false,
     options: [
       new AnswerOptionWidget({ text: "First Option" }),
@@ -80,7 +75,6 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       ...defaultProperties,
       "type",
       "placeholder",
-      ["emptyOption", { enabled: widget.get("type") == "string_dropdown" }],
       "enableConditionals",
       ["externalId", { enabled: false }],
       ["questionId", { enabled: false }]

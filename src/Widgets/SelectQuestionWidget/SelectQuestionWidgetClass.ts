@@ -6,7 +6,6 @@ export const SelectQuestionWidget = provideWidgetClass(
   {
     attributes: {
       ...defaultQuestionAttributes,
-      emptyOption: "boolean",
       type: ["enum", { values: ["string_dropdown", "string_radio", "string_checkboxes"] }],
       options: ["widgetlist", { only: ["AnswerOptionWidget"] }],
       enableConditionals: "boolean",
