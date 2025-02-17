@@ -86,7 +86,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
 						: "checkbox"
 				}
 				value={value}
-				defaultChecked={isChecked}
+				checked={isChecked}
 				onChange={onChange}
 
 				data-identifier={identifier}

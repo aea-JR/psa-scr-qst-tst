@@ -82,6 +82,29 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
     each(options, o => o.update({ isCondition: useAsCondtionals }))
   }, [useAsCondtionals]);
 
+  useEffect(() => {
+    if (useAsCondtionals) {
+      const activeConditionIds: string[] = [];
+
+      if (isMultiSelect) {
+        each(options, (option) => {
+          if (values.includes(option.get("text") as string)) {
+            activeConditionIds.push(option.get("externalId") as string);
+          }
+        });
+      } else {
+        const selectedOption = find(options, (option) =>
+          values.includes(option.get("text") as string)
+        );
+        if (selectedOption) {
+          activeConditionIds.push(selectedOption.get("externalId") as string);
+        }
+      }
+
+      setSelectedConditionIds(activeConditionIds);
+    }
+  }, [values]);
+
   const onChangeSelect = (externalIds: string[], newValues: string[], identifiers?: string[]) => {
     setSelectedConditionIds(externalIds);
     handleChange(newValues, identifiers);
