@@ -14,6 +14,7 @@ interface FormContextProps {
   successfullySent: boolean;
   submissionFailed: boolean;
   getAnswer: (questionId: string) => { value: string[]; valueIdentifier: string[]; updatedAt: string } | undefined;
+  setExcludedFromSubmit: (questionId: string, isExcluded: boolean) => void;
 }
 
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
@@ -40,6 +41,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   const [answers, setAnswers] = React.useState<Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>>(
     new Map()
   );
+  const [excludedAnswers, setExcludedAnswers] = React.useState<Record<string, boolean>>({});
+
   const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
   const { isOnline } = usePisaConnectionStatusContext();
   const { validateCurrentStep } = useQuestionnaireStepsContext();
@@ -159,6 +162,14 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     return answers.get(questionId);
   }, [answers]);
 
+  const setExcludedFromSubmit = (questionId: string, isExcluded: boolean) => {
+    setExcludedAnswers((prev) => ({
+      ...prev,
+      [questionId]: isExcluded,
+    }));
+  };
+
+
 
   const validateAnswerInput = (questionId: string, value: string[], valueIdentifier: string[]) => {
     if (isInPlaceEditingActive()) {
@@ -180,6 +191,25 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     }
     try {
       indicateProgress();
+
+      //TODO: discuss behaviour
+      const filteredAnswers = Array.from(answers.entries())
+        .filter(([questionId]) => !excludedAnswers[questionId])
+        .map(([questionId, { value, valueIdentifier, updatedAt }]) => ({
+          questionId,
+          updatedAt,
+          value,
+          valueIdentifier,
+        }));
+
+      // const preparedAnswers = Array.from(answers.entries())
+      //   .map(([questionId, { value, valueIdentifier, updatedAt }]) => ({
+      //     questionId,
+      //     updatedAt,
+      //     value: excludedAnswers[questionId] ? [""] : value,
+      //     valueIdentifier: excludedAnswers[questionId] ? [""] : valueIdentifier,
+      //   }));
+
       //TODO: refactor
       const payload = {
         keys: {
@@ -187,12 +217,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
           contactId,
           projectId,
         },
-        data: Array.from(answers.entries()).map(([questionId, { value, valueIdentifier, updatedAt }]) => ({
-          questionId,
-          updatedAt,
-          value,
-          valueIdentifier,
-        })),
+        data: filteredAnswers,
       };
 
       console.log("Submitting payload:", payload);
@@ -211,7 +236,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       answers, onChange, onSubmit, isSubmitting,
       successfullySent,
       submissionFailed,
-      getAnswer
+      getAnswer,
+      setExcludedFromSubmit
     }}>
       {children}
     </FormContext.Provider>
