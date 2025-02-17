@@ -58,7 +58,9 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
     enableConditionals: {
       title: "Use as Conditional Container",
       description: "Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met. Disable this feature only after ensuring there are no nested questions or widgets under the conditions."
-    }
+    },
+    externalId: { title: "External ID" },
+    questionId: { title: "Question ID (GID)" },
   },
   initialContent: {
     ...defaultInitialContent,

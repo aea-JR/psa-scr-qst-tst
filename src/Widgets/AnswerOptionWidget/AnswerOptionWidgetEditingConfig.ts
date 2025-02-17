@@ -34,7 +34,9 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
     text: { title: "Answer" },
     identifier: { title: "Identifier" },
     position: { title: "Position" },
-    content: { title: "Condition Content" }
+    content: { title: "Condition Content" },
+    externalId: { title: "External ID" },
+    answerOptionId: { title: "Answer Option ID (GID)" },
   },
   initialContent: {
     answerOptionId: null,

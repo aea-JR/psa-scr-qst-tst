@@ -32,6 +32,8 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
   title: "PisaSales Input Field Question",
   attributes: {
     ...defaultAttributes,
+    externalId: { title: "External ID" },
+    questionId: { title: "Question ID (GID)" },
     placeholder: { title: "Placeholder" },
     type: {
       title: "Input type",
