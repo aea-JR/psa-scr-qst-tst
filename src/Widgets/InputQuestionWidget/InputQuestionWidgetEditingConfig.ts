@@ -92,7 +92,7 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
           if (isUTCDate(defaultValue)) {
             return null;
           }
-          return "Specify a valid date value. Must be in UTC format (YYYY-MM-DDTHH:MM:SSZ) or PisaCubes format.";
+          return "Specify a valid date in UTC format (YYYY-MM-DDTHH:MM:SSZ) or ISO 8601 compact format (YYYYMMDDHHMMSS). Example: 2024-02-17T15:30:00Z or 20240217153000.";
         }
         if (type === "integer") {
           if (/^-?\d+$/.test(defaultValue)) {
