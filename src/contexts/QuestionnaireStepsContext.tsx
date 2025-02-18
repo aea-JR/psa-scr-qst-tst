@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import { isInPlaceEditingActive, Widget } from "scrivito";
 import { scrollIntoView } from "../utils/scrollIntoView";
+import { InputElements } from "../types/review";
+import { forEach, groupBy, some } from "lodash-es";
 
 interface QuestionnaireStepsContextProps {
 	currentStep: number;
@@ -85,18 +87,55 @@ export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; q
 const doValidate = (externalId: string, currentStep: number): boolean => {
 	let isValid = true;
 	const form = document.getElementById(externalId);
+
 	if (form) {
 		const step = form.querySelector(`[data-step-number='${currentStep}']`);
 		if (step) {
-			const allInputs: NodeListOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> =
-				step.querySelectorAll("input, select, textarea") || [];
-			for (const node of allInputs.values()) {
-				if (!node.checkValidity()) {
-					node.reportValidity();
+			const allInputs: NodeListOf<InputElements> = step.querySelectorAll("input, select, textarea") || [];
+
+			// Group checkboxes by their `data-group` attribute
+			const groupedCheckboxes = groupBy(
+				Array.from(allInputs).filter(input => input.type === "checkbox" && input.hasAttribute("data-group")),
+				checkbox => checkbox.getAttribute("data-group")
+			);
+
+			// Validate each checkbox group
+			forEach(groupedCheckboxes, (checkboxes, groupName) => {
+				if (!some(checkboxes as HTMLInputElement[], checkbox => checkbox.checked)) {
+					const message = getBrowserValidationMessage();
+					checkboxes[0].setCustomValidity(message);
+					checkboxes[0].reportValidity();
 					return (isValid = false);
+				} else {
+					checkboxes.forEach(checkbox => checkbox.setCustomValidity("")); // Reset message if valid
 				}
+			});
+
+			// Perform default validation on other inputs
+			if (isValid) {
+				forEach(allInputs, input => {
+					if (input.type !== "checkbox" || !input.hasAttribute("data-group")) {
+						if (!input.checkValidity()) {
+							input.reportValidity();
+							return (isValid = false);
+						}
+					}
+				});
 			}
 		}
 	}
 	return isValid;
+};
+
+const getBrowserValidationMessage = () => {
+	const testInput = document.createElement("input");
+	testInput.type = "radio";
+	testInput.required = true;
+	testInput.name = "fake-radio"
+	testInput.value = "";
+	document.body.appendChild(testInput)
+	const message = testInput.validationMessage;
+	document.body.removeChild(testInput);
+
+	return message;
 };

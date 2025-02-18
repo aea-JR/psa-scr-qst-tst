@@ -90,6 +90,9 @@ const SelectItem: React.FC<SelectItemProps> = ({
 				onChange={onChange}
 
 				data-identifier={identifier}
+				data-group={type == "string_radio"
+					? null
+					: externalQuestionId}
 			/>
 			<span>{value}</span>
 		</label>

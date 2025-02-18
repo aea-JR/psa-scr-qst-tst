@@ -48,7 +48,7 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
                   content={widget}
                   tag="span"
                 />
-                {!isMultiSelect && required && <Mandatory />}
+                {required && <Mandatory />}
                 {helpText && <HelpText widget={widget} />}
               </div>
               }
