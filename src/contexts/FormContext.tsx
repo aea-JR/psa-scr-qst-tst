@@ -100,7 +100,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
         return AnswersDataClass().all()
           // limit with question count + 1 ? 
           .transform({
-            limit: 99,
+            limit: 999,
             filters: {
               questionnaireId: {
                 operator: 'equals',
@@ -169,7 +169,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     }));
   };
 
-
+  React.useEffect(() => {
+    console.log("EXCLUDED:", excludedAnswers)
+  }, [excludedAnswers])
 
   const validateAnswerInput = (questionId: string, value: string[], valueIdentifier: string[]) => {
     if (isInPlaceEditingActive()) {
