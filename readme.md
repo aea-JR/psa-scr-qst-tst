@@ -9,13 +9,6 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 - **Questionnaire Creation**: Build questionnaires directly from the Scrivito CMS editor.
 - **Questionnaire Usage**: Use created questionnaires within restricted sites only.
 - **Answer submission & retrieval**: Submit and retrieve answers using context parameters such as questionnaireId, projectId, activityId, and contactId.
-- **Supported Question Types**:
-  - Fully implemented question templates:
-    - Single-line text input (`PSA_QST_TPL_QUE_STR`)
-    - Multi-line text input (`PSA_QST_TPL_STR_MUL`)
-    - Regular dropdown (`PSA_QST_TPL_CHC`)
-  - Planned support for additional question templates (see the table below).
-
 
 ## Supported Templates
 | Widget Category | Equivalent Templates | Type/Functionality  | Notes  |
@@ -29,14 +22,14 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_DAT_TIM  | Date and time input| ✅ Implemented                |
 |                     | PSA_QST_TPL_DAT  |Date-only input| ✅ Implemented                |
 |                     | PSA_QST_TPL_MON   | Money input field      | Planned                 |
-| **Dropdown Widget** | PSA_QST_TPL_CHC  | Regular dropdown   |✅ Implemented             |
+| **Select Widget** | PSA_QST_TPL_CHC  | Regular dropdown   |✅ Implemented             |
 |                     | PSA_QST_TPL_CTY   | Countries dropdown   |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LNG   | Languages dropdown    |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LOB   | Business dropdown         |❌ Rejected (requires API) |
-| **Select Widget**   | PSA_QST_TPL_RAD     | Single-select radios    | Planned               |
+|                     | PSA_QST_TPL_RAD     | Single-select radios    | ✅ Implemented               |
+|                     | PSA_QST_TPL_CHK     | Multi-select checkboxes    | ✅ Implemented              |
+|**Checkbox Widget**  | PSA_QST_TPL_LOG_NUL  | Tri-state single-select checkbox  | Planned      |
 |                     | PSA_QST_TPL_LOG      | Single-select checkbox  | Planned               |
-|                     | PSA_QST_TPL_LOG_NUL  | Tri-state single-select checkbox  | Planned      |
-|                     | PSA_QST_TPL_CHK     | Multi-select checkboxes    | Planned              |
 | **File Widget**     | PSA_QST_TPL_FIL     | Single file upload        |⏳ Pending Decision      |
 |                     | PSA_QST_TPL_FIL_MUL  | Multi-file upload      |⏳ Pending Decision        |
 | **Signature Widget**| PSA_QST_TPL_SIG     | Signature              |⏳ Pending Decision       |
@@ -209,7 +202,7 @@ The Review feature is specifically designed for questionnaires with multiple ste
 
 # Questionnaire Widgets
 
-## Questionnaire Widget
+## PisaSales Questionnaire Widget
 
 <!-- <img src="images/form_container.png" width="350" alt="Screenshot"> -->
 
@@ -231,7 +224,7 @@ The `Questionnaire` widget has the following properties divided into several tab
   - Overscroll behavior: Select how overscrolling should behave, i.e. it scrolls also the container."
 - "ID's" tab
   - External ID: The external reference ID for the questionnaire.
-  - Questionnaire ID (GID): The questionnaire ID in PisaSales.(Shown after questionnaire got created.)
+  - Questionnaire ID (GID): The questionnaire ID in PisaSales.(Visible after questionnaire got created)
 - "Answer Context" tab
   - Activity ID Source: Select whether to manually enter the Activity ID or retrieve it from a DataItem attribute.
   - Activity ID: Manully enter the Activity ID. (Visible if selected source is "manual")
@@ -279,8 +272,8 @@ The `Questionnaire` widget has the following properties divided into several tab
   - Submit button text: Text for the submit button.
   - Alignment: Alignment for the single-step questionnaire submit button.
 - "PisaSales Questionnaire Management" tab (Content depends on the current questionnaire status)
-  - Create button: Fully creates the questionnaire on PisaSales side. (Visible if questionnaire has not been created yet)
-  - Push changes button: Push all changes made for the questinnaire to PisaSales. (Visible if questionnaire has unsynced changes)
+  - Create button: Fully [creates the questionnaire](#creating-a-questionnaire) on PisaSales side. (Visible if questionnaire has not been created yet)
+  - Push changes button: [Push all changes](#updating-a-questionnaire) made for the questionnaire to PisaSales. (Visible if questionnaire has unsynced changes)
 
 ### Validation
 
@@ -291,7 +284,7 @@ The `Questionnaire` Widget has specific validation requirements:
 - The widget must include at least one question.
 - The Questionnaire title cannot be empty.
 
-## Questionnaire Step Widget
+## PisaSales Questionnaire Step Widget
 
 <!-- <img src="images/form_step_preview.png" width="350" alt="Screenshot"> -->
 
@@ -304,3 +297,51 @@ The `Questionnaire Step` widget represents an individual step within the questio
 ### Validation
 
 - The step widget must be placed within the questionnaire.
+
+
+## PisaSales Questionnaire Select Question Widget
+
+The `Questionnaire Select Question` widget enables you to create single or multiple selection elements, including radio buttons, dropdowns, or checkboxes in your form.
+
+### Properties
+
+- Question title: Specify the title for the question.
+- Help text: Provide optional help text for the select input.
+- Default value: Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B).
+- Identifier: Specify a unique identifier for the question.
+- Mandatory: Indicates whether selection is required.
+- Position: The position of the question (Read-only).
+- Input type: Choose the type of input, which can be single select (radio buttons or dropdown) or multi-select (checkboxes).
+- Use as Conditional Container: Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met.
+- External ID: The external reference ID for the question.
+- Question ID (GID): The question ID in PisaSales.(Visible after question got created)
+
+### Validation
+
+- This widget must be placed within a PisaSales Questionnaire widget to be effective.
+- The Question title cannot be empty.
+- Default value must start with # and match answer option identifier
+- Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
+
+## PisaSales Questionnaire Input Question Widget
+
+The `Questionnaire Input Question` widget enables you to create input questions, including string single line, string multi line, float, integer, date and date-time in your form.
+
+### Properties
+
+- Question title: Specify the title for the question.
+- Help text: Provide optional help text.
+- Default value: Specify the default value for the question.
+- Identifier: Specify a unique identifier for the question.
+- Mandatory: Indicates whether the input field is required.
+- Position: The position of the question (Read-only).
+- Input type: Choose the type of input, which can be Single-line (String), Multi-line (String), Float (Number), Integer (Number), Date (Date) and Date-time (Date).
+- External ID: The external reference ID for the question.
+- Question ID (GID): The question ID in PisaSales.(Visible after question got created)
+
+### Validation
+
+- This widget must be placed within a PisaSales Questionnaire widget to be effective.
+- The Question title cannot be empty.
+- Default value validation depends on the selected input type. For Integer, the default value must be a whole number. For Float, it must be a decimal number. For Date and Date-Time, you must use either the UTC format (YYYY-MM-DDTHH:MM:SSZ) or the ISO 8601 basic format (YYYYMMDDHHMMSS). 
+- Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
