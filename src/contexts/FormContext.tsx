@@ -194,36 +194,25 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     try {
       indicateProgress();
 
-      //TODO: discuss behaviour
-      const filteredAnswers = Array.from(answers.entries())
-        .filter(([questionId]) => !excludedAnswers[questionId])
+      const preparedAnswers = Array.from(answers.entries())
         .map(([questionId, { value, valueIdentifier, updatedAt }]) => ({
           questionId,
           updatedAt,
-          value,
-          valueIdentifier,
+          value: excludedAnswers[questionId] ? [""] : value,
+          valueIdentifier: excludedAnswers[questionId] ? [""] : valueIdentifier,
         }));
 
-      // const preparedAnswers = Array.from(answers.entries())
-      //   .map(([questionId, { value, valueIdentifier, updatedAt }]) => ({
-      //     questionId,
-      //     updatedAt,
-      //     value: excludedAnswers[questionId] ? [""] : value,
-      //     valueIdentifier: excludedAnswers[questionId] ? [""] : valueIdentifier,
-      //   }));
-
-      //TODO: refactor
       const payload = {
         keys: {
           activityId,
           contactId,
           projectId,
         },
-        data: filteredAnswers,
+        data: preparedAnswers,
       };
 
       console.log("Submitting payload:", payload);
-      const answerItem = await AnswersDataClass().create(payload)
+      const answerItem = await AnswersDataClass().create(payload);
       console.log("answers created", answerItem.get("data"))
       indicateSuccess();
     } catch (error) {
