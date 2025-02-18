@@ -345,3 +345,31 @@ The `Questionnaire Input Question` widget enables you to create input questions,
 - The Question title cannot be empty.
 - Default value validation depends on the selected input type. For Integer, the default value must be a whole number. For Float, it must be a decimal number. For Date and Date-Time, you must use either the UTC format (YYYY-MM-DDTHH:MM:SSZ) or the ISO 8601 basic format (YYYYMMDDHHMMSS). 
 - Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
+
+## Conditionals in PisaSales Questionnaires
+
+The psa-scr-qst-tst package allows you to dynamically show or hide content based on user selections using Conditionals. This feature is available for Select Questions (Dropdown, Radio, and Multi-Select Checkboxes) and enables a question to act as a conditional trigger. When enabled, each answer option becomes a condition that determines whether specific content (such as other questions) is displayed.
+
+### How It Works
+-	When “Use as Conditional” is enabled for a Select Question, each answer option can control the visibility of other content.
+-	Selecting an answer will display only the content associated with that condition while hiding other conditional content.
+-	Users can configure conditionals within the Select Question Widget in the questionnaire editor.
+
+### Behavior & Validation
+####	Disabling Conditionals with Active Questions:
+If a user disables the “Use as Conditional” option while there are still nested questions inside the conditional structure, a validation error will be shown. This prevents orphaned questions from being unintentionally hidden.
+####	Handling Multiple Selections:
+For Multi-Select Checkboxes, multiple conditions can be triggered simultaneously, allowing multiple sets of content to be displayed.
+####	Answer Submission & Hidden Questions:
+  -	When a user selects an option that hides certain questions, those hidden questions will still be included in the submitted answer data, but with empty values.
+  -	This prevents inconsistencies between different submissions and ensures that PisaSales maintains a complete answer dataset.
+
+### Example Use Case
+1. A Radio Question asks:
+“What type of product are you interested in?”
+-	Option 1: Electronics → Shows a question asking about preferred brands.
+-	Option 2: Clothing → Shows a question asking about size preferences.
+
+2. If the user selects “Electronics,” only the brand question is shown.
+3. If they switch to “Clothing,” the brand question disappears and the size preference question appears.
+4. When the questionnaire is submitted, all questions will be included, but hidden questions will have empty responses instead of previous answers.
