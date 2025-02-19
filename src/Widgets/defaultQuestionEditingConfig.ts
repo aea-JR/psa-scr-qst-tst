@@ -1,3 +1,4 @@
+import { DEFAULT_VALUE, HELP, IDENTIFIER, MANDATORY, POSITION, TEXT } from "../constants/constants";
 import { titleValidation } from "../utils/validations/titleValidation";
 
 export const defaultAttributes = {
@@ -24,12 +25,12 @@ export const defaultInitialContent = {
 } as const;
 
 export const defaultProperties = [
-	"text",
-	"help",
-	"defaultValue",
-	"identifier",
-	"mandatory",
-	["position", { enabled: false }]
+	TEXT,
+	HELP,
+	DEFAULT_VALUE,
+	IDENTIFIER,
+	MANDATORY,
+	[POSITION, { enabled: false }]
 ] as const;
 
 export const defaultValidations = [

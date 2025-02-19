@@ -7,18 +7,19 @@ import { useEffect } from "react";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
 import { useFormContext } from "../../contexts/FormContext";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
+import { CONTENT, EXTERNAL_ID, QUESTION_ID, TEXT } from "../../constants/constants";
 
 provideComponent(AnswerOptionWidget, ({ widget }) => {
 
 	const { getConditionData } = useConditionContext();
 	const { setExcludedFromSubmit } = useFormContext();
-	const data = getConditionData(widget.get("externalId"));
+	const data = getConditionData(widget.get(EXTERNAL_ID));
 	const titleBgColor = useDynamicBackground(".condition-info");
 
 	useEffect(() => {
 		const { questionWidgets } = extractQuestionsAndOptions(widget)
 		questionWidgets.forEach((question) => {
-			const questionId = question.get("questionId") as string;
+			const questionId = question.get(QUESTION_ID) as string;
 			setExcludedFromSubmit(questionId, !data.isActive);
 		});
 	}, [data.isActive]);
@@ -34,13 +35,13 @@ provideComponent(AnswerOptionWidget, ({ widget }) => {
 					<>
 						{/* <QuestionnaireMessageBlock status="updating" /> */}
 						<span className="condition-info" style={{ backgroundColor: titleBgColor || "transparent" }}>
-							{"Condition: " + widget.get("text")}
+							{"Condition: " + widget.get(TEXT)}
 						</span>
 					</>
 				)}
 				<ContentTag
 					content={widget}
-					attribute="content"
+					attribute={CONTENT}
 					className={"condition-content"}
 				/>
 

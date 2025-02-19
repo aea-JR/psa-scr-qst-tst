@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
+import { EXTERNAL_ID, IDENTIFIER, TEXT } from "../../constants/constants";
 interface SelectProps {
 	type: string;
 	required: boolean;
@@ -47,13 +48,13 @@ export const Select: React.FC<SelectProps> = Scrivito.connect(
 					<SelectItem
 						type={type}
 						externalQuestionId={externalId}
-						value={option.get("text") as string}
-						identifier={option.get("identifier") as string}
-						externalId={option.get("externalId") as string}
+						value={option.get(TEXT) as string}
+						identifier={option.get(IDENTIFIER) as string}
+						externalId={option.get(EXTERNAL_ID) as string}
 						required={required}
 						key={index}
 						onChange={onChangeSelect}
-						isChecked={values.includes(option.get("text") as string)}
+						isChecked={values.includes(option.get(TEXT) as string)}
 
 					/>
 				))}

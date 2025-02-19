@@ -3,6 +3,7 @@ import { ContentTag, Widget } from "scrivito";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { DropdownOption } from "../../Components/DropdownOption";
+import { EXTERNAL_ID, HELP, IDENTIFIER, OPTIONS, TEXT } from "../../constants/constants";
 
 interface DropdownProps {
 	widget: Widget;
@@ -14,8 +15,8 @@ interface DropdownProps {
 }
 
 export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, required, onChange }) => {
-	const helpText = widget.get("help");
-	const options = widget.get("options") as Widget[];
+	const helpText = widget.get(HELP);
+	const options = widget.get(OPTIONS) as Widget[];
 
 
 	const onChangeDropdown = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -31,7 +32,7 @@ export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, 
 			{title && (
 				<label htmlFor={externalId} className="dropdown-label">
 					<ContentTag
-						attribute="text"
+						attribute={TEXT}
 						content={widget}
 						tag="span"
 					/>
@@ -56,10 +57,10 @@ export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, 
 
 				{options.map((option) => (
 					<DropdownOption
-						value={option.get("text") as string}
-						externalId={option.get("externalId") as string}
+						value={option.get(TEXT) as string}
+						externalId={option.get(EXTERNAL_ID) as string}
 						key={option.id()}
-						identifier={option.get("identifier") as string}
+						identifier={option.get(IDENTIFIER) as string}
 					/>
 				))}
 

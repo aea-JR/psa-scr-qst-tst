@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
+import { SUBMITTING_MESSAGE_WIDGETS } from "../../constants/constants";
 
 
 interface FormSubmittingProps {
@@ -33,7 +34,7 @@ export const FormSubmitting: React.FC<FormSubmittingProps> = ({
 					:
 					<Scrivito.ContentTag
 						content={widget}
-						attribute={"submittingMessageWidgets"}
+						attribute={SUBMITTING_MESSAGE_WIDGETS}
 					/>
 			}
 		</div >

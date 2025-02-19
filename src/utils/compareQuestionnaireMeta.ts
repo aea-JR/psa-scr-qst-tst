@@ -2,10 +2,11 @@ import { isEmpty, isString } from "lodash-es";
 import { Widget } from "scrivito";
 import { QuestionnaireMetaSnapshot } from "../types/questionnaire";
 import { extractQuestionsAndOptions } from "./extractQuestionsAndOptions";
+import { ANSWER_OPTION_ID, CREATION_DATA, DEFAULT_VALUE, HELP, IDENTIFIER, INPUT_TYPE, MANDATORY, OPTIONS, POSITION, QUESTION_ID, QUESTIONNAIRE_ID, TEXT, TITLE, TYPE } from "../constants/constants";
 
 export const compareQuestionnaireMeta = (widget: Widget): boolean => {
-	const jsonMeta = widget.get("creationData") as string;
-	const qstId = widget.get("questionnaireId") as string;
+	const jsonMeta = widget.get(CREATION_DATA) as string;
+	const qstId = widget.get(QUESTIONNAIRE_ID) as string;
 	if (isEmpty(qstId)) {
 		// not created yet!
 		return false;
@@ -16,8 +17,8 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 	}
 
 	const storedMeta: QuestionnaireMetaSnapshot = JSON.parse(jsonMeta);
-	const title = widget.get("title") as string;
-	const inputType = widget.get("inputType") as string;
+	const title = widget.get(TITLE) as string;
+	const inputType = widget.get(INPUT_TYPE) as string;
 
 	// Check if title or inputType changed
 	if (title !== storedMeta.qstMeta.title || inputType !== storedMeta.qstMeta.inputType) {
@@ -49,7 +50,7 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 	// Compare each question's attributes and options
 	for (const question of questionWidgets) {
-		const questionId = question.get("questionId") as string;
+		const questionId = question.get(QUESTION_ID) as string;
 		if (!questionId) {
 			return true;
 		}
@@ -63,13 +64,13 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 		// Compare relevant attributes
 		if (
-			storedQuestion.text !== question.get("text") ||
-			storedQuestion.identifier !== question.get("identifier") ||
-			storedQuestion.mandatory !== question.get("mandatory") ||
-			storedQuestion.help !== question.get("help") ||
-			storedQuestion.defaultValue !== question.get("defaultValue") ||
-			storedQuestion.type !== question.get("type") ||
-			storedQuestion.position !== question.get("position")
+			storedQuestion.text !== question.get(TEXT) ||
+			storedQuestion.identifier !== question.get(IDENTIFIER) ||
+			storedQuestion.mandatory !== question.get(MANDATORY) ||
+			storedQuestion.help !== question.get(HELP) ||
+			storedQuestion.defaultValue !== question.get(DEFAULT_VALUE) ||
+			storedQuestion.type !== question.get(TYPE) ||
+			storedQuestion.position !== question.get(POSITION)
 		) {
 			console.log(`Question changed: ${questionId}`);
 			return true;
@@ -79,7 +80,7 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 		if (question.objClass() != "SelectQuestionWidget") {
 			continue;
 		}
-		const currentOptions = question.get("options") as Widget[];
+		const currentOptions = question.get(OPTIONS) as Widget[];
 		const storedQuestionOptions = storedOptions[questionId] || {};
 
 		// Check if the number of options changed
@@ -90,7 +91,7 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 		// Compare each option's attributes
 		for (const option of currentOptions) {
-			const optionId = option.get("answerOptionId") as string;
+			const optionId = option.get(ANSWER_OPTION_ID) as string;
 			if (!optionId) {
 				return true;
 			}
@@ -104,9 +105,9 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 			// Compare relevant attributes
 			if (
-				storedOption.identifier !== option.get("identifier") ||
-				storedOption.text !== option.get("text") ||
-				storedOption.position !== option.get("position")
+				storedOption.identifier !== option.get(IDENTIFIER) ||
+				storedOption.text !== option.get(TEXT) ||
+				storedOption.position !== option.get(POSITION)
 			) {
 				console.log(`Answer option changed: ${optionId}`);
 				return true;

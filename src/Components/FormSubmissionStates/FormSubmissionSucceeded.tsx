@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
+import { SUBMITTED_MESSAGE_WIDGETS } from "../../constants/constants";
 
 interface FormSubmissionSucceededProps {
 	submissionSuccessText: string;
@@ -23,7 +24,7 @@ export const FormSubmissionSucceeded: React.FC<
 				:
 				<Scrivito.ContentTag
 					content={widget}
-					attribute={"submittedMessageWidgets"}
+					attribute={SUBMITTED_MESSAGE_WIDGETS}
 				/>
 			}
 		</div >

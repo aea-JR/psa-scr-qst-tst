@@ -3,6 +3,7 @@ import { Widget } from "scrivito";
 import { Question, AnswerOption } from "../types/questionnaire";
 import { convertWidgetsToAnswerOptions } from "./convertoAnswerOptions";
 import { convertWidgetToQuestion } from "./convertoQuestion";
+import { OPTIONS } from "../constants/constants";
 
 export const extractQuestionsAndOptions = (widget: Widget) => {
 	const questionsAndOptions: { questions: Question[], answerOptions: Map<string, AnswerOption[]>, questionWidgets: Widget[], optionWidgets: Widget[] } = {
@@ -33,7 +34,7 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		questionsAndOptions.questions.push(question);
 
 		if (questionWidget.objClass() == "SelectQuestionWidget") {
-			const optionWidgets = questionWidget.get("options") as Widget[];
+			const optionWidgets = questionWidget.get(OPTIONS) as Widget[];
 			const options = convertWidgetsToAnswerOptions(optionWidgets)
 			if (!isEmpty(options)) {
 				questionsAndOptions.answerOptions.set(question.externalId, options)

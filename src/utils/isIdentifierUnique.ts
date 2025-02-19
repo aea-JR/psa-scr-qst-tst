@@ -2,6 +2,7 @@ import { Widget } from "scrivito";
 import { isEmpty } from "lodash-es";
 import { getIdentifier } from "./getIdentifier";
 import { getQuestionnaireContainerWidget } from "./getQuestionnaireContainerWidget";
+import { CONTENT } from "../constants/constants";
 
 export function isIdentifierUnique(widget: Widget, type: string) {
   const identifier = getIdentifier(widget);
@@ -20,7 +21,7 @@ export function isIdentifierUnique(widget: Widget, type: string) {
   const otherWidget = (
     type == "AnswerOptionWidget"
       ? container.widgets()
-      : (container.get("content") as Widget[])
+      : (container.get(CONTENT) as Widget[])
   ).find(
     (child) =>
       getIdentifier(child) === identifier && child.id() !== widget.id(),

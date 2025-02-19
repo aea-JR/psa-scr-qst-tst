@@ -5,6 +5,7 @@ import { isEmpty } from "lodash-es";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
+import { DATA, INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;
@@ -29,11 +30,11 @@ export const useFormContext = () => {
 };
 
 export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWidget: Widget }> = ({ children, qstContainerWidget }) => {
-  const questionnaireId = qstContainerWidget.get("questionnaireId") as string;
-  const inputType = qstContainerWidget.get("inputType") as string;
-  const showSubmittingPreview = qstContainerWidget.get("previewSubmittingMessage") || false;
-  const showSubmittedPreview = qstContainerWidget.get("previewSubmittedMessage") || false;
-  const showFailedPreview = qstContainerWidget.get("previewFailedMessage") || false;
+  const questionnaireId = qstContainerWidget.get(QUESTIONNAIRE_ID) as string;
+  const inputType = qstContainerWidget.get(INPUT_TYPE) as string;
+  const showSubmittingPreview = qstContainerWidget.get(PREVIEW_SUBMITTING_MESSAGE) || false;
+  const showSubmittedPreview = qstContainerWidget.get(PREVIEW_SUBBMITTED_MESSAGE) || false;
+  const showFailedPreview = qstContainerWidget.get(PREVIEW_FAILED_MESSAGE) || false;
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [successfullySent, setSuccessfullySent] = React.useState(false);
@@ -128,10 +129,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   }, [isOnline, activityId, contactId, projectId]);
 
   const extractAnswerData = (answerItem: DataItem) => {
-    const questionId = answerItem.get("questionId");
-    const value = answerItem.get("value") as string[] || [""];
-    const valueIdentifier = answerItem.get("valueIdentifier") as string[] || [""];
-    const updatedAt = answerItem.get("updatedAt") as string || new Date().toISOString();
+    const questionId = answerItem.get(QUESTION_ID);
+    const value = answerItem.get(VALUE) as string[] || [""];
+    const valueIdentifier = answerItem.get(VALUE_IDENTIFIER) as string[] || [""];
+    const updatedAt = answerItem.get(UPDATED_AT) as string || new Date().toISOString();
 
     return { questionId, value, valueIdentifier, updatedAt };
   };
@@ -213,7 +214,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
       console.log("Submitting payload:", payload);
       const answerItem = await AnswersDataClass().create(payload);
-      console.log("answers created", answerItem.get("data"))
+      console.log("answers created", answerItem.get(DATA))
       indicateSuccess();
     } catch (error) {
       console.log(error)

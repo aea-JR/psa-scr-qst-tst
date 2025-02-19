@@ -9,6 +9,7 @@ import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
+import { EXTERNAL_ID } from "../../constants/constants";
 
 export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 	const [isCreating, setIsCreating] = useState(false);
@@ -47,7 +48,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 
 					const questionId = questionItem.id();
 					const questionWidget = questionWidgets.find(
-						(w) => w.get("externalId") === question.externalId
+						(w) => w.get(EXTERNAL_ID) === question.externalId
 					);
 
 					if (questionWidget) {
@@ -65,7 +66,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 								});
 
 								const optionWidget = optionWidgets.find(
-									(w) => w.get("externalId") === option.externalId
+									(w) => w.get(EXTERNAL_ID) === option.externalId
 								);
 
 								if (optionWidget) {

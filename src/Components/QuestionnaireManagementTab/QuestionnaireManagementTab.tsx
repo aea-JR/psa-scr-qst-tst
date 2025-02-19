@@ -5,6 +5,7 @@ import { useCreateQuestionnaire } from "./useCreateQuestionnaire";
 import { useUpdateQuestionnaire } from "./useUpdateQuestionnaire";
 import { QuestionnaireStatus } from "../../types/questionnaire";
 import "./QuestionnaireManagementTab.scss";
+import { QUESTIONNAIRE_ID, QUESTIONNAIRE_STATUS } from "../../constants/constants";
 
 
 interface QuestionnaireManagementTabProps {
@@ -14,11 +15,11 @@ interface QuestionnaireManagementTabProps {
 export const QuestionnaireManagementTab: FC<
 	QuestionnaireManagementTabProps
 > = ({ widget }) => {
-	const questionnaireId = widget.get("questionnaireId") as string;
+	const questionnaireId = widget.get(QUESTIONNAIRE_ID) as string;
 	const context = uiContext();
 	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
 	const { updateQuestionnaire, isUpdating } = useUpdateQuestionnaire(widget);
-	const status = widget.get("questionnaireStatus") as QuestionnaireStatus;
+	const status = widget.get(QUESTIONNAIRE_STATUS) as QuestionnaireStatus;
 
 	const isCreated = !!questionnaireId;
 

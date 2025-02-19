@@ -4,6 +4,7 @@ import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
 import "./QuestionnaireExternalId.scss";
 import { ExternalIdInput } from "./ExternalIdInput";
+import { EXTERNAL_ID } from "../../constants/constants";
 interface QuestionnaireExternalIdComponentProps {
   widget: Scrivito.Widget;
 }
@@ -12,9 +13,9 @@ export const QuestionnaireExternalIdComponent: React.FC<
   QuestionnaireExternalIdComponentProps
 > = ({ widget }) => {
   const [currentId, setCurrentId] = React.useState<string>(
-    widget.get("externalId") as string,
+    widget.get(EXTERNAL_ID) as string,
   );
-  const initialId = React.useRef<string>(widget.get("externalId") as string);
+  const initialId = React.useRef<string>(widget.get(EXTERNAL_ID) as string);
   const uiContext = Scrivito.uiContext();
   if (!uiContext) return null;
 
@@ -43,7 +44,7 @@ export const QuestionnaireExternalIdComponent: React.FC<
           <ExternalIdInput
             widget={widget}
             title="Questionnaire External ID"
-            description="The reference ID to the  Questionnaire GID."
+            description="The reference ID to the Questionnaire GID."
             initialId={initialId.current}
             currentId={currentId}
             onGenerateNewId={onGenerateNewId}

@@ -13,6 +13,7 @@ import { getQuestionnaireItem } from "../../Data/Questionnaire/QuestionnaireData
 import { getQuestionItem } from "../../Data/Question/QuestionDataClassUtils";
 import { getOptionItem } from "../../Data/AnswerOption/AnswerOptionDataClassUtils";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
+import { ANSWER_OPTION_ID, CREATION_DATA, EXTERNAL_ID, OPTIONS, QUESTION_ID, QUESTIONNAIRE_ID } from "../../constants/constants";
 
 export const useUpdateQuestionnaire = (widget: Widget) => {
 	const [isUpdating, setIsUpdating] = useState(false);
@@ -37,10 +38,10 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 		try {
 			setIsUpdating(true);
 			setQuestionnaireStatus("updating", widget);
-			const qstId = widget.get("questionnaireId") as string;
+			const qstId = widget.get(QUESTIONNAIRE_ID) as string;
 			if (!qstId) throw new Error("Unable to update. Questionnaire ID not found.");
 
-			const storedQstMetaJson = widget.get("creationData") as string;
+			const storedQstMetaJson = widget.get(CREATION_DATA) as string;
 			if (!storedQstMetaJson) throw new Error("Unable to update. No stored metadata found.");
 
 			const storedQstMeta: QuestionnaireMetaSnapshot = JSON.parse(storedQstMetaJson);
@@ -54,22 +55,22 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 
 			// 2. Identify deleted questions
 			for (const questionId in storedQstMeta.questions) {
-				if (!questionWidgets.some((w) => w.get("questionId") === questionId)) {
+				if (!questionWidgets.some((w) => w.get(QUESTION_ID) === questionId)) {
 					updates.deleteQuestions.push(questionId);
 				}
 			}
 
 			// 3. Identify new questions
 			for (const widget of questionWidgets) {
-				const questionId = widget.get("questionId") as string;
+				const questionId = widget.get(QUESTION_ID) as string;
 				if (!questionId) updates.createQuestions.push(widget);
 			}
 
 			// 4. Identify updated questions
 			for (const questionId in storedQstMeta.questions) {
 				if (!updates.deleteQuestions.includes(questionId) &&
-					!updates.createQuestions.some((q) => q.get("questionId") === questionId)) {
-					const questionWidget = questionWidgets.find((q) => q.get("questionId") === questionId);
+					!updates.createQuestions.some((q) => q.get(QUESTION_ID) === questionId)) {
+					const questionWidget = questionWidgets.find((q) => q.get(QUESTION_ID) === questionId);
 					if (questionWidget) updates.updateQuestions.set(questionId, questionWidget);
 				}
 			}
@@ -78,7 +79,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			for (const questionId in storedQstMeta.options) {
 				if (updates.deleteQuestions.includes(questionId)) continue;
 				for (const optionId in storedQstMeta.options[questionId]) {
-					if (!optionWidgets.some((w) => w.get("answerOptionId") === optionId)) {
+					if (!optionWidgets.some((w) => w.get(ANSWER_OPTION_ID) === optionId)) {
 						updates.deleteOptions.push(optionId);
 					}
 				}
@@ -87,12 +88,12 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			// 6. Identify new options per question
 			const newOptionsByQuestion = new Map<string, Widget[]>();
 			for (const questionWidget of questionWidgets) {
-				const questionExternalId = questionWidget.get("externalId") as string;
-				const options = questionWidget.get("options") as Widget[];
+				const questionExternalId = questionWidget.get(EXTERNAL_ID) as string;
+				const options = questionWidget.get(OPTIONS) as Widget[];
 				if (!options || options.length === 0) continue;
 
 				for (const optionWidget of options) {
-					const optionId = optionWidget.get("answerOptionId") as string;
+					const optionId = optionWidget.get(ANSWER_OPTION_ID) as string;
 					if (!optionId) {
 						if (!newOptionsByQuestion.has(questionExternalId)) {
 							newOptionsByQuestion.set(questionExternalId, []);
@@ -107,9 +108,9 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 				for (const optionId in storedQstMeta.options[questionId]) {
 					if (!updates.deleteOptions.includes(optionId) &&
 						!Array.from(updates.createOptions.values()).some((optionWidgets) =>
-							optionWidgets.some((o) => o.get("answerOptionId") === optionId)
+							optionWidgets.some((o) => o.get(ANSWER_OPTION_ID) === optionId)
 						)) {
-						const optionWidget = optionWidgets.find((o) => o.get("answerOptionId") === optionId);
+						const optionWidget = optionWidgets.find((o) => o.get(ANSWER_OPTION_ID) === optionId);
 						if (optionWidget) updates.updateOptions.set(optionId, optionWidget);
 					}
 				}
@@ -150,7 +151,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 					const newQuestionId = questionItem.id();
 					widget.update({ questionId: newQuestionId });
 					updatedQstMeta.questions[newQuestionId] = question;
-					newQuestionIdMap.set(widget.get("externalId") as string, newQuestionId);
+					newQuestionIdMap.set(widget.get(EXTERNAL_ID) as string, newQuestionId);
 				} catch (error) {
 					hasFailures = true;
 					console.error("Failed to create question:", error);
@@ -158,8 +159,8 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			}
 			// 4. Create new options
 			for (const [questionExternalId, optionWidgets] of newOptionsByQuestion.entries()) {
-				const parentQuestionWidget = questionWidgets.find((q) => q.get("externalId") === questionExternalId);
-				const questionId = newQuestionIdMap.get(questionExternalId) as string || parentQuestionWidget?.get("questionId") as string;
+				const parentQuestionWidget = questionWidgets.find((q) => q.get(EXTERNAL_ID) === questionExternalId);
+				const questionId = newQuestionIdMap.get(questionExternalId) as string || parentQuestionWidget?.get(QUESTION_ID) as string;
 
 				if (!questionId) {
 					console.error(`No valid questionId found for externalId: ${questionExternalId}`);
@@ -212,7 +213,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 						const option = convertWidgetToAnswerOption(widget);
 						await optionItem.update({ ...option });
 
-						const questionId = optionItem.get("questionId") as string;
+						const questionId = optionItem.get(QUESTION_ID) as string;
 						if (!updatedQstMeta.options[questionId]) {
 							updatedQstMeta.options[questionId] = {};
 						}

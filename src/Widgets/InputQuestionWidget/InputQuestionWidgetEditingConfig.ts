@@ -5,10 +5,11 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
+import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 
 Scrivito.provideEditingConfig("InputQuestionWidget", {
   initialize: (obj) => {
-    if (!obj.get("externalId")) {
+    if (!obj.get(EXTERNAL_ID)) {
       const id = generateId();
       console.log("setting externalId for InputQuestionWidget fron initialize: " + id);
       obj.update({ externalId: id });
@@ -18,7 +19,7 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
     const parent = getQuestionnaireContainerWidget(child as any);
 
     // Skip updating externalId if the parent container is marked as being copied
-    if (parent && parent.get("isBeingCopied")) {
+    if (parent && parent.get(IS_BEING_COPIED)) {
       console.log(
         "Child widget copied as part of container. No change to externalId.",
       );
@@ -55,16 +56,16 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
   properties: (widget) => {
     return [
       ...defaultProperties,
-      "placeholder",
-      "type",
-      ["externalId", { enabled: false }],
-      ["questionId", { enabled: false }],
+      PLACEHOLDER,
+      TYPE,
+      [EXTERNAL_ID, { enabled: false }],
+      [QUESTION_ID, { enabled: false }],
     ];
   },
   validations: [
     ...defaultValidations as any,
     [
-      "identifier",
+      IDENTIFIER,
       (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
         if (!isIdentifierUnique(widget, "InputQuestionWidget")) {
           return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
@@ -79,9 +80,9 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
       },
     ],
     [
-      "defaultValue",
+      DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {
-        const type = widget.get("type")
+        const type = widget.get(TYPE)
         if (!defaultValue) {
           return null;
         }

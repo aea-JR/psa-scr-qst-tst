@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
+import { EXTERNAL_ID } from "../../constants/constants";
 
 interface ValidationResultObject {
   severity?: string;
@@ -29,12 +30,12 @@ export const ExternalIdInput = Scrivito.connect(
   }: ExternalIdInputProps) => {
     const validationResults = Scrivito.validationResultsFor(
       widget,
-      "externalId",
+      EXTERNAL_ID,
     );
     const highestSeverity = findHighestSeverity(validationResults);
     const severityClass = highestSeverity && `scrivito-${highestSeverity}`;
     const [value, setValue] = React.useState<string>(
-      widget.get("externalId") as string,
+      widget.get(EXTERNAL_ID) as string,
     );
     const [isModified, setIsModified] = React.useState<boolean>(false);
 

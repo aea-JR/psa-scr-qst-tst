@@ -12,17 +12,18 @@ import { StringMultiLineInput } from "./Inputs/StringMultiLineInput";
 import { NumberInput } from "./Inputs/NumberInput";
 import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
+import { DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
 
 provideComponent(InputQuestionWidget, ({ widget }) => {
   const id = `questionnaire_input_widget_${widget.id()}`;
-  const externalId = widget.get("externalId");
-  const required = widget.get("mandatory");
-  const placeholder = widget.get("placeholder");
-  const title = widget.get("text");
-  const helpText = widget.get("help");
-  const defaultValue = widget.get("defaultValue");
-  const type = widget.get("type") || "string_single_line";
-  const questionId = widget.get("questionId");
+  const externalId = widget.get(EXTERNAL_ID);
+  const required = widget.get(MANDATORY);
+  const placeholder = widget.get(PLACEHOLDER);
+  const title = widget.get(TEXT);
+  const helpText = widget.get(HELP);
+  const defaultValue = widget.get(DEFAULT_VALUE);
+  const type = widget.get(TYPE) || "string_single_line";
+  const questionId = widget.get(QUESTION_ID);
 
   const { values, handleChange } = useAnswer(questionId, [defaultValue]);
 
@@ -51,7 +52,7 @@ provideComponent(InputQuestionWidget, ({ widget }) => {
     <div className={`mb-3 form-input-container ${type}`}>
       {!isEmpty(title) && (
         <label htmlFor={id} className="input-label">
-          <ContentTag attribute="text" content={widget} tag="span" />
+          <ContentTag attribute={TEXT} content={widget} tag="span" />
           {required && <Mandatory />}
           {helpText && <HelpText widget={widget} />}
         </label>

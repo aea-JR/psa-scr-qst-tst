@@ -9,10 +9,11 @@ import { AnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClas
 import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
+import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 
 Scrivito.provideEditingConfig("SelectQuestionWidget", {
   initialize: (obj) => {
-    if (!obj.get("externalId")) {
+    if (!obj.get(EXTERNAL_ID)) {
       console.log("setting externalId fron initialize");
       obj.update({ externalId: generateId() });
     }
@@ -21,7 +22,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
     const parent = getQuestionnaireContainerWidget(child as any);
 
     // Skip updating externalId if the parent container is marked as being copied
-    if (parent && parent.get("isBeingCopied")) {
+    if (parent && parent.get(IS_BEING_COPIED)) {
       console.log(
         "Child widget copied as part of container. No change to externalId.",
       );
@@ -32,7 +33,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
   },
   title: "PisaSales Select Question",
   titleForContent: (obj) => {
-    if (obj.get("enableConditionals")) {
+    if (obj.get(ENABLE_CONDITIONALS)) {
       return "PisaSales Conditional Select Question";
     }
     return "PisaSales Select Question";
@@ -75,11 +76,11 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
   properties: (widget) => {
     return [
       ...defaultProperties,
-      "type",
-      "placeholder",
-      "enableConditionals",
-      ["externalId", { enabled: false }],
-      ["questionId", { enabled: false }]
+      TYPE,
+      PLACEHOLDER,
+      ENABLE_CONDITIONALS,
+      [EXTERNAL_ID, { enabled: false }],
+      [QUESTION_ID, { enabled: false }]
     ];
   },
   propertiesGroups: (widget) => {
@@ -87,7 +88,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       {
         title: "Options",
         key: "QuestionnaireDropdownOptions",
-        properties: ["options"],
+        properties: [OPTIONS],
         //  component: OptionsComponent
       },
     ];
@@ -98,7 +99,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
   validations: [
     ...defaultValidations as any,
     [
-      "identifier",
+      IDENTIFIER,
       (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
         if (!isIdentifierUnique(widget, "SelectQuestionWidget")) {
           return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
@@ -113,7 +114,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       },
     ],
     [
-      "defaultValue",
+      DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {
         if (isEmpty(defaultValue)) {
           return;
@@ -121,11 +122,11 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
         if (!defaultValue.startsWith("#")) {
           return "Default value must start with #.";
         }
-        const type = widget.get("type");
+        const type = widget.get(TYPE);
         const isMultiCheckboxes = type == "string_checkboxes";
-        const options = widget.get("options") as Widget[];
+        const options = widget.get(OPTIONS) as Widget[];
         const allowedValues = compact(
-          map(options, (option) => option.get("identifier") as string),
+          map(options, (option) => option.get(IDENTIFIER) as string),
         );
 
         if (isMultiCheckboxes) {
@@ -145,7 +146,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       },
     ],
     [
-      "options",
+      OPTIONS,
       (options: Widget[]) => {
         if (options.length < 2) {
           return "Question must include at least two options.";
@@ -153,7 +154,7 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
       },
     ],
     [
-      "enableConditionals",
+      ENABLE_CONDITIONALS,
       (enableConditionals: boolean, { widget }: { widget: Scrivito.Widget }) => {
         const { questions } = extractQuestionsAndOptions(widget);
 

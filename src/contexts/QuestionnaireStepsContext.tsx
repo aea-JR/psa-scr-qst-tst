@@ -3,6 +3,7 @@ import { isInPlaceEditingActive, Widget } from "scrivito";
 import { scrollIntoView } from "../utils/scrollIntoView";
 import { InputElements } from "../types/review";
 import { forEach, groupBy, some } from "lodash-es";
+import { EXTERNAL_ID, FORM_TYPE, STEPS } from "../constants/constants";
 
 interface QuestionnaireStepsContextProps {
 	currentStep: number;
@@ -29,12 +30,12 @@ export const useQuestionnaireStepsContext = () => {
 };
 
 export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; qstContainerWidget: Widget }> = ({ children, qstContainerWidget }) => {
-	const steps = qstContainerWidget.get("steps") as Widget[] || [];
-	const isSingleStep = qstContainerWidget.get("formType") === "single-step";
+	const steps = qstContainerWidget.get(STEPS) as Widget[] || [];
+	const isSingleStep = qstContainerWidget.get(FORM_TYPE) === "single-step";
 	const [currentStep, setCurrentStep] = useState(1);
 	const isLastStep = currentStep === steps.length;
 	const stepsLength = steps.length;
-	const externalId = qstContainerWidget.get("externalId") as string;
+	const externalId = qstContainerWidget.get(EXTERNAL_ID) as string;
 
 	const validateCurrentStep = useCallback((): boolean => {
 		return doValidate(externalId, currentStep);

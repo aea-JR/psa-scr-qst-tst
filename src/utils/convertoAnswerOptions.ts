@@ -1,6 +1,7 @@
 import { Widget } from "scrivito";
-import { Answer, AnswerOption } from "../types/questionnaire";
+import { AnswerOption } from "../types/questionnaire";
 import { isEmpty } from "lodash-es";
+import { EXTERNAL_ID, IDENTIFIER, POSITION, TEXT } from "../constants/constants";
 
 export const convertWidgetsToAnswerOptions = (
   widgets: Widget[],
@@ -24,9 +25,9 @@ export const convertWidgetsToAnswerOptions = (
 
 export const convertWidgetToAnswerOption = (widget: Widget): AnswerOption => {
   return {
-    text: widget.get("text") as string,
-    identifier: widget.get("identifier") as string,
-    externalId: widget.get("externalId") as string,
-    position: widget.get("position") as number
+    text: widget.get(TEXT) as string,
+    identifier: widget.get(IDENTIFIER) as string,
+    externalId: widget.get(EXTERNAL_ID) as string,
+    position: widget.get(POSITION) as number
   }
 }

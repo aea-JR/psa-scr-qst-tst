@@ -4,6 +4,7 @@ import { useFormContext } from "../../contexts/FormContext";
 import { useQuestionnaireWidgetAttributesContext } from "../../contexts/QuestionnaireWidgetAttributesContext";
 import { FormSubmissionStatesRenderer } from "../FormSubmissionStates/FormSubmissionStatesRenderer";
 import { QuestionnaireFooter } from "../QuestionnaireFormFooter/QuestionnaireFormFooter";
+import { EXTERNAL_ID, STEPS } from "../../constants/constants";
 
 
 
@@ -27,9 +28,9 @@ export const Questionnaire: FC<QuestionnaireProps> = ({
 		<>
 			<form
 				method="post"
-				id={widget.get("externalId") as string}
+				id={widget.get(EXTERNAL_ID) as string}
 			>
-				<ContentTag content={widget} attribute="steps" />
+				<ContentTag content={widget} attribute={STEPS} />
 			</form>
 			<QuestionnaireFooter
 				widget={widget}

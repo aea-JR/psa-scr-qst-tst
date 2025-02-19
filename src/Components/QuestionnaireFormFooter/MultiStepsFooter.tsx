@@ -5,7 +5,6 @@ import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsC
 import { useFormContext } from "../../contexts/FormContext";
 import { ReviewPortal } from "../Review/ReviewPortal";
 
-
 interface MultiStepsFooterProps {
 	submitDisabled: boolean;
 }
@@ -14,7 +13,6 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 	connect(
 		({ submitDisabled }) => {
 			const [show, setShow] = useState(false);
-
 			const { onSubmit } = useFormContext();
 			const { onPageChange, currentStep, isLastStep, stepsLength } = useQuestionnaireStepsContext();
 			const { backwardButtonText, forwardButtonText, submitButtonText, showReview, reviewButtonText } = useQuestionnaireWidgetAttributesContext();

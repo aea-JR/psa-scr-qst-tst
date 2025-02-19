@@ -1,11 +1,12 @@
 import { isInPlaceEditingActive, Widget } from "scrivito";
 import { QuestionnaireStatus } from "../types/questionnaire";
+import { QUESTIONNAIRE_STATUS } from "../constants/constants";
 
 let _questionnaireStatus: QuestionnaireStatus = "void";
 
 export const getQuestionnaireStatus = (qstMainWidget?: Widget) => {
 	if (isInPlaceEditingActive() && qstMainWidget) {
-		return qstMainWidget.get("questionnaireStatus") as QuestionnaireStatus || "void";
+		return qstMainWidget.get(QUESTIONNAIRE_STATUS) as QuestionnaireStatus || "void";
 	}
 	return _questionnaireStatus;
 }

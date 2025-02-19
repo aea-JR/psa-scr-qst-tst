@@ -3,6 +3,7 @@ import { QuestionnaireStepWidget } from "./QuestionnaireStepWidgetClass";
 import "./QuestionnaireStepWidget.scss";
 import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsContext";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
+import { CONTENT } from "../../constants/constants";
 
 provideComponent(QuestionnaireStepWidget, ({ widget }) => {
   const { getStepInfo } = useQuestionnaireStepsContext();
@@ -21,7 +22,7 @@ provideComponent(QuestionnaireStepWidget, ({ widget }) => {
       >
         <ContentTag
           content={widget}
-          attribute="content"
+          attribute={CONTENT}
         />
       </div>
     </>

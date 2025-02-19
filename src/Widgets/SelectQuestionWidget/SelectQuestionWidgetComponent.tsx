@@ -7,6 +7,7 @@ import { Select } from "./Select";
 import { ConditionProvider } from "../../contexts/ConditionContext";
 import { useSelectQuestion } from "./useSelectQuestion";
 import "./SelectQuestionWidget.scss";
+import { OPTIONS, TEXT } from "../../constants/constants";
 
 provideComponent(SelectQuestionWidget, ({ widget }) => {
 
@@ -44,7 +45,7 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
             (<>
               {text && <div className="select-title">
                 <ContentTag
-                  attribute="text"
+                  attribute={TEXT}
                   content={widget}
                   tag="span"
                 />
@@ -64,7 +65,7 @@ provideComponent(SelectQuestionWidget, ({ widget }) => {
           }
         </div>
         {useAsConditionals &&
-          <ContentTag content={widget} attribute="options" />
+          <ContentTag content={widget} attribute={OPTIONS} />
         }
       </>
     </ConditionProvider >

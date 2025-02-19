@@ -3,10 +3,11 @@ import generateId from "../../utils/idGenerator";
 import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { isEmpty } from "lodash-es";
+import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, TEXT } from "../../constants/constants";
 
 Scrivito.provideEditingConfig("AnswerOptionWidget", {
   initialize: (obj) => {
-    if (!obj.get("externalId")) {
+    if (!obj.get(EXTERNAL_ID)) {
       console.log("setting externalId fron initialize");
       obj.update({ externalId: generateId() });
     }
@@ -14,7 +15,7 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
   initializeCopy: (child) => {
     const parent = getQuestionnaireContainerWidget(child as any);
     // Skip updating externalId if the parent container is marked as being copied
-    if (parent && parent.get("isBeingCopied")) {
+    if (parent && parent.get(IS_BEING_COPIED)) {
       console.log(
         "Child widget copied as part of container. No change to externalId.",
       );
@@ -25,7 +26,7 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
   },
   title: "PisaSales Answer Option",
   titleForContent: (obj) => {
-    if (obj.get("isCondition")) {
+    if (obj.get(IS_CONDITION)) {
       return "PisaSales Answer Option Condition";
     }
     return "PisaSales Answer Option";
@@ -48,15 +49,15 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
     isCondition: false,
   },
   properties: (widget) => {
-    const props: any[] = ["text", "identifier", ["position", { enabled: false }], ["externalId", { enabled: false }], ["answerOptionId", { enabled: false }]];
-    if ((widget.get("content") as Scrivito.Widget[]).length > 0) {
-      props.push("content");
+    const props: any[] = [TEXT, IDENTIFIER, [POSITION, { enabled: false }], [EXTERNAL_ID, { enabled: false }], [ANSWER_OPTION_ID, { enabled: false }]];
+    if ((widget.get(CONTENT) as Scrivito.Widget[]).length > 0) {
+      props.push(CONTENT);
     }
     return props;
   },
   validations: [
     [
-      "identifier",
+      IDENTIFIER,
       (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
         if (!isIdentifierUnique(widget, "AnswerOptionWidget")) {
           return "Specify a unique Identifier. There is at least one other option with the same Identfier.";
@@ -71,7 +72,7 @@ Scrivito.provideEditingConfig("AnswerOptionWidget", {
       },
     ],
     [
-      "text",
+      TEXT,
       (text: string) => {
         if (isEmpty(text)) return "Answer can not be empty.";
       },

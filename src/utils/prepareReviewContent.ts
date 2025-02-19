@@ -1,6 +1,7 @@
 import { isEmpty, uniq } from "lodash-es";
 import { Widget } from "scrivito";
 import { InputElements, ReviewContent, ReviewItemContent } from "../types/review";
+import { EXTERNAL_ID, STEP_NUMBER, TEXT, TITLE, TYPE } from "../constants/constants";
 
 
 export function prepareReviewContent(externalId: string, steps: Widget[], includeEmptyAnswers: boolean): ReviewContent {
@@ -43,14 +44,14 @@ export function prepareReviewContent(externalId: string, steps: Widget[], includ
       continue;
     }
     // get title && step number
-    const widget = widgets.find((w) => w.get("externalId") == key);
+    const widget = widgets.find((w) => w.get(EXTERNAL_ID) == key);
     if (widget) {
       const step = steps.find((s) =>
-        s.widgets().find((w) => w.get("externalId") == key)
+        s.widgets().find((w) => w.get(EXTERNAL_ID) == key)
       );
-      const stepNumber = step?.get("stepNumber") as number;
-      const title = (widget.get("text") ||
-        widget.get("title") ||
+      const stepNumber = step?.get(STEP_NUMBER) as number;
+      const title = (widget.get(TEXT) ||
+        widget.get(TITLE) ||
         "") as string;
 
       if (!reviewData[stepNumber]) {
@@ -67,7 +68,7 @@ export function prepareReviewContent(externalId: string, steps: Widget[], includ
 
 function getAnswerValue(answer: string, widget: Widget): string {
   const emptyValue = "-";
-  const type = widget.get("type");
+  const type = widget.get(TYPE);
 
   if (isEmpty(answer)) {
     return emptyValue;

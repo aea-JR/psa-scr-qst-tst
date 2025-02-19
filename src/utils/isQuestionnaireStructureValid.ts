@@ -2,9 +2,10 @@ import { filter, isEmpty, isNil, some } from "lodash-es";
 import { Widget } from "scrivito";
 import { isUTCDate } from "./isUTCDate";
 import { isPisaDate } from "./isPisaDate";
+import { DEFAULT_VALUE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
-  const title = qstMainWidget.get("title") as string;
+  const title = qstMainWidget.get(TITLE) as string;
 
   if (isEmpty(title)) {
     return false;
@@ -28,14 +29,14 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
   }
   // check questions & options
   for (const question of questions) {
-    if (isEmpty(question.get("text"))) {
+    if (isEmpty(question.get(TEXT))) {
       return false;
     }
     if (question.objClass() == "SelectQuestionWidget") {
-      const options = question.get("options") as Widget[];
+      const options = question.get(OPTIONS) as Widget[];
 
       const hasEmptyOption = some(options, (option) =>
-        isEmpty(option.get("text"))
+        isEmpty(option.get(TEXT))
       );
 
       if (hasEmptyOption) {
@@ -45,8 +46,8 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     } else if (question.objClass() == "InputQuestionWidget") {
 
       // check defaultValue
-      const type = question.get("type") as string;
-      const defaultValue = question.get("defaultValue") as string || "";
+      const type = question.get(TYPE) as string;
+      const defaultValue = question.get(DEFAULT_VALUE) as string || "";
       if (isEmpty((defaultValue.trim()))) {
         continue;
       }

@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
+import { FAILED_MESSAGE_WIDGETS } from "../../constants/constants";
 
 interface FormSubmissionFailedProps {
 	submissionFailureText: string;
@@ -36,7 +37,7 @@ export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
 				:
 				<Scrivito.ContentTag
 					content={widget}
-					attribute={"failedMessageWidgets"}
+					attribute={FAILED_MESSAGE_WIDGETS}
 				/>
 			}
 			{showRetryButton &&
