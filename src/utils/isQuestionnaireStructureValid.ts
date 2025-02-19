@@ -29,7 +29,12 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
   }
   // check questions & options
   for (const question of questions) {
+    // text
     if (isEmpty(question.get(TEXT))) {
+      return false;
+    }
+    // type
+    if (isEmpty(question.get(TYPE))) {
       return false;
     }
     if (question.objClass() == "SelectQuestionWidget") {
