@@ -163,5 +163,13 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
         }
       },
     ],
+    [
+      TYPE,
+      (type: string) => {
+        if (isEmpty(type)) {
+          return "Specify the Input type."
+        }
+      }
+    ]
   ],
 });

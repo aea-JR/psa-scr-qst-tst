@@ -6,6 +6,7 @@ import { defaultAttributes, defaultInitialContent, defaultProperties, defaultVal
 import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
 import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
+import { isEmpty } from "lodash-es";
 
 Scrivito.provideEditingConfig("InputQuestionWidget", {
   initialize: (obj) => {
@@ -108,6 +109,14 @@ Scrivito.provideEditingConfig("InputQuestionWidget", {
           return "Specify a valid floating-point value. Must be a number with optional decimal places (e.g., -10.5, 0.0, 42.99).";
         }
       },
+    ],
+    [
+      TYPE,
+      (type: string) => {
+        if (isEmpty(type)) {
+          return "Specify the Input type."
+        }
+      }
     ]
 
   ],
