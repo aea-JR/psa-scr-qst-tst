@@ -2,10 +2,10 @@ import { DEFAULT_VALUE, HELP, IDENTIFIER, MANDATORY, POSITION, TEXT } from "../c
 import { titleValidation } from "../utils/validations/titleValidation";
 
 export const defaultAttributes = {
-	text: { title: "Question title" },
+	text: { title: "Question Title" },
 	mandatory: { title: "Mandatory" },
 	identifier: { title: "Identifier" },
-	help: { title: "Help text" },
+	help: { title: "Help Text" },
 	defaultValue: { title: "Default Value" },
 	position: { title: "Position" },
 	externalId: { title: "External ID" },
