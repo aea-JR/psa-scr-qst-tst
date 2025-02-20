@@ -214,66 +214,66 @@ The `Questionnaire` widget is the main widget for creating and managing question
 
 The `Questionnaire` widget has the following properties divided into several tabs:
 
-- "General" tab
-  - Title: Enter the title for the questionnaire.
-  - Response Mode: Select the [response mode](#supported-questionnaire-input-types-response-mode) for the questionnaire.
-  - Additional CSS Classes: Specify additional CSS class names to be added to the main container of the questionnaire. Separate multiple class names with spaces.
-  - Enable fixed height: Manually set the form height if enabled.
-  - Form height: Enter the height of the questionnaire content measured in em units.
-  - Scrollbar width: Select the width of the scrollbar. "None" will hide the scrolbar.
-  - Overscroll behavior: Select how overscrolling should behave, i.e. it scrolls also the container."
-- "ID's" tab
-  - External ID: The external reference ID for the questionnaire.
-  - Questionnaire ID (GID): The questionnaire ID in PisaSales.(Visible after questionnaire got created)
-- "Answer Context" tab
-  - Activity ID Source: Select whether to manually enter the Activity ID or retrieve it from a DataItem attribute.
-  - Activity ID: Manully enter the Activity ID. (Visible if selected source is "manual")
-  - Name of the data attribute in question: Enter the name of the data attribute to read the activity id from.(Visible if selected source is "DataItem")
-  - Activity ID data attribute value: The value behind the data item attribute name.(Visible if selected source is "DataItem")
-  - Contact ID Source: Select whether to manually enter the Contact ID or retrieve it from a DataItem attribute.
-  - Contact ID: Manully enter the Contact ID. (Visible if selected source is "manual")
-  - Name of the data attribute in question: Enter the name of the data attribute to read the contact id from.(Visible if selected source is "DataItem")
-  - Contact ID data attribute value: The value behind the data item attribute name.(Visible if selected source is "DataItem")
-  - Project ID Source: Select whether to manually enter the Project ID or retrieve it from a DataItem attribute.
-  - Project ID: Manully enter the Project ID. (Visible if selected source is "manual")
-  - Name of the data attribute in question: Enter the name of the data attribute to read the project id from.(Visible if selected source is "DataItem")
-  - Project ID data attribute value: The value behind the data item attribute name.(Visible if selected source is "DataItem")
-- "Submission messages" tab
-  - Submitting message type: Select the type of message displayed while the questionnaire answers are being submitted.
-  - Submitting message: Message shown while the questionnaire answers are being submitted. (Visible if submitting message type is set to `Default text`).
-  - Submitting content: Widgets shown while the questionnaire answers are being submitted. (Visible if submitting message type is set to `Custom content`).
-  - Preview submitting message/widgets: Preview the message or content displayed while the questionnaire answers are being submitted. Works only in edit mode.
-  - Submission success message type: Select the type of message displayed after successful answer submission.
-  - Submitted message: Message shown after the answers are successfully submitted. (Visible if submission success message type is set to `Default text`).
-  - Submission success content: Widgets shown after the answers are successfully submitted. (Visible if submission success message type is set to `Custom content`).
-  - Preview success message/widgets: Preview the message or content displayed after the answers are successfully submitted. Works only in edit mode.
-  - Submission failure message type: Select the type of failure message displayed upon submission failure.
-  - Failed message: Message shown if the answer submission failed. (Visible if submission failure message type is set to `Default text`).
-  - Submission failure content: Widgets shown if the answer submission failed. (Visible if submission failure message type is set to `Custom content`).
-  - Show retry button: Show a retry button at the end of the message/widgets.
-  - Retry button text: The text for the retry button.
-  - Retry button alignment: Alignment for the retry button.
-  - Preview failed message/widgets: Preview the message or content displayed if the answer submission failed. Works only in edit mode.
-- "Steps" tab
-  - Steps: Configure the questionnaire steps.
-- "Review" tab
-  - Enable Review: Adds a button to the last step of "Multiple Steps" for reviewing the answers.
-  - Review button text: The text for the review button.
-  - Show steps: Shows the steps in the review dialog.
-  - Include empty answers: Includes empty answers in the review dialog, otherwise only non empty answers are shown.
-  - Show header: Adds a header to the review dialog.
-  - Header title: The title of the review header.
-  - Show footer: Adds a footer with a button for closing the review dialog.
-  - Close button text: The text on the button for closing the review dialog.
+- **General** tab
+  - **Title:** Enter the title for the questionnaire.
+  - **Response Mode:** Select the [response mode](#supported-questionnaire-input-types-response-mode) for the questionnaire.
+  - **Additional CSS Classes:** Specify additional CSS class names to be added to the main container of the questionnaire. Separate multiple class names with spaces.
+  - **Enable fixed height:** Manually set the form height if enabled.
+  - **Form height:** Enter the height of the questionnaire content measured in em units.
+  - **Scrollbar width:** Select the width of the scrollbar. "None" will hide the scrolbar.
+  - **Overscroll behavior:** Select how overscrolling should behave, i.e. it scrolls also the container."
+- **ID's** tab
+  - **External ID:** The external reference ID for the questionnaire.
+  - **Questionnaire ID (GID):** The questionnaire ID in PisaSales.(Visible after questionnaire got created)
+- **Answer Context** tab
+  - **Activity ID Source:** Select whether to manually enter the Activity ID or retrieve it from a DataItem attribute.
+  - **Activity ID:** Manully enter the Activity ID. (Visible if selected source is "manual")
+  - **Name of the data attribute in question:** Enter the name of the data attribute to read the activity id from.(Visible if selected source is "DataItem")
+  - **Activity ID data attribute value:** The value behind the data item attribute name.(Visible if selected source is "DataItem")
+  - **Contact ID Source:** Select whether to manually enter the Contact ID or retrieve it from a DataItem attribute.
+  - **Contact ID:** Manully enter the Contact ID. (Visible if selected source is "manual")
+  - **Name of the data attribute in question:** Enter the name of the data attribute to read the contact id from.(Visible if selected source is "DataItem")
+  - **Contact ID data attribute value:** The value behind the data item attribute name.(Visible if selected source is "DataItem")
+  - **Project ID Source:** Select whether to manually enter the Project ID or retrieve it from a DataItem attribute.
+  - **Project ID:** Manully enter the Project ID. (Visible if selected source is "manual")
+  - **Name of the data attribute in question:** Enter the name of the data attribute to read the project id from.(Visible if selected source is "DataItem")
+  - **Project ID data attribute value:** The value behind the data item attribute name.(Visible if selected source is "DataItem")
+- **Submission messages** tab
+  - **Submitting message type:** Select the type of message displayed while the questionnaire answers are being submitted.
+  - **Submitting message:** Message shown while the questionnaire answers are being submitted. (Visible if submitting message type is set to `Default text`).
+  - **Submitting content:** Widgets shown while the questionnaire answers are being submitted. (Visible if submitting message type is set to `Custom content`).
+  - **Preview submitting message/widgets:** Preview the message or content displayed while the questionnaire answers are being submitted. Works only in edit mode.
+  - **Submission success message type:** Select the type of message displayed after successful answer submission.
+  - **Submitted message:** Message shown after the answers are successfully submitted. (Visible if submission success message type is set to `Default text`).
+  - **Submission success content:** Widgets shown after the answers are successfully submitted. (Visible if submission success message type is set to `Custom content`).
+  - **Preview success message/widgets:** Preview the message or content displayed after the answers are successfully submitted. Works only in edit mode.
+  - **Submission failure message type:** Select the type of failure message displayed upon submission failure.
+  - **Failed message:** Message shown if the answer submission failed. (Visible if submission failure message type is set to `Default text`).
+  - **Submission failure content:** Widgets shown if the answer submission failed. (Visible if submission failure message type is set to `Custom content`).
+  - **Show retry button:** Show a retry button at the end of the message/widgets.
+  - **Retry button text:** The text for the retry button.
+  - **Retry button alignment:** Alignment for the retry button.
+  - **Preview failed message/widgets:** Preview the message or content displayed if the answer submission failed. Works only in edit mode.
+- **Steps** tab
+  - **Steps:** Configure the questionnaire steps.
+- **Review** tab
+  - **Enable Review:** Adds a button to the last step of "Multiple Steps" for reviewing the answers.
+  - **Review button text:** The text for the review button.
+  - **Show steps:** Shows the steps in the review dialog.
+  - **Include empty answers:** Includes empty answers in the review dialog, otherwise only non empty answers are shown.
+  - **Show header:** Adds a header to the review dialog.
+  - **Header title:** The title of the review header.
+  - **Show footer:** Adds a footer with a button for closing the review dialog.
+  - **Close button text:** The text on the button for closing the review dialog.
 
-- "Navigation area" tab (Content depends on form type i.e. single-step or multiple-steps)
-  - Forward button text: Text for the forward button.
-  - Backward button text: Text for the backward button.
-  - Submit button text: Text for the submit button.
-  - Alignment: Alignment for the single-step questionnaire submit button.
-- "PisaSales Questionnaire Management" tab (Content depends on the current questionnaire status)
-  - Create button: Fully [creates the questionnaire](#creating-a-questionnaire) on PisaSales side. (Visible if questionnaire has not been created yet)
-  - Push changes button: [Push all changes](#updating-a-questionnaire) made for the questionnaire to PisaSales. (Visible if questionnaire has unsynced changes)
+- **Navigation area** tab (Content depends on form type i.e. single-step or multiple-steps)
+  - **Forward button text:** Text for the forward button.
+  - **Backward button text:** Text for the backward button.
+  - **Submit button text:** Text for the submit button.
+  - **Alignment:** Alignment for the single-step questionnaire submit button.
+- **PisaSales Questionnaire Management** tab (Content depends on the current questionnaire status)
+  - **Create button:** Fully [creates the questionnaire](#creating-a-questionnaire) on PisaSales side. (Visible if questionnaire has not been created yet)
+  - **Push changes button:** [Push all changes](#updating-a-questionnaire) made for the questionnaire to PisaSales. (Visible if questionnaire has unsynced changes)
 
 ### Validation
 
@@ -305,16 +305,16 @@ The `Questionnaire Select Question` widget enables you to create single or multi
 
 ### Properties
 
-- Question title: Specify the title for the question.
-- Help text: Provide optional help text for the select input.
-- Default value: Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B).
-- Identifier: Specify a unique identifier for the question.
-- Mandatory: Indicates whether selection is required.
-- Position: The position of the question (Read-only).
-- Input type: Choose the type of input, which can be single select (radio buttons or dropdown) or multi-select (checkboxes).
-- Use as Conditional Container: Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met.
-- External ID: The external reference ID for the question.
-- Question ID (GID): The question ID in PisaSales.(Visible after question got created)
+- **Question title:** Specify the title for the question.
+- **Help text:** Provide optional help text for the select input.
+- **Default value:** Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B).
+- **Identifier:** Specify a unique identifier for the question.
+- **Mandatory:** Indicates whether selection is required.
+- **Position:** The position of the question (Read-only).
+- **Input Type:** Choose the type of selection: `Dropdown, Radio buttons, Multi-select checkboxes.`
+- **Use as Conditional Container:** Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met.
+- **External ID:** The external reference ID for the question.
+- **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
 ### Validation
 
@@ -323,21 +323,38 @@ The `Questionnaire Select Question` widget enables you to create single or multi
 - Default value must start with # and match answer option identifier
 - Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
 
+## PisaSales Questionnaire Answer Option Widget
+The `Questionnaire Answer Option` widget represents an individual answer option for a `Select Question` (Dropdown, Radio, or Multi-Select Checkboxes).
+
+### Properties
+-	**Answer:** Define the label of the answer option.
+- **Identifier:** Specify a unique identifier for the answer option (must be unique within the same Select Question).
+- **Position:** The position of the answer option (Read-only).
+- **External ID:** The external reference ID for the answer option.
+- **Answer Option ID (GID):** The answer option ID in PisaSales. (Visible after the answer option is created in PisaSales)
+- **Condition Content:** The conditional content associated with this answer option. (Visible only if `Use as Conditional Container` is enabled in the parent Select Question and content is present.)
+
+### Validation
+- The Answer Option widget must be placed within a PisaSales Questionnaire Select Question widget.
+- The Answer cannot be empty.
+- The Identifier must be unique within the same Select Question.
+
+
 ## PisaSales Questionnaire Input Question Widget
 
 The `Questionnaire Input Question` widget enables you to create input questions, including string single line, string multi line, float, integer, date and date-time in your form.
 
 ### Properties
 
-- Question title: Specify the title for the question.
-- Help text: Provide optional help text.
-- Default value: Specify the default value for the question.
-- Identifier: Specify a unique identifier for the question.
-- Mandatory: Indicates whether the input field is required.
-- Position: The position of the question (Read-only).
-- Input type: Choose the type of input, which can be Single-line (String), Multi-line (String), Float (Number), Integer (Number), Date (Date) and Date-time (Date).
-- External ID: The external reference ID for the question.
-- Question ID (GID): The question ID in PisaSales.(Visible after question got created)
+- **Question title:** Specify the title for the question.
+- **Help text:** Provide optional help text.
+- **Default value:** Specify the default value for the question.
+- **Identifier:** Specify a unique identifier for the question.
+- **Mandatory:** Indicates whether the input field is required.
+- **Position:** The position of the question (Read-only).
+- **Input Type:** Choose the type of input: `Single-line (String), Multi-line (String), Float (Number), Integer (Number), Date (Date), Date-time (Date & Time).`
+- **External ID:** The external reference ID for the question.
+- **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
 ### Validation
 
@@ -345,6 +362,29 @@ The `Questionnaire Input Question` widget enables you to create input questions,
 - The Question title cannot be empty.
 - Default value validation depends on the selected input type. For Integer, the default value must be a whole number. For Float, it must be a decimal number. For Date and Date-Time, you must use either the UTC format (YYYY-MM-DDTHH:MM:SSZ) or the ISO 8601 basic format (YYYYMMDDHHMMSS). 
 - Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
+
+## PisaSales Questionnaire Checkbox Question Widget
+
+The `Questionnaire Checkbox Question` widget enables you to create single-select checkboxes, including standard checkboxes and tri-state checkboxes.
+
+### Properties
+
+- **Question title:** Specify the title for the question.
+- **Help text:** Provide optional help text.
+- **Default value:** Specify the default value for the checkbox. For standard checkboxes, the value should be true or false. For tri-state checkboxes, possible values are true, false, or unset (empty).
+- **Identifier:** Specify a unique identifier for the question.
+- **Mandatory:** Indicates whether the checkbox selection is required.
+- **Position:** The position of the question (Read-only).
+- **Input Type:** Choose the type of checkbox: `Standard (True/False), Tri-State (True/False/Unset).`
+- **External ID:** The external reference ID for the question.
+- **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
+
+### Vaidation
+-	This widget must be placed within a PisaSales Questionnaire widget to be effective.
+-	The Question title cannot be empty.
+-	Default value validation depends on the selected type. For default checkboxes, the default value must be true or false. For tri-state checkboxes, it must be true, false, or unset (empty).
+-	Identifier must be unique across the questions and follow the Pisa schema. (A-Z, 0-9, _)
+
 
 ## Conditionals in PisaSales Questionnaires
 
