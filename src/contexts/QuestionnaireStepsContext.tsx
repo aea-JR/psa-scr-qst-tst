@@ -88,40 +88,52 @@ export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; q
 const doValidate = (externalId: string, currentStep: number): boolean => {
 	let isValid = true;
 	const form = document.getElementById(externalId);
+	if (!form) return isValid;
 
-	if (form) {
-		const step = form.querySelector(`[data-step-number='${currentStep}']`);
-		if (step) {
-			const allInputs: NodeListOf<InputElements> = step.querySelectorAll("input, select, textarea") || [];
+	const step = form.querySelector(`[data-step-number='${currentStep}']`);
+	if (!step) return isValid;
 
-			// Group checkboxes by their `data-group` attribute
-			const groupedCheckboxes = groupBy(
-				Array.from(allInputs).filter(input => input.type === "checkbox" && input.hasAttribute("data-group")),
-				checkbox => checkbox.getAttribute("data-group")
-			);
 
-			// Validate each checkbox group
-			forEach(groupedCheckboxes, (checkboxes, groupName) => {
-				if (!some(checkboxes as HTMLInputElement[], checkbox => checkbox.checked)) {
+	const allInputs: InputElements[] = Array.from(step.querySelectorAll("input, select, textarea") || []);
+	const processedGroups = new Set(); // to track validated checkbox groups
+
+	// iterate in order & validate accordingly
+	for (const input of allInputs) {
+		if (input.type === "checkbox") {
+			// handle grouped checkboxes
+			if (input.hasAttribute("data-group")) {
+				const group = input.getAttribute("data-group")!;
+				if (processedGroups.has(group)) continue; // skip already validated groups
+
+				const groupCheckboxes = allInputs.filter(el => el.getAttribute("data-group") === group) as HTMLInputElement[];
+				if (!groupCheckboxes.some(cb => cb.checked)) {
 					const message = getBrowserValidationMessage();
-					checkboxes[0].setCustomValidity(message);
-					checkboxes[0].reportValidity();
+					groupCheckboxes[0].setCustomValidity(message);
+					groupCheckboxes[0].reportValidity();
 					return (isValid = false);
 				} else {
-					checkboxes.forEach(checkbox => checkbox.setCustomValidity("")); // Reset message if valid
+					groupCheckboxes.forEach(cb => cb.setCustomValidity(""));
 				}
-			});
-
-			// Perform default validation on other inputs
-			if (isValid) {
-				forEach(allInputs, input => {
-					if (input.type !== "checkbox" || !input.hasAttribute("data-group")) {
-						if (!input.checkValidity()) {
-							input.reportValidity();
-							return (isValid = false);
-						}
-					}
-				});
+				processedGroups.add(group);
+			}
+			// handle tri-state checkboxes
+			else if (input.hasAttribute("data-tristate")) {
+				if (input.getAttribute("data-tristate") === "unset") {
+					input.reportValidity();
+					return (isValid = false);
+				}
+			} else {
+				// normal checkbox validation
+				if (!input.checkValidity()) {
+					input.reportValidity();
+					return (isValid = false);
+				}
+			}
+		} else {
+			// validate other inputs normally
+			if (!input.checkValidity()) {
+				input.reportValidity();
+				return (isValid = false);
 			}
 		}
 	}
