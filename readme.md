@@ -15,10 +15,10 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |-----------------------|----------------------------|------------------------------------|--------------------------|
 | **Input Widget**    | PSA_QST_TPL_QUE_STR | Single-line text input|✅ Implemented           |
 |                     | PSA_QST_TPL_STR_MUL |Multi-line text input  |❌ Not Needed           |
-|                     | PSA_QST_TPL_CLB   | Multi-line text input | ✅ Implemented                  |
+|                     | PSA_QST_TPL_CLB   | Multi-line text input | ✅ Implemented            |
 |                     | PSA_QST_TPL_BLB  | Multi-line text input  | ❌ Not Needed                  |
-|                     | PSA_QST_TPL_INT  | Integer (numeric number input)| ✅ Implemented                |
-|                     | PSA_QST_TPL_FLO  | Float (decimal number input)| ✅ Implemented                |
+|                     | PSA_QST_TPL_INT  | Integer (numeric number input)| ✅ Implemented         |
+|                     | PSA_QST_TPL_FLO  | Float (decimal number input)| ✅ Implemented          |
 |                     | PSA_QST_TPL_DAT_TIM  | Date and time input| ✅ Implemented                |
 |                     | PSA_QST_TPL_DAT  |Date-only input| ✅ Implemented                |
 |                     | PSA_QST_TPL_MON   | Money input field      | Planned                 |
@@ -26,10 +26,10 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_CTY   | Countries dropdown   |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LNG   | Languages dropdown    |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LOB   | Business dropdown         |❌ Rejected (requires API) |
-|                     | PSA_QST_TPL_RAD     | Single-select radios    | ✅ Implemented               |
-|                     | PSA_QST_TPL_CHK     | Multi-select checkboxes    | ✅ Implemented              |
-|**Checkbox Widget**  | PSA_QST_TPL_LOG_NUL  | Tri-state single-select checkbox  | Planned      |
-|                     | PSA_QST_TPL_LOG      | Single-select checkbox  | Planned               |
+|                     | PSA_QST_TPL_RAD     | Single-select radios    | ✅ Implemented            |
+|                     | PSA_QST_TPL_CHK     | Multi-select checkboxes    | ✅ Implemented       |
+|**Checkbox Widget**  | PSA_QST_TPL_LOG_NUL  | Tri-state single-select checkbox  | ✅ Implemented  |
+|                     | PSA_QST_TPL_LOG      | Single-select checkbox  | ✅ Implemented          |
 | **File Widget**     | PSA_QST_TPL_FIL     | Single file upload        |⏳ Pending Decision      |
 |                     | PSA_QST_TPL_FIL_MUL  | Multi-file upload      |⏳ Pending Decision        |
 | **Signature Widget**| PSA_QST_TPL_SIG     | Signature              |⏳ Pending Decision       |
