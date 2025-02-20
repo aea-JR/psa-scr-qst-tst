@@ -1,7 +1,7 @@
 import * as Scrivito from "scrivito";
 
 import generateId from "../../utils/idGenerator";
-import { isEmpty, some } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
 import { QuestionnaireManagementTab } from "../../Components/QuestionnaireManagementTab/QuestionnaireManagementTab";
@@ -9,6 +9,7 @@ import { defaultValidations } from "../defaultQuestionEditingConfig";
 import { isUsageRestricted } from "../../utils/isRestricted";
 import { QuestionnaireStepWidget } from "../QuestionnaireStepWidget/QuestionnaireStepWidgetClass";
 import { ACTIVITY_ID, ACTIVITY_ID_DATA_ITEM_FIELD, ACTIVITY_ID_DATA_ITEM_FIELD_VALUE, ACTIVITY_ID_SOURCE, BACKWARD_BUTTON_TEXT, CONTACT_ID, CONTACT_ID_DATA_ITEM_FIELD, CONTACT_ID_DATA_ITEM_FIELD_VALUE, CONTACT_ID_SOURCE, CUSTOM_CLASS_NAMES, EXTERNAL_ID, FAILED_MESSAGE, FAILED_MESSAGE_TYPE, FAILED_MESSAGE_WIDGETS, FIXED_FORM_HEIGHT, FORM_HEIGHT, FORM_TYPE, FORWARD_BUTTON_TEXT, INCLUDE_EMPTY_ANSWERS, INPUT_TYPE, OVERSCROLL_BEHAVIOR, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, PROJECT_ID, PROJECT_ID_DATA_ITEM_FIELD, PROJECT_ID_DATA_ITEM_FIELD_VALUE, PROJECT_ID_SOURCE, QUESTIONNAIRE_ID, RETRY_BUTTON_ALIGNMENT, RETRY_BUTTON_TEXT, REVIEW_BUTTON_TEXT, REVIEW_CLOSE_BUTTON_TEXT, REVIEW_HEADER_TITLE, SCROLLBAR_WIDTH, SHOW_RETRY_BUTTON, SHOW_REVIEW, SHOW_REVIEW_FOOTER, SHOW_REVIEW_HEADER, SHOW_STEPS_IN_REVIEW, SINGLE_SUBMIT_BUTTON_ALIGNMENT, STEPS, SUBMIT_BUTTON_TEXT, SUBMITTED_MESSAGE, SUBMITTED_MESSAGE_TYPE, SUBMITTED_MESSAGE_WIDGETS, SUBMITTING_MESSAGE, SUBMITTING_MESSAGE_TYPE, SUBMITTING_MESSAGE_WIDGETS, TITLE } from "../../constants/constants";
+import { getQuestionWidgets } from "../../utils/getQuestionWidgets";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
@@ -349,20 +350,8 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       }
     },
     (widget: Scrivito.Widget) => {
-      const allWidgets = widget.widgets();
-      //TODO: improve
-      if (allWidgets.length <= 0) {
-        return "The questionnaie must include at least one question.";
-      }
-      const hasQuestion = some(
-        allWidgets,
-        (c) =>
-          c.objClass() == "InputQuestionWidget" ||
-          c.objClass() == "SelectQuestionWidget" ||
-          c.objClass() == "PisaQuestionnaireCheckboxWidget"
-
-      );
-      if (!hasQuestion) {
+      const questions = getQuestionWidgets(widget);
+      if (isEmpty(questions)) {
         return "The questionnaie must include at least one question.";
       }
       if (isUsageRestricted(widget)) {

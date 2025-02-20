@@ -1,9 +1,10 @@
-import { isEmpty, filter } from "lodash-es";
+import { isEmpty } from "lodash-es";
 import { Widget } from "scrivito";
 import { Question, AnswerOption } from "../types/questionnaire";
 import { convertWidgetsToAnswerOptions } from "./convertoAnswerOptions";
 import { convertWidgetToQuestion } from "./convertoQuestion";
 import { OPTIONS } from "../constants/constants";
+import { getQuestionWidgets } from "./getQuestionWidgets";
 
 export const extractQuestionsAndOptions = (widget: Widget) => {
 	const questionsAndOptions: { questions: Question[], answerOptions: Map<string, AnswerOption[]>, questionWidgets: Widget[], optionWidgets: Widget[] } = {
@@ -12,20 +13,8 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		questionWidgets: [],
 		optionWidgets: []
 	}
-	const allWidgets = widget.widgets();
-	if (isEmpty(allWidgets)) {
-		return questionsAndOptions;
-	}
 
-	//TODO: improve
-	const questionWidgets = filter(
-		allWidgets,
-		(c) =>
-			c.objClass() == "InputQuestionWidget" ||
-			c.objClass() == "SelectQuestionWidget" ||
-			c.objClass() == "PisaQuestionnaireCheckboxWidget"
-		,
-	);
+	const questionWidgets = getQuestionWidgets(widget);
 	if (isEmpty(questionWidgets)) {
 		return questionsAndOptions;
 	}
