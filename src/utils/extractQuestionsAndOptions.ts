@@ -22,7 +22,9 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		allWidgets,
 		(c) =>
 			c.objClass() == "InputQuestionWidget" ||
-			c.objClass() == "SelectQuestionWidget",
+			c.objClass() == "SelectQuestionWidget" ||
+			c.objClass() == "PisaQuestionnaireCheckboxWidget"
+		,
 	);
 	if (isEmpty(questionWidgets)) {
 		return questionsAndOptions;

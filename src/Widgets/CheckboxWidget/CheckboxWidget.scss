@@ -1,0 +1,24 @@
+.pisa-questionnaire-widgets {
+  $gray : #666666;
+
+  .form-check-input {
+    &.unset {
+      background-color: $gray ;
+      border-color: $gray;
+      opacity: 0.3;
+      &:focus {
+        box-shadow: 0 0 0 0.25rem lightgray;
+      }
+    }
+  }
+  
+  .form-check-label {
+    margin-left: 0.3em;
+    display: inline;
+    
+    p {
+      display: inline;
+      margin: 0;
+    }
+  }
+}

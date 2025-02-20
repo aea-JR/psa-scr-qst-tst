@@ -358,7 +358,9 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
         allWidgets,
         (c) =>
           c.objClass() == "InputQuestionWidget" ||
-          c.objClass() == "SelectQuestionWidget",
+          c.objClass() == "SelectQuestionWidget" ||
+          c.objClass() == "PisaQuestionnaireCheckboxWidget"
+
       );
       if (!hasQuestion) {
         return "The questionnaie must include at least one question.";

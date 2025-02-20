@@ -2,12 +2,13 @@ import { filter, isEmpty, isNil, some } from "lodash-es";
 import { Widget } from "scrivito";
 import { isUTCDate } from "./isUTCDate";
 import { isPisaDate } from "./isPisaDate";
-import { DEFAULT_VALUE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
+import { DEFAULT_VALUE, INPUT_TYPE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
   const title = qstMainWidget.get(TITLE) as string;
+  const type = qstMainWidget.get(INPUT_TYPE);
 
-  if (isEmpty(title)) {
+  if (isEmpty(title) || isEmpty(type)) {
     return false;
   }
   const allWidgets = qstMainWidget.widgets();
@@ -22,7 +23,8 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     allWidgets,
     (c) =>
       c.objClass() == "InputQuestionWidget" ||
-      c.objClass() == "SelectQuestionWidget",
+      c.objClass() == "SelectQuestionWidget" ||
+      c.objClass() == "PisaQuestionnaireCheckboxWidget"
   );
   if (isEmpty(questions)) {
     return false;
