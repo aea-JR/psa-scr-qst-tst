@@ -21,7 +21,7 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_FLO  | Float (decimal number input)| ✅ Implemented          |
 |                     | PSA_QST_TPL_DAT_TIM  | Date and time input| ✅ Implemented                |
 |                     | PSA_QST_TPL_DAT  |Date-only input| ✅ Implemented                |
-|                     | PSA_QST_TPL_MON   | Money input field      | Planned                 |
+|                     | PSA_QST_TPL_MON   | Money input field      | ❌ Not Planned     |
 | **Select Widget** | PSA_QST_TPL_CHC  | Regular dropdown   |✅ Implemented             |
 |                     | PSA_QST_TPL_CTY   | Countries dropdown   |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LNG   | Languages dropdown    |❌ Rejected (requires API) |
