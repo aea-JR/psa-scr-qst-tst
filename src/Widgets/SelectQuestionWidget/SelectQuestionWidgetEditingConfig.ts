@@ -5,7 +5,7 @@ import { Widget } from "scrivito";
 
 import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClass";
 import { compact, isEmpty, map, some } from "lodash-es";
-import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
+import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
 
@@ -38,8 +38,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   },
 
   attributes: {
-    text: { title: "Question title" },
-    mandatory: { title: "Mandatory" },
+    ...defaultAttributes,
     type: {
       title: "Input Type",
       values: [
@@ -48,23 +47,14 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
         { title: "Checkboxes", value: "string_checkboxes" }
       ],
     },
-    identifier: { title: "Identifier" },
-    help: { title: "Help text" },
-    defaultValue: {
-      title: "Default value",
-      description: "Specify the default value for the question. For single selection types, use a value starting with # matching one of the option identifiers. For multiple selection (checkboxes), provide a comma-separated list of values, each starting with # (e.g., #A,#B)."
-    },
     enableConditionals: {
       title: "Use as Conditional Container",
       description: "Enables this question to act as a conditional container. Each answer option will represent a condition, and associated content will only display if the condition is met. Disable this feature only after ensuring there are no nested questions or widgets under the conditions."
     },
-    externalId: { title: "External ID" },
-    questionId: { title: "Question ID (GID)" },
   },
   initialContent: {
     ...defaultInitialContent,
     type: "string_dropdown",
-    mandatory: false,
     enableConditionals: false,
     options: [
       new QuestionnaireAnswerOptionWidget({ text: "First Option" }),
