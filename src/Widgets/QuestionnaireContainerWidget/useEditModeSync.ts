@@ -43,7 +43,7 @@ export const useEditModeSync = (qstMainWidget: Widget) => {
 		qstMainWidget.update({
 			formType: stepsLength > 1 ? "multi-step" : "single-step",
 		});
-	}, [steps]);
+	}, [steps.length]);
 
 	// Sync Context ID Previews
 	useEffect(() => {
