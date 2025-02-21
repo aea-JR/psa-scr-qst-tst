@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { each, find, isEmpty } from "lodash-es";
+import { compact, each, find, isEmpty } from "lodash-es";
 import { useAnswer } from "../../hooks/useAnswer";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
@@ -25,20 +25,22 @@ export const useSelectQuestion = (widget: Widget) => {
 
 	const getInitialValueAndIdentifiers = useCallback(() => {
 		if (isEmpty(defaultValue)) {
-			return { values: [""], identifiers: [""] };
+			return { values: [], identifiers: [] };
 		}
 		if (isMultiSelect) {
-			const selectedOptions = options.filter((option) =>
-				defaultValue.includes(option.get(IDENTIFIER) as string)
-			);
+			const selectedOptions = options.filter((option) => {
+				const identifier = option.get(IDENTIFIER) as string;
+				return identifier && defaultValue.includes(identifier);
+			});
 			return {
 				values: selectedOptions.map((option) => option.get(TEXT) as string),
 				identifiers: selectedOptions.map((option) => option.get(IDENTIFIER) as string),
 			};
 		} else {
-			const defaultOption = find(options, (option) =>
-				defaultValue.includes(option.get(IDENTIFIER) as string)
-			);
+			const defaultOption = find(options, (option) => {
+				const identifier = option.get(IDENTIFIER) as string;
+				return !isEmpty(identifier) && defaultValue.includes(identifier);
+			});
 			if (defaultOption) {
 				return {
 					values: [defaultOption.get(TEXT) as string],
@@ -46,7 +48,7 @@ export const useSelectQuestion = (widget: Widget) => {
 				};
 			}
 		}
-		return { values: [""], identifiers: [""] };
+		return { values: [], identifiers: [] };
 	}, [defaultValue, options, isMultiSelect]);
 
 	const initialValues = useMemo(() => getInitialValueAndIdentifiers(), [getInitialValueAndIdentifiers]);
