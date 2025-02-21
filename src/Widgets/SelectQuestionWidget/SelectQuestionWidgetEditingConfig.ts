@@ -96,22 +96,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
 
   },
   validations: [
-    ...defaultValidations as any,
-    [
-      IDENTIFIER,
-      (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
-        if (!isIdentifierUnique(widget, "SelectQuestionWidget")) {
-          return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
-        }
-
-        if (identifier && !/^[A-Z0-9_]+$/.test(identifier)) {
-          return "Specifiy a valid identifier! Follow the PisaSales Schema (A-Z0-9_)";
-        }
-        if (identifier.length > 32) {
-          return "Maximum identifier character length of 32 exceeded!";
-        }
-      },
-    ],
+    ...defaultValidations,
     [
       DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {

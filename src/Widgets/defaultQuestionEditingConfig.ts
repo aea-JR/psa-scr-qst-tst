@@ -1,4 +1,5 @@
 import { DEFAULT_VALUE, HELP, IDENTIFIER, MANDATORY, POSITION, TEXT } from "../constants/constants";
+import { identifierValidation } from "../utils/validations/identifierValidation";
 import { titleValidation } from "../utils/validations/titleValidation";
 import { typeValidation } from "../utils/validations/typeValidation";
 
@@ -36,5 +37,6 @@ export const defaultProperties = [
 
 export const defaultValidations = [
 	titleValidation,
-	typeValidation
-] as const;
+	typeValidation,
+	identifierValidation
+];

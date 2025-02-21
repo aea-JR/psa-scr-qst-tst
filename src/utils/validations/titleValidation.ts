@@ -6,4 +6,4 @@ export const titleValidation = [
 		if (!text) { return "Title can not be empty."; }
 		return null;
 	},
-];
+] as const;

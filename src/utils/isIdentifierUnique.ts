@@ -3,13 +3,13 @@ import { isEmpty } from "lodash-es";
 import { getIdentifier } from "./getIdentifier";
 import { getQuestionnaireContainerWidget } from "./getQuestionnaireContainerWidget";
 import { CONTENT, STEPS } from "../constants/constants";
-
-export function isIdentifierUnique(widget: Widget, type: string) {
+type WidgetType = "option" | "question";
+export function isIdentifierUnique(widget: Widget, type: WidgetType) {
   const identifier = getIdentifier(widget);
   if (isEmpty(identifier)) {
     return true;
   }
-  return type === "AnswerOptionWidget"
+  return type === "option"
     ? isOptionIdentifierUnique(identifier, widget)
     : isQuestionIdentifierUnique(identifier, widget);
 }

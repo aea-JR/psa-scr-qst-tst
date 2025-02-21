@@ -7,4 +7,4 @@ export const typeValidation = [
 		return null;
 	}
 
-]
+] as const;

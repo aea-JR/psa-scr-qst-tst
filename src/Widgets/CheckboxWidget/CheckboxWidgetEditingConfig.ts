@@ -1,11 +1,8 @@
 import * as Scrivito from "scrivito";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
-import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
+import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE } from "../../constants/constants";
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
-import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
-import { isEmpty } from "lodash-es";
-
 
 Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
@@ -54,22 +51,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
     type: "logic",
   },
   validations: [
-    ...defaultValidations as any,
-    [
-      IDENTIFIER,
-      (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
-        if (!isIdentifierUnique(widget, "QuestionnaireCheckboxQuestionWidget")) {
-          return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
-        }
-
-        if (identifier && !/^[A-Z0-9_]+$/.test(identifier)) {
-          return "Specifiy a valid identifier! Follow the PisaSales Schema (A-Z0-9_)";
-        }
-        if (identifier.length > 32) {
-          return "Maximum identifier character length of 32 exceeded!";
-        }
-      },
-    ],
+    ...defaultValidations,
     [
       DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {

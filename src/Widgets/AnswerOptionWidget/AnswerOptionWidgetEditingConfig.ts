@@ -4,6 +4,7 @@ import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { isEmpty } from "lodash-es";
 import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, TEXT } from "../../constants/constants";
+import { identifierValidation } from "../../utils/validations/identifierValidation";
 
 Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
   initialize: (obj) => {
@@ -56,21 +57,7 @@ Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
     return props;
   },
   validations: [
-    [
-      IDENTIFIER,
-      (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
-        if (!isIdentifierUnique(widget, "AnswerOptionWidget")) {
-          return "Specify a unique Identifier. There is at least one other option with the same Identfier.";
-        }
-
-        if (identifier && !/^[A-Z0-9_]+$/.test(identifier)) {
-          return "Specifiy a valid identifier! Follow the PisaSales Schema (A-Z0-9_)";
-        }
-        if (identifier.length > 32) {
-          return "Maximum identifier character length of 32 exceeded!";
-        }
-      },
-    ],
+    identifierValidation,
     [
       TEXT,
       (text: string) => {
