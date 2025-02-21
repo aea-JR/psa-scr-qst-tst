@@ -1,7 +1,7 @@
 import { Widget } from "scrivito";
 import { Question } from "../types/questionnaire";
-import { SelectQuestionWidget } from "../Widgets/SelectQuestionWidget/SelectQuestionWidgetClass";
-import { InputQuestionWidget } from "../Widgets/InputQuestionWidget/InputQuestionWidgetClass";
+import { QuestionnaireInputQuestionWidget } from "../Widgets/InputQuestionWidget/InputQuestionWidgetClass";
+import { QuestionnaireSelectQuestionWidget } from "../Widgets/SelectQuestionWidget/SelectQuestionWidgetClass";
 
 /**
  * NOT USED
@@ -18,9 +18,9 @@ export const createNewQuestionWidget = (question: Question, questionId: string):
 		case "floating_point":
 		case "date":
 		case "date_time":
-			return new InputQuestionWidget({ ...question, questionId: questionId });
+			return new QuestionnaireInputQuestionWidget({ ...question, questionId: questionId });
 		case "string_dropdown":
-			return new SelectQuestionWidget({ ...question, questionId: questionId, options: [] });
+			return new QuestionnaireSelectQuestionWidget({ ...question, questionId: questionId, options: [] });
 		default:
 			throw "Unable to create new question widget. Invalid type!";
 	}
