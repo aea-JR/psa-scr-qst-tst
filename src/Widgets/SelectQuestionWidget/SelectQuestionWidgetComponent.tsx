@@ -1,5 +1,5 @@
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
-import { SelectQuestionWidget } from "./SelectQuestionWidgetClass";
+import { QuestionnaireSelectQuestionWidget } from "./SelectQuestionWidgetClass";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { Dropdown } from "./Dropdown";
@@ -9,7 +9,7 @@ import { useSelectQuestion } from "./useSelectQuestion";
 import "./SelectQuestionWidget.scss";
 import { OPTIONS, TEXT } from "../../constants/constants";
 
-provideComponent(SelectQuestionWidget, ({ widget }) => {
+provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
 
   const {
     externalId,

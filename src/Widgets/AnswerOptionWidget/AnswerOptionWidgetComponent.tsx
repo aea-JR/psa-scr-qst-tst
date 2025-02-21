@@ -1,5 +1,5 @@
 import "./AnswerOptionWidget.scss";
-import { AnswerOptionWidget } from "./AnswerOptionWidgetClass";
+import { QuestionnaireAnswerOptionWidget } from "./AnswerOptionWidgetClass";
 import { useConditionContext } from "../../contexts/ConditionContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
@@ -9,7 +9,7 @@ import { useFormContext } from "../../contexts/FormContext";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { CONTENT, EXTERNAL_ID, QUESTION_ID, TEXT } from "../../constants/constants";
 
-provideComponent(AnswerOptionWidget, ({ widget }) => {
+provideComponent(QuestionnaireAnswerOptionWidget, ({ widget }) => {
 
 	const { getConditionData } = useConditionContext();
 	const { setExcludedFromSubmit } = useFormContext();

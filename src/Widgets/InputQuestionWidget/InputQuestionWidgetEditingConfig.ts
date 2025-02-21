@@ -8,11 +8,11 @@ import { isUTCDate } from "../../utils/isUTCDate";
 import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 import { isEmpty } from "lodash-es";
 
-Scrivito.provideEditingConfig("InputQuestionWidget", {
+Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       const id = generateId();
-      console.log("setting externalId for InputQuestionWidget fron initialize: " + id);
+      console.log("setting externalId for QuestionnaireInputQuestionWidget fron initialize: " + id);
       obj.update({ externalId: id });
     }
   },

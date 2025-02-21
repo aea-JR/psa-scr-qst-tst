@@ -5,7 +5,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { isEmpty } from "lodash-es";
 import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, TEXT } from "../../constants/constants";
 
-Scrivito.provideEditingConfig("AnswerOptionWidget", {
+Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       console.log("setting externalId fron initialize");

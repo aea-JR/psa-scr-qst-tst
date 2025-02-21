@@ -1,12 +1,12 @@
 import { provideComponent } from "scrivito";
-import { PisaQuestionnaireCheckboxWidget } from "./CheckboxWidgetClass";
+import { QuestionnaireCheckboxQuestionWidget } from "./CheckboxWidgetClass";
 import { SingleCheckbox } from "./Checkboxes/SingleCheckbox";
 import { TriStateCheckbox } from "./Checkboxes/TriStateCheckbox";
 import { useExternalId } from "../../hooks/useExternalId";
 import { TYPE, MANDATORY, EXTERNAL_ID, QUESTION_ID, IDENTIFIER, HELP, DEFAULT_VALUE } from "../../constants/constants";
 import "./CheckboxWidget.scss";
 
-provideComponent(PisaQuestionnaireCheckboxWidget, ({ widget }) => {
+provideComponent(QuestionnaireCheckboxQuestionWidget, ({ widget }) => {
   const type = widget.get(TYPE) || "logic";
   const required = widget.get(MANDATORY);
   const externalId = widget.get(EXTERNAL_ID);

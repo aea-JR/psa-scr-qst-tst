@@ -1,10 +1,9 @@
 import { useEffect } from "react";
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
 import { isEmpty } from "lodash-es";
-import { InputQuestionWidget } from "./InputQuestionWidgetClass";
+import { QuestionnaireInputQuestionWidget } from "./InputQuestionWidgetClass";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";
-import "./InputQuestionWidget.scss";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useAnswer } from "../../hooks/useAnswer";
 import { StringSingleLineInput } from "./Inputs/StringSingleLineInput";
@@ -13,8 +12,9 @@ import { NumberInput } from "./Inputs/NumberInput";
 import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
 import { DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
+import "./InputQuestionWidget.scss";
 
-provideComponent(InputQuestionWidget, ({ widget }) => {
+provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const id = `questionnaire_input_widget_${widget.id()}`;
   const externalId = widget.get(EXTERNAL_ID);
   const required = widget.get(MANDATORY);

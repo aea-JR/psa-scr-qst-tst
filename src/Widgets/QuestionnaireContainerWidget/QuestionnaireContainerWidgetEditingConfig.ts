@@ -3,7 +3,7 @@ import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
 import { isEmpty } from "lodash-es";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
-import { InputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
+import { QuestionnaireInputQuestionWidget } from "../InputQuestionWidget/InputQuestionWidgetClass";
 import { QuestionnaireManagementTab } from "../../Components/QuestionnaireManagementTab/QuestionnaireManagementTab";
 import { defaultValidations } from "../defaultQuestionEditingConfig";
 import { isUsageRestricted } from "../../utils/isRestricted";
@@ -298,7 +298,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     steps: [new QuestionnaireStepWidget({
       isSingleStep: true,
       content: [
-        new InputQuestionWidget({})
+        new QuestionnaireInputQuestionWidget({})
       ]
     })],
     externalId: () => generateId(),

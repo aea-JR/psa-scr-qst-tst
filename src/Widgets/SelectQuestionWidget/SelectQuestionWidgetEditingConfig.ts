@@ -4,14 +4,13 @@ import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { Widget } from "scrivito";
 
-import { AnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClass";
-//import { OptionsComponent } from "../../Components/AnswerOptionsTab/OptionsComponent";
+import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClass";
 import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 
-Scrivito.provideEditingConfig("SelectQuestionWidget", {
+Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       console.log("setting externalId fron initialize");
@@ -69,8 +68,8 @@ Scrivito.provideEditingConfig("SelectQuestionWidget", {
     mandatory: false,
     enableConditionals: false,
     options: [
-      new AnswerOptionWidget({ text: "First Option" }),
-      new AnswerOptionWidget({ text: "Second Option" })
+      new QuestionnaireAnswerOptionWidget({ text: "First Option" }),
+      new QuestionnaireAnswerOptionWidget({ text: "Second Option" })
     ]
   },
   properties: (widget) => {

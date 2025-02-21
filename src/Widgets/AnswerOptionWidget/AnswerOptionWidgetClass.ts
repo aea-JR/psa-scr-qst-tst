@@ -1,6 +1,6 @@
 import { provideWidgetClass } from "scrivito";
 
-export const AnswerOptionWidget = provideWidgetClass("AnswerOptionWidget", {
+export const QuestionnaireAnswerOptionWidget = provideWidgetClass("QuestionnaireAnswerOptionWidget", {
   attributes: {
     text: "string",
     identifier: "string",
@@ -11,5 +11,5 @@ export const AnswerOptionWidget = provideWidgetClass("AnswerOptionWidget", {
     content: "widgetlist",
     isCondition: "boolean",
   },
-  onlyInside: ["SelectQuestionWidget"],
+  onlyInside: ["QuestionnaireSelectQuestionWidget"],
 });

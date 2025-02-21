@@ -7,12 +7,12 @@ import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { isEmpty } from "lodash-es";
 
 
-Scrivito.provideEditingConfig("PisaQuestionnaireCheckboxWidget", {
+Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       const id = generateId();
-      console.log("setting externalId for PisaQuestionnaireCheckboxWidget fron initialize: " + id);
+      console.log("setting externalId for QuestionnaireCheckboxQuestionWidget fron initialize: " + id);
       obj.update({ externalId: id });
     }
   },
@@ -27,7 +27,7 @@ Scrivito.provideEditingConfig("PisaQuestionnaireCheckboxWidget", {
       return;
     }
     const id = generateId();
-    console.log("Copying child widget for PisaQuestionnaireCheckboxWidget w: " + id);
+    console.log("Copying child widget for QuestionnaireCheckboxQuestionWidget w: " + id);
     child.update({ externalId: id, questionId: null });
   },
 
@@ -58,7 +58,7 @@ Scrivito.provideEditingConfig("PisaQuestionnaireCheckboxWidget", {
     [
       IDENTIFIER,
       (identifier: string, { widget }: { widget: Scrivito.Widget }) => {
-        if (!isIdentifierUnique(widget, "PisaQuestionnaireCheckboxWidget")) {
+        if (!isIdentifierUnique(widget, "QuestionnaireCheckboxQuestionWidget")) {
           return "Specify a unique Identifier. There is at least one other question with the same Identfier.";
         }
 

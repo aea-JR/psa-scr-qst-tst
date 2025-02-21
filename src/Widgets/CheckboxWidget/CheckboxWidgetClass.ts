@@ -1,7 +1,7 @@
 import * as Scrivito from "scrivito";
 import { defaultQuestionAttributes } from "../defaultQuestionAttributes";
-export const PisaQuestionnaireCheckboxWidget = Scrivito.provideWidgetClass(
-  "PisaQuestionnaireCheckboxWidget",
+export const QuestionnaireCheckboxQuestionWidget = Scrivito.provideWidgetClass(
+  "QuestionnaireCheckboxQuestionWidget",
   {
     attributes: {
       ...defaultQuestionAttributes,

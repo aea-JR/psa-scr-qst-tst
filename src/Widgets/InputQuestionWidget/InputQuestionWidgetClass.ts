@@ -1,7 +1,7 @@
 import { provideWidgetClass } from "scrivito";
 import { defaultQuestionAttributes } from "../defaultQuestionAttributes";
 
-export const InputQuestionWidget = provideWidgetClass("InputQuestionWidget", {
+export const QuestionnaireInputQuestionWidget = provideWidgetClass("QuestionnaireInputQuestionWidget", {
   attributes: {
     ...defaultQuestionAttributes,
     placeholder: "string",
