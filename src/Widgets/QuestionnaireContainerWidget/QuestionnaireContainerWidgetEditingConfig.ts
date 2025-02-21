@@ -226,8 +226,6 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
     ];
   },
   propertiesGroups: (widget) => {
-    const isCreated = !isEmpty(widget.get(QUESTIONNAIRE_ID));
-    // const hasUpdates = compareQuestionnaireMeta(widget as unknown as Scrivito.Widget)
     const showSubmittingMessage = widget.get(SUBMITTING_MESSAGE_TYPE) !== "widget-list";
     const showSubmittedMessage = widget.get(SUBMITTED_MESSAGE_TYPE) !== "widget-list";
     const showFailedMessage = widget.get(FAILED_MESSAGE_TYPE) !== "widget-list";
@@ -283,14 +281,10 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       {
         title: "PisaSales Questionnaire Management",
         key: "QuestionnaireBuilder",
-        // properties: [EXTERNAL_ID],
         component: QuestionnaireManagementTab,
       },
     ];
 
-    // if (isCreated && !hasUpdates) {
-    //   groups.pop()
-    // }
     return groups;
   },
 
@@ -384,22 +378,10 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
       },
     ],
     [
-      EXTERNAL_ID,
-      (externalId: string) => {
-        if (!externalId) {
-          return "Specify the External ID.";
-        }
-
-        if (externalId.match(/^[0-9a-zA-Z]{20}$/) === null) {
-          return "Specify a valid external ID (20 characters).";
-        }
-      },
-    ],
-    [
       INPUT_TYPE,
       (inputType: string) => {
         if (!inputType) {
-          return "Specify the Input type.";
+          return "Specify the Response Mode.";
         }
 
       },
