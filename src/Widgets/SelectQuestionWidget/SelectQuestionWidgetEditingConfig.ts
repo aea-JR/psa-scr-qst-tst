@@ -87,8 +87,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
       {
         title: "Options",
         key: "QuestionnaireDropdownOptions",
-        properties: [OPTIONS],
-        //  component: OptionsComponent
+        properties: [OPTIONS]
       },
     ];
 
@@ -133,7 +132,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
       OPTIONS,
       (options: Widget[]) => {
         if (options.length < 2) {
-          return "Question must include at least two options.";
+          return "Question must include at least two answer options.";
         }
       },
     ],
