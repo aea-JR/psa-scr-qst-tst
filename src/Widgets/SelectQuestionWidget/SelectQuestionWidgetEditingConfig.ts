@@ -1,6 +1,5 @@
 import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
-import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { Widget } from "scrivito";
 
@@ -8,7 +7,7 @@ import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOpt
 import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
-import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
+import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
 
 Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   initialize: (obj) => {
@@ -76,7 +75,6 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
     return [
       ...defaultProperties,
       TYPE,
-      PLACEHOLDER,
       ENABLE_CONDITIONALS,
       [EXTERNAL_ID, { enabled: false }],
       [QUESTION_ID, { enabled: false }]
