@@ -109,14 +109,6 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
           return "Specify a valid floating-point value. Must be a number with optional decimal places (e.g., -10.5, 0.0, 42.99).";
         }
       },
-    ],
-    [
-      TYPE,
-      (type: string) => {
-        if (isEmpty(type)) {
-          return "Specify the Input type."
-        }
-      }
     ]
 
   ],

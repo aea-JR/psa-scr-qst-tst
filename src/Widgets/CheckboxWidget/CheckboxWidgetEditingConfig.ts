@@ -86,14 +86,6 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
         }
         return null;;
       },
-    ],
-    [
-      TYPE,
-      (type: string) => {
-        if (isEmpty(type)) {
-          return "Specify the Input type."
-        }
-      }
     ]
 
   ]

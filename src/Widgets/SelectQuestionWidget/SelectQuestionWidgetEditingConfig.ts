@@ -161,14 +161,6 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
           return "This question was used as a conditional container and has nested questions. Disable this feature only after removing or relocating the nested questions to prevent submission inconsistencies."
         }
       },
-    ],
-    [
-      TYPE,
-      (type: string) => {
-        if (isEmpty(type)) {
-          return "Specify the Input type."
-        }
-      }
     ]
   ],
 });
