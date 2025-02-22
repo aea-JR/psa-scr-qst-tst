@@ -21,6 +21,8 @@ export const Description: FC<DescriptionProps> = ({ status }) => {
 				return "Unsaved changes detected. Push these updates to PisaSales to keep your questionnaire up to date.";
 			case "updating":
 				return "Updating questionnaire data. Please wait...";
+			case "offline":
+				return "PisaSales is not reachable. Please check your configuration or contact your administrator."
 			default:
 				return "The questionnaire is ready for use.";
 		}

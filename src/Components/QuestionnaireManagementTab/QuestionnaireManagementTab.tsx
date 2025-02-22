@@ -35,7 +35,7 @@ export const QuestionnaireManagementTab: FC<
 					<Description status={status} />
 					{!isCreated && <button
 						className="btn btn-primary"
-						disabled={status == "invalid" || isCreating}
+						disabled={status == "invalid" || status == "offline" || isCreating}
 						onClick={createQuestionnaire}
 					>
 						Create
