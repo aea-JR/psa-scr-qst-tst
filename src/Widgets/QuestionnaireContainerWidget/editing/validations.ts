@@ -4,6 +4,7 @@ import { isUsageRestricted } from "../../../utils/isRestricted";
 import { Widget } from "scrivito";
 import { getQuestionWidgets } from "../../../utils/getQuestionWidgets";
 import { getQuestionnaireContainerWidget } from "../../../utils/getQuestionnaireContainerWidget";
+import { hasContext } from "../../../utils/hasContext";
 
 export const questionnaireContainerEditingValidations = [
 	(widget: Widget) => {
@@ -16,6 +17,9 @@ export const questionnaireContainerEditingValidations = [
 		}
 		if (isUsageRestricted(widget)) {
 			return "This questionnaire can not be used on a public site. Please move it to a restricted site.";
+		}
+		if (!hasContext(widget)) {
+			return 'Specify at least one activity, contact or project ID in the “Answer Context” properties tab.';
 		}
 		return null;
 	},

@@ -283,6 +283,7 @@ The `Questionnaire` Widget has specific validation requirements:
 - The widget cannot be placed into another Questionnaire widget.
 - The widget must include at least one question.
 - The Questionnaire title cannot be empty.
+- At least one **Activity ID, Contact ID, or Project ID** must be specified in the **Answer Context** tab.
 
 ## PisaSales Questionnaire Step Widget
 

@@ -88,11 +88,15 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
         return;
       }
       if (!isOnline) {
-        console.log("not loading answers")
+        console.log("not loading answersm offline!")
         return;
       }
       if (inputType == REPEATABLE) {
         console.log("repeatable mode, not loading answers");
+        return;
+      }
+      if (isEmpty(activityId) && isEmpty(contactId) && isEmpty(projectId)) {
+        console.log("not loading answers, no context found!")
         return;
       }
       const answers = await load(() => {
