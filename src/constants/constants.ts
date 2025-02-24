@@ -74,3 +74,6 @@ export const VALUE_IDENTIFIER = "valueIdentifier";
 export const DATA = "data";
 export const UPDATED_AT = "updatedAt";
 
+export const QST_BUILDER_ORIGIN = "questionnaire-builder";
+
+
