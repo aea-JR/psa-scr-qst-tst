@@ -17,6 +17,7 @@ module.exports = (_env, argv) => {
   const plugins = [
     new CopyWebpackPlugin({
       patterns: [
+        { from: "../LICENSE", to: BUILD_PATH },
         { from: "../package.json", to: BUILD_PATH },
          { from: "../src/index.d.ts", to: BUILD_PATH },
          { from: "../src/editing.d.ts", to: BUILD_PATH },
