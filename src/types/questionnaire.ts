@@ -41,6 +41,7 @@ export interface QuestionnaireMetaSnapshot {
 	qstMeta: {
 		title: string;
 		inputType: string;
+		origin: string;
 	};
 	questions: { [key: string]: Question };
 	options: { [questionId: string]: { [optionId: string]: AnswerOption } };

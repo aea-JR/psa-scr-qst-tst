@@ -17,7 +17,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 	const createQuestionnaire = async (): Promise<boolean> => {
 		let hasFailures = false;
 		const createdItems: QuestionnaireMetaSnapshot = {
-			qstMeta: { title: "", inputType: "" },
+			qstMeta: { title: "", inputType: "", origin: "" },
 			questions: {},
 			options: {},
 		};
