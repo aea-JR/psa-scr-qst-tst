@@ -4,12 +4,16 @@ import { isUTCDate } from "./isUTCDate";
 import { isPisaDate } from "./isPisaDate";
 import { DEFAULT_VALUE, INPUT_TYPE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
 import { getQuestionWidgets } from "./getQuestionWidgets";
+import { hasContext } from "./hasContext";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
   const title = qstMainWidget.get(TITLE) as string;
   const type = qstMainWidget.get(INPUT_TYPE);
 
   if (isEmpty(title) || isEmpty(type)) {
+    return false;
+  }
+  if (!hasContext(qstMainWidget)) {
     return false;
   }
   const questions = getQuestionWidgets(qstMainWidget);
