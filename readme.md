@@ -2,6 +2,29 @@
 
 ## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments. A proper release with an updated package name will follow.
 
+## Table of Contents
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Importing and Initializing](#importing-and-initializing)
+5. [Default Templates & Availability](#default-templates--availability)
+6. [Supported Questionnaire Input Types (Response Mode)](#supported-questionnaire-input-types-response-mode)
+7. [Questionnaire Widgets](#questionnaire-widgets)
+    - [PisaSales Questionnaire Widget](#pisasales-questionnaire-widget)
+    - [PisaSales Questionnaire Step Widget](#pisasales-questionnaire-step-widget)
+    - [PisaSales Questionnaire Select Question Widget](#pisasales-questionnaire-select-question-widget)
+    - [PisaSales Questionnaire Answer Option Widget](#pisasales-questionnaire-answer-option-widget)
+    - [PisaSales Questionnaire Input Question Widget](#pisasales-questionnaire-input-question-widget)
+    - [PisaSales Questionnaire Checkbox Question Widget](#pisasales-questionnaire-checkbox-question-widget)
+8. [Creating & Updating a Questionnaire](#questionnaire-creation-and-updating)
+9. [Using Questionnaires Across Pages](#questionnaire-usage-across-different-pages)
+10. [Review Feature](#review-feature)
+11. [Conditionals in PisaSales Questionnaires](#conditionals-in-pisasales-questionnaires)
+12. [Validation Rules](#validation)
+13. [Local Development](#local-development)
+
+---
+
 ## Overview
 The psa-scr-qst-tst package provides a collection of questionnaire builder widgets for creating and using PisaSales questionnaires within the Scrivito CMS. These questionnaires cannot be used on public sites.
 
