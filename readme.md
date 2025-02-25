@@ -3,12 +3,12 @@
 ## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments. A proper release with an updated package name will follow.
 
 ## Overview
-The psa-scr-qst-tst package provides a collection of questionnaire builder widgets for creating and using PisaSales questionnaires within the Scrivito CMS. These questionnaires can only be used on restricted sites.
+The psa-scr-qst-tst package provides a collection of questionnaire builder widgets for creating and using PisaSales questionnaires within the Scrivito CMS. These questionnaires cannot be used on public sites.
 
 ## Features
 - **Questionnaire Creation**: Build questionnaires directly from the Scrivito CMS editor.
 - **Questionnaire Usage**: Use created questionnaires within restricted sites only.
-- **Answer submission & retrieval**: Submit and retrieve answers using context parameters such as questionnaireId, projectId, activityId, and contactId.
+- **Answer Submission & Retrieval**: Submit and retrieve answers using context parameters such as questionnaireId, projectId, activityId, and contactId.
 
 ## Supported Templates
 | Widget Category | Equivalent Templates | Type/Functionality  | Notes  |
@@ -24,7 +24,7 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 |                     | PSA_QST_TPL_MON   | Money input field      | ❌ Not Planned     |
 | **Select Widget** | PSA_QST_TPL_CHC  | Regular dropdown   |✅ Implemented             |
 |                     | PSA_QST_TPL_CTY   | Countries dropdown   |❌ Rejected (requires API) |
-|                     | PSA_QST_TPL_LNG   | Languages dropdown    |❌ Rejected (requires API) |
+|                     | PSA_QST_TPL_LNG   | Language dropdown    |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_LOB   | Business dropdown         |❌ Rejected (requires API) |
 |                     | PSA_QST_TPL_RAD     | Single-select radios    | ✅ Implemented            |
 |                     | PSA_QST_TPL_CHK     | Multi-select checkboxes    | ✅ Implemented       |
@@ -118,7 +118,7 @@ npm link
 ```shell
 npm link psa-scr-qst-tst
 ```
-- If you have a prevoius version installed, remove or outcomment the imported styles from `index.scss` and `scrivitoExtensions.scss`.
+- If you have a previous version installed, remove or outcomment the imported styles from `index.scss` and `scrivitoExtensions.scss`.
 - follow [importing and initializing](#importing-and-initializing) instructions.
 - Add the following snippet to your vite.config:
 
@@ -156,7 +156,7 @@ Before you can use or answer a questionnaire, it needs to be created in PisaSale
 The package automatically detects changes related to the questionnaire, such as modifications to questions, options, or other attributes. If changes are detected, you must manually push these updates to PisaSales via the **PisaSales Questionnaire Management** tab in the widget properties.
 
 ### Failure Handling
-If creating or updating any question or answer option fails, the questionnaire will behave as if changes were detected, displaying a Pending Update message and button. This happens when the data in the Scrivito questionnaire no longer matches the data in PisaSales, allowing you to retry the update process to synchronize both systems.
+If the creation or update of any question or answer option fails, the questionnaire will behave as if changes were detected, displaying a Pending Update message and button. This happens when the data in the Scrivito questionnaire no longer matches the data in PisaSales, allowing you to retry the update process to synchronize both systems.
 
 
 ## Questionnaire Usage Across Different Pages
@@ -165,7 +165,7 @@ The `psa-scr-qst-tst` package allows you to reuse questionnaires across differen
 
 ### Key Behaviors:
 1. **Copying or Duplicating an Already Created Questionnaire:**
-   - When you copy or duplicate a questionnaire that has already been created in PisaSales, its identifiers are retained.
+   - When you copy or duplicate a questionnaire that has already been created in PisaSales, the existing identifiers are retained.
    - This allows the same questionnaire to be reused across multiple pages without creating duplicates in PisaSales.
 
 2. **Copying or Duplicating a New Questionnaire:**
@@ -220,7 +220,7 @@ The `Questionnaire` widget has the following properties divided into several tab
   - **Additional CSS Classes:** Specify additional CSS class names to be added to the main container of the questionnaire. Separate multiple class names with spaces.
   - **Enable fixed height:** Manually set the form height if enabled.
   - **Form height:** Enter the height of the questionnaire content measured in em units.
-  - **Scrollbar width:** Select the width of the scrollbar. "None" will hide the scrolbar.
+  - **Scrollbar width:** Select the width of the scrollbar. "None" will hide the scrollbar.
   - **Overscroll behavior:** Select how overscrolling should behave, i.e. it scrolls also the container."
 - **ID's** tab
   - **External ID:** The external reference ID for the questionnaire.
@@ -282,7 +282,7 @@ The `Questionnaire` Widget has specific validation requirements:
 - The widget cannot be placed on public sites.
 - The widget cannot be placed into another Questionnaire widget.
 - The widget must include at least one question.
-- The Questionnaire title cannot be empty.
+- The questionnaire title cannot be empty.
 - At least one **Activity ID, Contact ID, or Project ID** must be specified in the **Answer Context** tab.
 
 ## PisaSales Questionnaire Step Widget
@@ -376,14 +376,14 @@ The `Questionnaire Checkbox Question` widget enables you to create single-select
 - **Identifier:** Specify a unique identifier for the question.
 - **Mandatory:** Indicates whether the checkbox selection is required.
 - **Position:** The position of the question (Read-only).
-- **Input Type:** Choose the type of checkbox: `Standard (True/False), Tri-State (True/False/Unset).`
+- **Input Type:** Choose the type of checkbox: `Standard (true/false), Tri-State (true/false/unset).`
 - **External ID:** The external reference ID for the question.
 - **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
-### Vaidation
+### Validation
 -	This widget must be placed within a PisaSales Questionnaire widget to be effective.
 -	The Question title cannot be empty.
--	Default value validation depends on the selected type. For default checkboxes, the default value must be true or false. For tri-state checkboxes, it must be true, false, or unset (empty).
+-	Default value validation depends on the selected type. For default checkboxes, the default value must be "true" or "false". For tri-state checkboxes, it must be "true", "false", or "unset" (empty).
 -	Identifier must be unique across the questions and follow the Pisa schema. (A-Z, 0-9, _)
 
 
@@ -397,7 +397,7 @@ The psa-scr-qst-tst package allows you to dynamically show or hide content based
 -	Users can configure conditionals within the Select Question Widget in the questionnaire editor.
 
 ### Behavior & Validation
-####	Disabling Conditionals with Active Questions:
+####	Disabling Conditionals with Nested Questions:
 If a user disables the “Use as Conditional” option while there are still nested questions inside the conditional structure, a validation error will be shown. This prevents orphaned questions from being unintentionally hidden.
 ####	Handling Multiple Selections:
 For Multi-Select Checkboxes, multiple conditions can be triggered simultaneously, allowing multiple sets of content to be displayed.
