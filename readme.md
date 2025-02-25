@@ -10,7 +10,7 @@ The psa-scr-qst-tst package provides a collection of questionnaire builder widge
 - **Questionnaire Usage**: Use created questionnaires within restricted sites only.
 - **Answer Submission & Retrieval**: Submit and retrieve answers using context parameters such as questionnaireId, projectId, activityId, and contactId.
 
-## Supported Templates
+## Default Templates & Availability 
 | Widget Category | Equivalent Templates | Type/Functionality  | Notes  |
 |-----------------------|----------------------------|------------------------------------|--------------------------|
 | **Input Widget**    | PSA_QST_TPL_QUE_STR | Single-line text input|✅ Implemented           |
