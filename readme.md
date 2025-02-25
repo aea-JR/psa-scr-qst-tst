@@ -223,15 +223,15 @@ It's important to note that the footer with the close button is not mandatory. U
 The Review feature is specifically designed for questionnaires with multiple steps, providing users with an opportunity to verify their responses before final submission.
 
 
-# Questionnaire Widgets
+## Questionnaire Widgets
 
-## PisaSales Questionnaire Widget
+### PisaSales Questionnaire Widget
 
 <!-- <img src="images/form_container.png" width="350" alt="Screenshot"> -->
 
 The `Questionnaire` widget is the main widget for creating and managing questionnaires. 
 
-### Properties
+#### Properties
 
 <!-- <img src="images/questionnaire_properties.png" width="350" alt="Screenshot"> -->
 
@@ -298,7 +298,7 @@ The `Questionnaire` widget has the following properties divided into several tab
   - **Create button:** Fully [creates the questionnaire](#creating-a-questionnaire) on PisaSales side. (Visible if questionnaire has not been created yet)
   - **Push changes button:** [Push all changes](#updating-a-questionnaire) made for the questionnaire to PisaSales. (Visible if questionnaire has unsynced changes)
 
-### Validation
+#### Validation
 
 The `Questionnaire` Widget has specific validation requirements:
 
@@ -308,26 +308,26 @@ The `Questionnaire` Widget has specific validation requirements:
 - The questionnaire title cannot be empty.
 - At least one **Activity ID, Contact ID, or Project ID** must be specified in the **Answer Context** tab.
 
-## PisaSales Questionnaire Step Widget
+### PisaSales Questionnaire Step Widget
 
 <!-- <img src="images/form_step_preview.png" width="350" alt="Screenshot"> -->
 
 The `Questionnaire Step` widget represents an individual step within the questionnaire. Each step can have its own set of questions and content.
 
-### Properties
+#### Properties
 
 - Content: Configure the content for this step.
 
-### Validation
+#### Validation
 
 - The step widget must be placed within the questionnaire.
 
 
-## PisaSales Questionnaire Select Question Widget
+### PisaSales Questionnaire Select Question Widget
 
 The `Questionnaire Select Question` widget enables you to create single or multiple selection elements, including radio buttons, dropdowns, or checkboxes in your form.
 
-### Properties
+#### Properties
 
 - **Question title:** Specify the title for the question.
 - **Help text:** Provide optional help text for the select input.
@@ -340,17 +340,17 @@ The `Questionnaire Select Question` widget enables you to create single or multi
 - **External ID:** The external reference ID for the question.
 - **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
-### Validation
+#### Validation
 
 - This widget must be placed within a PisaSales Questionnaire widget to be effective.
 - The Question title cannot be empty.
 - Default value must start with # and match answer option identifier
 - Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
 
-## PisaSales Questionnaire Answer Option Widget
+### PisaSales Questionnaire Answer Option Widget
 The `Questionnaire Answer Option` widget represents an individual answer option for a `Select Question` (Dropdown, Radio, or Multi-Select Checkboxes).
 
-### Properties
+#### Properties
 -	**Answer:** Define the label of the answer option.
 - **Identifier:** Specify a unique identifier for the answer option (must be unique within the same Select Question).
 - **Position:** The position of the answer option (Read-only).
@@ -358,17 +358,17 @@ The `Questionnaire Answer Option` widget represents an individual answer option 
 - **Answer Option ID (GID):** The answer option ID in PisaSales. (Visible after the answer option is created in PisaSales)
 - **Condition Content:** The conditional content associated with this answer option. (Visible only if `Use as Conditional Container` is enabled in the parent Select Question and content is present.)
 
-### Validation
+#### Validation
 - The Answer Option widget must be placed within a PisaSales Questionnaire Select Question widget.
 - The Answer cannot be empty.
 - The Identifier must be unique within the same Select Question.
 
 
-## PisaSales Questionnaire Input Question Widget
+### PisaSales Questionnaire Input Question Widget
 
 The `Questionnaire Input Question` widget enables you to create input questions, including string single line, string multi line, float, integer, date and date-time in your form.
 
-### Properties
+#### Properties
 
 - **Question title:** Specify the title for the question.
 - **Help text:** Provide optional help text.
@@ -380,18 +380,18 @@ The `Questionnaire Input Question` widget enables you to create input questions,
 - **External ID:** The external reference ID for the question.
 - **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
-### Validation
+#### Validation
 
 - This widget must be placed within a PisaSales Questionnaire widget to be effective.
 - The Question title cannot be empty.
 - Default value validation depends on the selected input type. For Integer, the default value must be a whole number. For Float, it must be a decimal number. For Date and Date-Time, you must use either the UTC format (YYYY-MM-DDTHH:MM:SSZ) or the ISO 8601 basic format (YYYYMMDDHHMMSS). 
 - Identifier must be unique across the questions and follow the pisa schema. (A-Z, 0-9,_)
 
-## PisaSales Questionnaire Checkbox Question Widget
+### PisaSales Questionnaire Checkbox Question Widget
 
 The `Questionnaire Checkbox Question` widget enables you to create single-select checkboxes, including standard checkboxes and tri-state checkboxes.
 
-### Properties
+#### Properties
 
 - **Question title:** Specify the title for the question.
 - **Help text:** Provide optional help text.
@@ -403,7 +403,7 @@ The `Questionnaire Checkbox Question` widget enables you to create single-select
 - **External ID:** The external reference ID for the question.
 - **Question ID (GID):** The question ID in PisaSales.(Visible after question got created)
 
-### Validation
+#### Validation
 -	This widget must be placed within a PisaSales Questionnaire widget to be effective.
 -	The Question title cannot be empty.
 -	Default value validation depends on the selected type. For default checkboxes, the default value must be "true" or "false". For tri-state checkboxes, it must be "true", "false", or "unset" (empty).
