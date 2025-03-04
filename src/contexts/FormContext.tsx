@@ -155,6 +155,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
   const onChange = (questionId: string, value: string[], valueIdentifier = [""]) => {
     validateAnswerInput(questionId, value, valueIdentifier);
+    if (isEmpty(questionId)) {
+      return;
+    }
     const updatedAt = new Date().toISOString();
     setAnswers((prevData) => {
       const newData = new Map(prevData);
