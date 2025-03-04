@@ -1,6 +1,6 @@
 {
   "name": "psa-scr-qst-tst",
-  "version": "0.0.307",
+  "version": "0.0.308",
   "description": "PisaSales Questionnaire Widgets for Scrivito TEST PACKAGE",
   "main": "index.js",
   "scripts": {
