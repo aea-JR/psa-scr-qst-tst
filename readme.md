@@ -1,6 +1,6 @@
 # psa-scr-qst-tst (Proof of Concept)
 
-## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments. A proper release with an updated package name will follow.
+## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments.
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -128,13 +128,13 @@ The `psa-scr-qst-tst` package supports multiple questionnaire input types, deter
 
 ### PisaSales Questionnaire Widget
 
-<!-- <img src="images/form_container.png" width="350" alt="Screenshot"> -->
+ <img src="images/questionnaire_container.png" width="350" alt="Screenshot">
 
 The `Questionnaire` widget is the main widget for creating and managing questionnaires. 
 
 #### Properties
 
-<!-- <img src="images/questionnaire_properties.png" width="350" alt="Screenshot"> -->
+<img src="images/questionnaire_properties.png" width="350" alt="Screenshot"> 
 
 The `Questionnaire` widget has the following properties divided into several tabs:
 
@@ -211,7 +211,7 @@ The `Questionnaire` Widget has specific validation requirements:
 
 ### PisaSales Questionnaire Step Widget
 
-<!-- <img src="images/form_step_preview.png" width="350" alt="Screenshot"> -->
+<img src="images/questionnaire_step_preview.png" width="350" alt="Screenshot"> 
 
 The `Questionnaire Step` widget represents an individual step within the questionnaire. Each step can have its own set of questions and content.
 
@@ -225,6 +225,8 @@ The `Questionnaire Step` widget represents an individual step within the questio
 
 
 ### PisaSales Questionnaire Input Question Widget
+
+<img src="images/questionnaire_input_question.png" width="350" alt="Screenshot"> 
 
 The `Questionnaire Input Question` widget enables you to create input questions, including string single line, string multi line, float, integer, date and date-time in your form.
 
@@ -272,6 +274,8 @@ The `Questionnaire Checkbox Question` widget enables you to create single-select
 
 
 ### PisaSales Questionnaire Select Question Widget
+
+<img src="images/questionnaire_select_question.png" width="350" alt="Screenshot"> 
 
 The `Questionnaire Select Question` widget enables you to create single or multiple selection elements, including radio buttons, dropdowns, or checkboxes in your form.
 
@@ -330,7 +334,7 @@ If the creation or update of any question or answer option fails, the questionna
 
 ## Questionnaire Usage Across Different Pages
 
-The `psa-scr-qst-tst` package allows you to reuse questionnaires across different pages using the copy/duplicate functionality. This feature enables flexibility in how questionnaires are deployed and managed within your Scrivito project.
+The package allows you to reuse questionnaires across different pages using the copy/duplicate functionality. This feature enables flexibility in how questionnaires are deployed and managed within your Scrivito project.
 
 ### Key Behaviors:
 1. **Copying or Duplicating an Already Created Questionnaire:**
@@ -372,7 +376,9 @@ The Review feature is specifically designed for questionnaires with multiple ste
 
 ## Conditionals in PisaSales Questionnaires
 
-The psa-scr-qst-tst package allows you to dynamically show or hide content based on user selections using Conditionals. This feature is available for Select Questions (Dropdown, Radio, and Multi-Select Checkboxes) and enables a question to act as a conditional trigger. When enabled, each answer option becomes a condition that determines whether specific content (such as other questions) is displayed.
+<img src="images/questionnaire_conditionals.png" width="350" alt="Screenshot"> 
+
+The package allows you to dynamically show or hide content based on user selections using Conditionals. This feature is available for Select Questions (Dropdown, Radio, and Multi-Select Checkboxes) and enables a question to act as a conditional trigger. When enabled, each answer option becomes a condition that determines whether specific content (such as other questions) is displayed.
 
 ### How It Works
 -	When “Use as Conditional” is enabled for a Select Question, each answer option can control the visibility of other content.
