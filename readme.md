@@ -52,12 +52,12 @@ initPisaQuestionnaireWidgets({ pisaUrl: "YOUR_PISA_API_URL" });
 
 ```
 
-Import the `loadEditingConfigs` function from the package and call it in your editingConfigs.ts file also found in the Widgets folder.
+Import the `loadQuestionnaireEditingConfigs` function from the package and call it in your editingConfigs.ts file also found in the Widgets folder.
 
 ```js
-import { loadEditingConfigs } from "psa-scr-qst-tst/editing";
+import { loadQuestionnaireEditingConfigs } from "psa-scr-qst-tst/editing";
 
-loadEditingConfigs();
+loadQuestionnaireEditingConfigs();
 ```
 
 Add the widget styles to your app.

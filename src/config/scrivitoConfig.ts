@@ -11,23 +11,12 @@ interface Options {
 
 const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
 
-// Singleton instances for data classes
-let questionInstance: DataClass | null = null;
-let questionnaireInstance: DataClass | null = null;
-let answerOptionInstance: DataClass | null = null;
-let answersInstance: DataClass | null = null;
-
 /**
  * Initialize Pisa Questionnaire Widgets
  * @param options Configuration options including Pisa URL
  */
 export const initPisaQuestionnaireWidgets = async (options: Options): Promise<void> => {
   (GLOBAL_OBJ as any).pisaUrl = options.pisaUrl || "";
-
-  questionInstance = provideQuestion();
-  questionnaireInstance = provideQuestionnaire();
-  answerOptionInstance = provideAnswerOption();
-  answersInstance = provideAnswers();
 
   loadWidgets();
 
@@ -54,18 +43,6 @@ const loadWidgets = (): void => {
 
 };
 
-const ensureInitialized = (
-  instance: DataClass | null,
-  name: string,
-): DataClass => {
-  if (!instance) {
-    throw new Error(
-      `${name} is not initialized. Did you forget to call initPisaQuestionnaireWidgets?`,
-    );
-  }
-  return instance;
-};
-
 /**
  * Get the configured Pisa URL
  * @returns Pisa URL string
@@ -76,24 +53,22 @@ export const getPisaUrl = (): string => (GLOBAL_OBJ as any).pisaUrl;
  * Get the Question Data Class
  * @returns Singleton instance of QuestionDataClass
  */
-export const QuestionDataClass = (): DataClass =>
-  ensureInitialized(questionInstance, "QuestionDataClass");
+export const QuestionDataClass = (): DataClass => provideQuestion();
 
 /**
  * Get the Questionnaire Data Class
  * @returns Singleton instance of QuestionnaireDataClass
  */
-export const QuestionnaireDataClass = (): DataClass =>
-  ensureInitialized(questionnaireInstance, "QuestionnaireDataClass");
+export const QuestionnaireDataClass = (): DataClass => provideQuestionnaire()
+
 /**
  * Get the AnswerOption Data Class
  * @returns Singleton instance of AnswerOptionDataClass
  */
-export const AnswerOptionDataClass = (): DataClass =>
-  ensureInitialized(answerOptionInstance, "AnswerOptionDataClass");
+export const AnswerOptionDataClass = (): DataClass => provideAnswerOption()
+
 /**
  * Get the Answers Data Class
  * @returns Singleton instance of AnswerDataClass
  */
-export const AnswersDataClass = (): DataClass =>
-  ensureInitialized(answersInstance, "AnswersDataClass");
+export const AnswersDataClass = (): DataClass => provideAnswers()
