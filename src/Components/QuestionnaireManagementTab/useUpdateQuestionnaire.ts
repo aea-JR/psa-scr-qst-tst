@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Widget } from "scrivito";
-import {
-	QuestionDataClass,
-	AnswerOptionDataClass,
-} from "../../config/scrivitoConfig";
+
+import { AnswerOptionDataClass } from "../../Data/AnswerOption/AnswerOptionDataClass";
+import { QuestionDataClass } from "../../Data/Question/QuestionDataClass";
 import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
@@ -143,7 +142,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			for (const widget of updates.createQuestions) {
 				try {
 					const question = convertWidgetToQuestion(widget);
-					const questionItem = await QuestionDataClass().create({
+					const questionItem = await QuestionDataClass.create({
 						...question,
 						questionnaireId: qstId,
 					});
@@ -170,7 +169,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 				for (const widget of optionWidgets) {
 					try {
 						const option = convertWidgetToAnswerOption(widget);
-						const optionItem = await AnswerOptionDataClass().create({
+						const optionItem = await AnswerOptionDataClass.create({
 							...option,
 							questionId,
 						});

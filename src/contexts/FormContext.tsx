@@ -1,6 +1,6 @@
 import * as React from "react";
-import { AnswersDataClass } from "../config/scrivitoConfig";
 import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
+import { AnswersDataClass } from "../Data/Answers/AnswersDataClass";
 import { isEmpty } from "lodash-es";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
@@ -102,7 +102,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       const answers = await load(() => {
         console.log("loading answers")
 
-        return AnswersDataClass().all()
+        return AnswersDataClass.all()
           // limit with question count + 1 ? 
           .transform({
             limit: 999,
@@ -220,7 +220,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       };
 
       console.log("Submitting payload:", payload);
-      const answerItem = await AnswersDataClass().create(payload);
+      const answerItem = await AnswersDataClass.create(payload);
       console.log("answers created", answerItem.get(DATA))
       indicateSuccess();
     } catch (error) {

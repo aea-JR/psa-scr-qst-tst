@@ -1,8 +1,8 @@
 import { load } from "scrivito";
-import { AnswerOptionDataClass } from "../../config/scrivitoConfig";
+import { AnswerOptionDataClass } from "./AnswerOptionDataClass";
 
 export const getOptionItem = (answerOptionId: string) => {
 	return load(() => {
-		return AnswerOptionDataClass().get(answerOptionId);
-	})
+		return AnswerOptionDataClass.get(answerOptionId);
+	});
 }

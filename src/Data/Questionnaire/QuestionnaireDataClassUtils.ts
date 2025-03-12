@@ -1,8 +1,8 @@
 import { load } from "scrivito";
-import { QuestionnaireDataClass } from "../../config/scrivitoConfig";
+import { QuestionnaireDataClass } from "./QuestionnaireDataClass";
 
 export const getQuestionnaireItem = (questionnaireId: string) => {
 	return load(() => {
-		return QuestionnaireDataClass().get(questionnaireId);
-	})
+		return QuestionnaireDataClass.get(questionnaireId);
+	});
 }

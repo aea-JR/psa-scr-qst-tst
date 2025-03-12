@@ -1,8 +1,3 @@
-import { DataClass } from "scrivito";
-import { provideQuestion } from "../Data/Question/QuestionDataClass";
-import { provideQuestionnaire } from "../Data/Questionnaire/QuestionnaireDataClass";
-import { provideAnswerOption } from "../Data/AnswerOption/AnswerOptionDataClass";
-import { provideAnswers } from "../Data/Answers/AnswersDataClass";
 import { isEmpty } from "lodash-es";
 
 interface Options {
@@ -18,6 +13,7 @@ const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
 export const initPisaQuestionnaireWidgets = async (options: Options): Promise<void> => {
   (GLOBAL_OBJ as any).pisaUrl = options.pisaUrl || "";
 
+  loadDataClasses();
   loadWidgets();
 
 };
@@ -43,32 +39,27 @@ const loadWidgets = (): void => {
 
 };
 
+const loadDataClasses = (): void => {
+  if (isEmpty(import.meta)) {
+    const dataClassImportsContext = require.context(
+      "../Data",
+      true,
+      /DataClass.*\.ts$/
+    );
+    dataClassImportsContext.keys().forEach(dataClassImportsContext);
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (import.meta as any).glob(
+      ["../Data/**/*DataClass.ts"],
+      {
+        eager: true
+      }
+    );
+  }
+};
+
 /**
  * Get the configured Pisa URL
  * @returns Pisa URL string
  */
 export const getPisaUrl = (): string => (GLOBAL_OBJ as any).pisaUrl;
-
-/**
- * Get the Question Data Class
- * @returns QuestionDataClass
- */
-export const QuestionDataClass = (): DataClass => provideQuestion();
-
-/**
- * Get the Questionnaire Data Class
- * @returns QuestionnaireDataClass
- */
-export const QuestionnaireDataClass = (): DataClass => provideQuestionnaire()
-
-/**
- * Get the AnswerOption Data Class
- * @returns AnswerOptionDataClass
- */
-export const AnswerOptionDataClass = (): DataClass => provideAnswerOption()
-
-/**
- * Get the Answers Data Class
- * @returns AnswerDataClass
- */
-export const AnswersDataClass = (): DataClass => provideAnswers()
