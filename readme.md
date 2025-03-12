@@ -447,6 +447,16 @@ npm link psa-scr-qst-tst
       "psa-scr-qst-tst/editing": ["../psa-scr-qst-tst/src/editing"]
     },
 ```
+- `getPisaUrl()` might not be initialized in time, causing issues with API requests. To avoid this, replace `getPisaUrl()` with a fixed URL in `pisaClient.ts`:
+```js
+export const clientConfig = async (subPath: string) => ({
+  url: `https://your-fixed-url.com/${subPath}`,
+  headers: { "Accept-Language": "de" },
+});
+```
+**⚠️ Don’t forget to switch back to getPisaUrl() for production!**
+
+
 **Note:**
 The Scrivito Portal App is built using Vite and will automatically compile the package, so there's no need to run `npm run build` or `npm run start` for local development.
 
