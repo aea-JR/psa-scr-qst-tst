@@ -11,7 +11,7 @@ export const convertWidgetsToAnswerOptions = (
   }
   const answerOptions: AnswerOption[] = [];
   for (const widget of widgets) {
-    if (widget.objClass() !== "AnswerOptionWidget") {
+    if (widget.objClass() !== "QuestionnaireAnswerOptionWidget") {
       console.warn(
         `${widget.objClass()} with ID ${widget.id()} can not be converted to an AnswerOption.`,
       );

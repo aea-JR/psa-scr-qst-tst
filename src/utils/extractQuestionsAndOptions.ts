@@ -24,7 +24,7 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		const question = convertWidgetToQuestion(questionWidget);
 		questionsAndOptions.questions.push(question);
 
-		if (questionWidget.objClass() == "SelectQuestionWidget") {
+		if (questionWidget.objClass() == "QuestionnaireSelectQuestionWidget") {
 			const optionWidgets = questionWidget.get(OPTIONS) as Widget[];
 			const options = convertWidgetsToAnswerOptions(optionWidgets)
 			if (!isEmpty(options)) {

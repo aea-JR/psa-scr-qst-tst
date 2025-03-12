@@ -30,7 +30,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     if (isEmpty(question.get(TYPE))) {
       return false;
     }
-    if (question.objClass() == "SelectQuestionWidget") {
+    if (question.objClass() == "QuestionnaireSelectQuestionWidget") {
       const options = question.get(OPTIONS) as Widget[];
 
       const hasEmptyOption = some(options, (option) =>
@@ -41,7 +41,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
         return false;
       }
       //TODO: check default value against identifier
-    } else if (question.objClass() == "InputQuestionWidget") {
+    } else if (question.objClass() == "QuestionnaireInputQuestionWidget") {
 
       // check defaultValue
       const type = question.get(TYPE) as string;
