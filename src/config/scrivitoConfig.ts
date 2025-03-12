@@ -51,24 +51,24 @@ export const getPisaUrl = (): string => (GLOBAL_OBJ as any).pisaUrl;
 
 /**
  * Get the Question Data Class
- * @returns Singleton instance of QuestionDataClass
+ * @returns QuestionDataClass
  */
 export const QuestionDataClass = (): DataClass => provideQuestion();
 
 /**
  * Get the Questionnaire Data Class
- * @returns Singleton instance of QuestionnaireDataClass
+ * @returns QuestionnaireDataClass
  */
 export const QuestionnaireDataClass = (): DataClass => provideQuestionnaire()
 
 /**
  * Get the AnswerOption Data Class
- * @returns Singleton instance of AnswerOptionDataClass
+ * @returns AnswerOptionDataClass
  */
 export const AnswerOptionDataClass = (): DataClass => provideAnswerOption()
 
 /**
  * Get the Answers Data Class
- * @returns Singleton instance of AnswerDataClass
+ * @returns AnswerDataClass
  */
 export const AnswersDataClass = (): DataClass => provideAnswers()
