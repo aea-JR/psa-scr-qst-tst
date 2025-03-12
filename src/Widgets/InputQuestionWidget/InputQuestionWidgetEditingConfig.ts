@@ -7,6 +7,7 @@ import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
 import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 import { isEmpty } from "lodash-es";
+import inputThumbnail from "../../assets/images/crm-questionnaire-input.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
   initialize: (obj) => {
@@ -30,7 +31,7 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
     console.log("Copying child widget for InputQuestionWidget w: " + id);
     child.update({ externalId: id, questionId: null });
   },
-
+  thumbnail: inputThumbnail,
   title: "PisaSales Input Field Question",
   attributes: {
     ...defaultAttributes,

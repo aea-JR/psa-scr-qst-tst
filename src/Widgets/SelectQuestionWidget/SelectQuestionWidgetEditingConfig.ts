@@ -8,6 +8,7 @@ import { compact, isEmpty, map, some } from "lodash-es";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
+import selectThumbnail from "../../assets/images/crm-questionnaire-select.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   initialize: (obj) => {
@@ -29,6 +30,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
     console.log("Copying child widget");
     child.update({ externalId: generateId(), questionId: null });
   },
+  thumbnail: selectThumbnail,
   title: "PisaSales Select Question",
   titleForContent: (obj) => {
     if (obj.get(ENABLE_CONDITIONALS)) {

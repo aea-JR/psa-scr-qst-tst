@@ -6,11 +6,12 @@ import { initialQuestionnaireContent } from "./editing/initialContent";
 import { questionnaireContainerEditingValidations } from "./editing/validations";
 import { questionnaireEditingAttributes } from "./editing/attributes";
 import { questionnaieEditingProperties, questionnaireEditingPropertiesGroups } from "./editing/properties";
+import questionnaireThumbnail from "../../assets/images/crm-questionnaire.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
   title: "PisaSales Questionnaire",
-
+  thumbnail: questionnaireThumbnail,
   attributes: questionnaireEditingAttributes,
   properties: (widget) => questionnaieEditingProperties(widget) as any,
   propertiesGroups: (widget) => questionnaireEditingPropertiesGroups(widget) as any,

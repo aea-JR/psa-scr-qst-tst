@@ -5,6 +5,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { isEmpty } from "lodash-es";
 import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, TEXT } from "../../constants/constants";
 import { identifierValidation } from "../../utils/validations/identifierValidation";
+import answerOptionThumbnail from "../../assets/images/crm-questionnaire-select-option.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
   initialize: (obj) => {
@@ -25,6 +26,7 @@ Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
     console.log("Copying child widget");
     child.update({ externalId: generateId(), answerOptionId: null });
   },
+  thumbnail: answerOptionThumbnail,
   title: "PisaSales Answer Option",
   titleForContent: (obj) => {
     if (obj.get(IS_CONDITION)) {

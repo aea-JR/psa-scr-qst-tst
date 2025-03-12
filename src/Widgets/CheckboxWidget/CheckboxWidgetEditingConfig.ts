@@ -3,6 +3,7 @@ import { defaultAttributes, defaultInitialContent, defaultProperties, defaultVal
 import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE } from "../../constants/constants";
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
+import checkboxThumbnail from "../../assets/images/crm-questionnaire-checkbox.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
@@ -28,6 +29,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
     child.update({ externalId: id, questionId: null });
   },
 
+  thumbnail: checkboxThumbnail,
   title: "PisaSales Checkbox Question",
 
   attributes: {
