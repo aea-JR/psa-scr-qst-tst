@@ -88,20 +88,15 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
         return;
       }
       if (!isOnline) {
-        console.log("not loading answersm offline!")
         return;
       }
       if (inputType == REPEATABLE) {
-        console.log("repeatable mode, not loading answers");
         return;
       }
       if (isEmpty(activityId) && isEmpty(contactId) && isEmpty(projectId)) {
-        console.log("not loading answers, no context found!")
         return;
       }
       const answers = await load(() => {
-        console.log("loading answers")
-
         return AnswersDataClass.all()
           // limit with question count + 1 ? 
           .transform({
@@ -177,10 +172,6 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     }));
   };
 
-  React.useEffect(() => {
-    console.log("EXCLUDED:", excludedAnswers)
-  }, [excludedAnswers])
-
   const validateAnswerInput = (questionId: string, value: string[], valueIdentifier: string[]) => {
     if (isInPlaceEditingActive()) {
       return;
@@ -219,12 +210,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
         data: preparedAnswers,
       };
 
-      console.log("Submitting payload:", payload);
-      const answerItem = await AnswersDataClass.create(payload);
-      console.log("answers created", answerItem.get(DATA))
+      await AnswersDataClass.create(payload);
       indicateSuccess();
     } catch (error) {
-      console.log(error)
+      console.error(error)
       indicateFailure();
     }
 

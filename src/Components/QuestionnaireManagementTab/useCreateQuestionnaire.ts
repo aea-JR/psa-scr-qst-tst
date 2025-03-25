@@ -13,7 +13,7 @@ import { EXTERNAL_ID } from "../../constants/constants";
 export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 	const [isCreating, setIsCreating] = useState(false);
 
-	const createQuestionnaire = async (): Promise<boolean> => {
+	const createQuestionnaire = async (): Promise<void> => {
 		let hasFailures = false;
 		const createdItems: QuestionnaireMetaSnapshot = {
 			qstMeta: { title: "", inputType: "", origin: "" },
@@ -29,7 +29,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 
 			if (!questions.length) {
 				console.warn("No questions found. Aborting questionnaire creation.");
-				return false;
+				return;
 			}
 
 			console.log("Creating questionnaire...");
@@ -92,11 +92,10 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 
 		} catch (error) {
 			console.error("Error creating questionnaire:", error);
-			return false;
 		} finally {
 			setIsCreating(false);
 			setQuestionnaireStatus(hasFailures ? "pendingUpdate" : "void", widget);
-			return true;
+			!hasFailures && console.log("Questionnaire created successfully.");
 		}
 	};
 

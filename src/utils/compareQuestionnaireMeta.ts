@@ -12,7 +12,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 		return false;
 	}
 	if (isEmpty(jsonMeta) || !isString(jsonMeta)) {
-		console.log("Invalid questionnaire meta.");
 		return false;
 	}
 
@@ -22,7 +21,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 	// Check if title or inputType changed
 	if (title !== storedMeta.qstMeta.title || inputType !== storedMeta.qstMeta.inputType) {
-		console.log("Qst meta changed");
 		return true;
 	}
 
@@ -35,7 +33,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 	// Check if number of questions changed
 	if (questionWidgets.length !== Object.keys(storedQuestions).length) {
-		console.log("Question count changed");
 		return true;
 	}
 	// Check if number of options changed
@@ -44,7 +41,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 		0
 	);
 	if (optionWidgets.length !== storedOptionCount) {
-		console.log("Answer option count changed");
 		return true;
 	}
 
@@ -58,7 +54,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 		// If the questionId is not found in storedMeta, it's a new question
 		if (!storedQuestion) {
-			console.log(`New question added: ${questionId}`);
 			return true;
 		}
 
@@ -72,7 +67,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 			storedQuestion.type !== question.get(TYPE) ||
 			storedQuestion.position !== question.get(POSITION)
 		) {
-			console.log(`Question changed: ${questionId}`);
 			return true;
 		}
 
@@ -85,7 +79,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 		// Check if the number of options changed
 		if (currentOptions.length !== Object.keys(storedQuestionOptions).length) {
-			console.log(`Option count changed for question: ${questionId}`);
 			return true;
 		}
 
@@ -99,7 +92,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 
 			// If the optionId is not found in storedMeta, it's a new option
 			if (!storedOption) {
-				console.log(`New answer option added: ${optionId}`);
 				return true;
 			}
 
@@ -109,7 +101,6 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 				storedOption.text !== option.get(TEXT) ||
 				storedOption.position !== option.get(POSITION)
 			) {
-				console.log(`Answer option changed: ${optionId}`);
 				return true;
 			}
 		}

@@ -10,7 +10,6 @@ import answerOptionThumbnail from "../../assets/images/crm-questionnaire-select-
 Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
-      console.log("setting externalId fron initialize");
       obj.update({ externalId: generateId() });
     }
   },
@@ -18,12 +17,8 @@ Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
     const parent = getQuestionnaireContainerWidget(child as any);
     // Skip updating externalId if the parent container is marked as being copied
     if (parent && parent.get(IS_BEING_COPIED)) {
-      console.log(
-        "Child widget copied as part of container. No change to externalId.",
-      );
       return;
     }
-    console.log("Copying child widget");
     child.update({ externalId: generateId(), answerOptionId: null });
   },
   thumbnail: answerOptionThumbnail,

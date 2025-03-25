@@ -4,7 +4,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { Widget } from "scrivito";
 
 import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClass";
-import { compact, isEmpty, map, some } from "lodash-es";
+import { compact, isEmpty, map } from "lodash-es";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
@@ -13,7 +13,6 @@ import selectThumbnail from "../../assets/images/crm-questionnaire-select.svg";
 Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
-      console.log("setting externalId fron initialize");
       obj.update({ externalId: generateId() });
     }
   },
@@ -22,12 +21,8 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
 
     // Skip updating externalId if the parent container is marked as being copied
     if (parent && parent.get(IS_BEING_COPIED)) {
-      console.log(
-        "Child widget copied as part of container. No change to externalId.",
-      );
       return;
     }
-    console.log("Copying child widget");
     child.update({ externalId: generateId(), questionId: null });
   },
   thumbnail: selectThumbnail,

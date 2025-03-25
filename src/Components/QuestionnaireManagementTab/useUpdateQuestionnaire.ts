@@ -17,7 +17,7 @@ import { ANSWER_OPTION_ID, CREATION_DATA, EXTERNAL_ID, OPTIONS, QUESTION_ID, QUE
 export const useUpdateQuestionnaire = (widget: Widget) => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
-	const updateQuestionnaire = async (): Promise<boolean> => {
+	const updateQuestionnaire = async (): Promise<void> => {
 		let hasFailures = false;
 		const updates = {
 			deleteQuestions: [] as string[],
@@ -228,11 +228,10 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 		} catch (error) {
 			//TODO: Add error status or show error?
 			console.error("Error updating questionnaire:", error);
-			return false;
 		} finally {
 			setIsUpdating(false);
 			setQuestionnaireStatus(hasFailures ? "pendingUpdate" : "void", widget);
-			return true;
+			!hasFailures && console.log("Questionnaire updated successfully.")
 		}
 	};
 

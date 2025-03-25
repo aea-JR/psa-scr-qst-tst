@@ -7,9 +7,7 @@ export const useExternalId = (widget: Scrivito.Widget) => {
   useEffect(() => {
     try {
       if (!widget.get(EXTERNAL_ID) && Scrivito.isInPlaceEditingActive()) {
-        console.log("useExternalId setting externalIsd from useExternalId");
         widget.update({ externalId: generateId() });
-        console.log(" useExternalId Generated new externalId for widget:", widget.id());
       }
     } catch (error) {
       console.error("Error generating externalId:", error);

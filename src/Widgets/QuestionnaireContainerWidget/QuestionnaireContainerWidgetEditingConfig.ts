@@ -21,9 +21,7 @@ Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
 });
 
 const initializeQstContainerCopy = (qstContainerWidget: Scrivito.Widget) => {
-  console.log("Copying container");
   if (isEmpty(qstContainerWidget.get(QUESTIONNAIRE_ID))) {
-    console.log("QST not yet created, will not mark as copied!")
     qstContainerWidget.update({ externalId: generateId() });
     return;
   }

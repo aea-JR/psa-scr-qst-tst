@@ -18,7 +18,7 @@ export const QuestionnaireManagementTab: FC<
 	const questionnaireId = widget.get(QUESTIONNAIRE_ID) as string;
 	const context = uiContext();
 	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
-	const { updateQuestionnaire, isUpdating } = useUpdateQuestionnaire(widget);
+	const { updateQuestionnaire } = useUpdateQuestionnaire(widget);
 	const status = widget.get(QUESTIONNAIRE_STATUS) as QuestionnaireStatus;
 
 	const isCreated = !!questionnaireId;

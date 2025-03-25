@@ -10,7 +10,6 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       const id = generateId();
-      console.log("setting externalId for QuestionnaireCheckboxQuestionWidget fron initialize: " + id);
       obj.update({ externalId: id });
     }
   },
@@ -19,13 +18,9 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
     // Skip updating externalId if the parent container is marked as being copied
     if (parent && parent.get(IS_BEING_COPIED)) {
-      console.log(
-        "Child widget copied as part of container. No change to externalId.",
-      );
       return;
     }
     const id = generateId();
-    console.log("Copying child widget for QuestionnaireCheckboxQuestionWidget w: " + id);
     child.update({ externalId: id, questionId: null });
   },
 
