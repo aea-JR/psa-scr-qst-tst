@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "../../utils/lodashPolyfills";
 import { QuestionnaireInputQuestionWidget } from "./InputQuestionWidgetClass";
 import { HelpText } from "../../Components/HelpText/HelpText";
 import { Mandatory } from "../../Components/Mandatory/Mandatory";

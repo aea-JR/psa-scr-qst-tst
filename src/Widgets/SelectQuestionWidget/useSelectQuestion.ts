@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { compact, each, find, isEmpty } from "lodash-es";
+
+import { isEmpty } from "../../utils/lodashPolyfills";
 import { useAnswer } from "../../hooks/useAnswer";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
@@ -37,7 +38,7 @@ export const useSelectQuestion = (widget: Widget) => {
 				identifiers: selectedOptions.map((option) => option.get(IDENTIFIER) as string),
 			};
 		} else {
-			const defaultOption = find(options, (option) => {
+			const defaultOption = options.find((option) => {
 				const identifier = option.get(IDENTIFIER) as string;
 				return !isEmpty(identifier) && defaultValue.includes(identifier);
 			});
@@ -58,7 +59,7 @@ export const useSelectQuestion = (widget: Widget) => {
 		if (!isInPlaceEditingActive()) {
 			return;
 		}
-		each(options, (option, index) => {
+		options.forEach((option, index) => {
 			if (!option.get(TYPE)) {
 				const realType = type === "string_dropdown" ? "dropdown" : isMultiSelect ? "checkbox" : "radio";
 				option.update({ type: realType });
@@ -70,7 +71,7 @@ export const useSelectQuestion = (widget: Widget) => {
 	}, [options]);
 
 	useEffect(() => {
-		each(options, (option) => option.update({ isCondition: useAsConditionals }));
+		options.forEach((option) => option.update({ isCondition: useAsConditionals }));
 	}, [useAsConditionals]);
 
 	useEffect(() => {
@@ -78,13 +79,13 @@ export const useSelectQuestion = (widget: Widget) => {
 			const activeConditionIds: string[] = [];
 
 			if (isMultiSelect) {
-				each(options, (option) => {
+				options.forEach((option) => {
 					if (values.includes(option.get(TEXT) as string)) {
 						activeConditionIds.push(option.get(EXTERNAL_ID) as string);
 					}
 				});
 			} else {
-				const selectedOption = find(options, (option) =>
+				const selectedOption = options.find((option) =>
 					values.includes(option.get(TEXT) as string)
 				);
 				if (selectedOption) {

@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useCallback } from "react";
 import { isInPlaceEditingActive, Widget } from "scrivito";
 import { scrollIntoView } from "../utils/scrollIntoView";
 import { InputElements } from "../types/review";
-import { forEach, groupBy, some } from "lodash-es";
 import { EXTERNAL_ID, FORM_TYPE, STEPS } from "../constants/constants";
 
 interface QuestionnaireStepsContextProps {

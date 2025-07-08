@@ -2,7 +2,7 @@
 
 
 export interface Options {
-  pisaUrl: string;
+  pisaApiUrl: string | null;
 }
 
 export declare function initPisaQuestionnaireWidgets(

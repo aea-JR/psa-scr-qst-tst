@@ -1,5 +1,5 @@
 import { Widget } from "scrivito";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "./lodashPolyfills";
 import { getIdentifier } from "./getIdentifier";
 import { getQuestionnaireContainerWidget } from "./getQuestionnaireContainerWidget";
 import { CONTENT, STEPS } from "../constants/constants";

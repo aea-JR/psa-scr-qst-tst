@@ -1,7 +1,7 @@
-import { isEmpty } from "lodash-es";
+import { Widget } from "scrivito";
 import { FAILED_MESSAGE, INPUT_TYPE, SUBMITTED_MESSAGE, SUBMITTING_MESSAGE, TITLE } from "../../../constants/constants";
 import { isUsageRestricted } from "../../../utils/isRestricted";
-import { Widget } from "scrivito";
+import { isEmpty } from "../../../utils/lodashPolyfills";
 import { getQuestionWidgets } from "../../../utils/getQuestionWidgets";
 import { getQuestionnaireContainerWidget } from "../../../utils/getQuestionnaireContainerWidget";
 import { hasContext } from "../../../utils/hasContext";

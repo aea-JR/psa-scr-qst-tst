@@ -1,6 +1,6 @@
 import { Widget } from "scrivito";
 import { AnswerOption } from "../types/questionnaire";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "./lodashPolyfills";
 import { EXTERNAL_ID, IDENTIFIER, POSITION, TEXT } from "../constants/constants";
 
 export const convertWidgetsToAnswerOptions = (

@@ -12,6 +12,7 @@ const messages = {
 	inCreation: { prefix: EDITORS_INFO, content: "Creating the questionnaire in PisaSales. Please wait..." },
 	updating: { prefix: EDITORS_INFO, content: "Updating questionnaire data. Please wait..." },
 	void: { prefix: EDITORS_INFO, content: "The questionnaire is ready for use." },
+	unconfiguredUrl: { prefix: EDITORS_INFO, content: "PisaSales is not configured yet. " },
 
 };
 interface Props {

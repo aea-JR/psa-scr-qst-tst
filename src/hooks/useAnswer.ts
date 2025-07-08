@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "../utils/lodashPolyfills";
 import { useFormContext } from "../contexts/FormContext";
 
 export const useAnswer = (

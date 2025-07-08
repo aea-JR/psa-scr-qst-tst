@@ -1,6 +1,6 @@
-import { isEmpty, uniq } from "lodash-es";
 import { Widget } from "scrivito";
-import { InputElements, ReviewContent, ReviewItemContent } from "../types/review";
+import { isEmpty, uniq } from "./lodashPolyfills";
+import { InputElements, ReviewContent } from "../types/review";
 import { EXTERNAL_ID, STEP_NUMBER, TEXT, TITLE, TYPE } from "../constants/constants";
 
 

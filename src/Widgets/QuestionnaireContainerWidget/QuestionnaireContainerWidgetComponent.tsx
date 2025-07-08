@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { isQuestionnaireStructureValid } from "../../utils/isQuestionnaireStructureValid";
 import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
+import { isNil } from "../../utils/lodashPolyfills";
 
 provideComponent(QuestionnaireContainerWidget, ({ widget }) => {
   const values = useQuestionnaireWidgetAttributes(widget);
@@ -42,6 +43,10 @@ const QuestionnaireContainerContent: React.FC<{
   const isCreated = !!questionnaireId;
 
   useEffect(() => {
+    if (isNil(isOnline)) {
+      setQuestionnaireStatus("unconfiguredUrl", widget);
+      return;
+    }
     if (!isOnline) {
       setQuestionnaireStatus("offline", widget);
       return;

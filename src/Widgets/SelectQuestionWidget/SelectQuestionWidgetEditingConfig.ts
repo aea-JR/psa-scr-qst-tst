@@ -4,7 +4,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { Widget } from "scrivito";
 
 import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOptionWidgetClass";
-import { compact, isEmpty, map } from "lodash-es";
+import { compact, isEmpty } from "../../utils/lodashPolyfills";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
@@ -94,7 +94,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
         const isMultiCheckboxes = type == "string_checkboxes";
         const options = widget.get(OPTIONS) as Widget[];
         const allowedValues = compact(
-          map(options, (option) => option.get(IDENTIFIER) as string),
+          options.map((option) => option.get(IDENTIFIER) as string),
         );
 
         if (isMultiCheckboxes) {

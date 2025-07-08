@@ -1,10 +1,10 @@
 import { Widget } from "scrivito";
-import { isEmpty, some } from "lodash-es";
 import { isUTCDate } from "./isUTCDate";
 import { isPisaDate } from "./isPisaDate";
 import { DEFAULT_VALUE, INPUT_TYPE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
 import { getQuestionWidgets } from "./getQuestionWidgets";
 import { hasContext } from "./hasContext";
+import { isEmpty } from "./lodashPolyfills";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
   const title = qstMainWidget.get(TITLE) as string;
@@ -33,7 +33,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     if (question.objClass() == "QuestionnaireSelectQuestionWidget") {
       const options = question.get(OPTIONS) as Widget[];
 
-      const hasEmptyOption = some(options, (option) =>
+      const hasEmptyOption = options.some((option) =>
         isEmpty(option.get(TEXT))
       );
 

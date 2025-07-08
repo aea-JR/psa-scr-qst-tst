@@ -1,5 +1,5 @@
-import { isEmpty } from "lodash-es";
 import { Widget } from "scrivito";
+import { isEmpty } from "./lodashPolyfills";
 import { Question, AnswerOption } from "../types/questionnaire";
 import { convertWidgetsToAnswerOptions } from "./convertoAnswerOptions";
 import { convertWidgetToQuestion } from "./convertoQuestion";

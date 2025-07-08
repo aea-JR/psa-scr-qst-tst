@@ -1,11 +1,11 @@
 import * as React from "react";
 import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
 import { AnswersDataClass } from "../Data/Answers/AnswersDataClass";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "../utils/lodashPolyfills";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
-import { DATA, INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
+import { INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;

@@ -1,5 +1,5 @@
 import * as Scrivito from "scrivito";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "../../utils/lodashPolyfills";
 import generateId from "../../utils/idGenerator";
 import { QUESTIONNAIRE_ID } from "../../constants/constants";
 import { initialQuestionnaireContent } from "./editing/initialContent";

@@ -1,12 +1,10 @@
 import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
-import { isIdentifierUnique } from "../../utils/isIdentifierUnique";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
-import { DEFAULT_VALUE, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
-import { isEmpty } from "lodash-es";
+import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 import inputThumbnail from "../../assets/images/crm-questionnaire-input.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {

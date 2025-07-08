@@ -1,5 +1,5 @@
 import { Widget } from "scrivito";
-import { isEmpty } from "lodash-es";
+import { isEmpty } from "./lodashPolyfills";
 import { ACTIVITY_ID, ACTIVITY_ID_DATA_ITEM_FIELD_VALUE, ACTIVITY_ID_SOURCE, CONTACT_ID, CONTACT_ID_DATA_ITEM_FIELD_VALUE, CONTACT_ID_SOURCE, PROJECT_ID, PROJECT_ID_DATA_ITEM_FIELD_VALUE, PROJECT_ID_SOURCE } from "../constants/constants";
 
 export const hasContext = (qstMainWidget: Widget): boolean => {

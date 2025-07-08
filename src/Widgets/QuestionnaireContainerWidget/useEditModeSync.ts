@@ -1,6 +1,5 @@
-import { isInPlaceEditingActive, useDataItem, Widget } from "scrivito";
 import { useEffect } from "react";
-import { each } from "lodash-es";
+import { isInPlaceEditingActive, useDataItem, Widget } from "scrivito";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { ACTIVITY_ID_DATA_ITEM_FIELD, ACTIVITY_ID_DATA_ITEM_FIELD_VALUE, ACTIVITY_ID_SOURCE, CONTACT_ID_DATA_ITEM_FIELD, CONTACT_ID_DATA_ITEM_FIELD_VALUE, CONTACT_ID_SOURCE, POSITION, PROJECT_ID_DATA_ITEM_FIELD, PROJECT_ID_DATA_ITEM_FIELD_VALUE, PROJECT_ID_SOURCE, STEPS } from "../../constants/constants";
 
@@ -21,7 +20,7 @@ export const useEditModeSync = (qstMainWidget: Widget) => {
 	useEffect(() => {
 		if (!isEditing) { return; }
 
-		each(questionWidgets, (question, index) => {
+		questionWidgets.forEach((question, index) => {
 			const newPos = (index + 1) * 10;
 			if (question.get(POSITION) !== newPos) {
 				question.update({ position: newPos });
