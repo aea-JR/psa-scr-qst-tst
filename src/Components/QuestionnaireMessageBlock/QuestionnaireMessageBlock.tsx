@@ -13,6 +13,7 @@ const messages = {
 	updating: { prefix: EDITORS_INFO, content: "Updating questionnaire data. Please wait..." },
 	void: { prefix: EDITORS_INFO, content: "The questionnaire is ready for use." },
 	unconfiguredUrl: { prefix: EDITORS_INFO, content: "PisaSales is not configured yet. " },
+	noContext: { prefix: EDITORS_INFO, content: "This widget must be placed within a PisaSales Questionnaire! " },
 
 };
 interface Props {
@@ -30,7 +31,7 @@ export const QuestionnaireMessageBlock: FC<Props> = ({ className, status }) => {
 	return (
 		<div className="qst-message-block-container">
 			<div className={`message-block alert fade show ${message.prefix == EDITORS_INFO ? "alert-warning" : "alert-error"} ${className || ''}`}>
-				<p>
+				<p className='m-0'>
 					<strong>{message.prefix}</strong> {message.content}
 				</p>
 			</div>
