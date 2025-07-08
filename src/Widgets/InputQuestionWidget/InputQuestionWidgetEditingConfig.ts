@@ -6,6 +6,7 @@ import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
 import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
 import inputThumbnail from "../../assets/images/crm-questionnaire-input.svg";
+import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
 Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
   initialize: (obj) => {
@@ -59,6 +60,7 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
   },
   validations: [
     ...defaultValidations,
+    insideQuestionnaireContainerValidation,
     [
       DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {

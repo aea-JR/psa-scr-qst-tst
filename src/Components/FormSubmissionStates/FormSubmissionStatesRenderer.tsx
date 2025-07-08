@@ -11,7 +11,7 @@ interface FormSubbmissionStatesRendererProps {
 }
 
 export const FormSubmissionStatesRenderer: FC<FormSubbmissionStatesRendererProps> = ({ widget }) => {
-	const { onSubmit, isSubmitting, successfullySent, submissionFailed } = useFormContext();
+	const { onSubmit, isSubmitting, successfullySent, submissionFailed } = useFormContext()!;
 	const {
 		submissionFailureText,
 		retryButtonText,

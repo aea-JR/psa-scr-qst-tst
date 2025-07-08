@@ -10,7 +10,7 @@ interface SingleStepFooterProps {
 
 export const SingleStepFooter: FC<SingleStepFooterProps> =
 	connect(({ submitDisabled }) => {
-		const { onSubmit } = useFormContext();
+		const { onSubmit } = useFormContext()!;
 		const { singleSubmitButtonAlignment, submitButtonText } = useQuestionnaireWidgetAttributesContext();
 		return (
 			<div

@@ -17,7 +17,7 @@ export const Questionnaire: FC<QuestionnaireProps> = ({
 
 }) => {
 
-	const { isSubmitting, submissionFailed, successfullySent } = useFormContext();
+	const { isSubmitting, submissionFailed, successfullySent } = useFormContext()!;
 
 	const { isCreated } = useQuestionnaireWidgetAttributesContext();
 	if (isSubmitting || successfullySent || submissionFailed) {

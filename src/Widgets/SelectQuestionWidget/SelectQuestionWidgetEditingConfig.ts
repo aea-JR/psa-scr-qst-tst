@@ -9,6 +9,7 @@ import { defaultAttributes, defaultInitialContent, defaultProperties, defaultVal
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, OPTIONS, QUESTION_ID, TYPE } from "../../constants/constants";
 import selectThumbnail from "../../assets/images/crm-questionnaire-select.svg";
+import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
 Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   initialize: (obj) => {
@@ -81,6 +82,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   },
   validations: [
     ...defaultValidations,
+    insideQuestionnaireContainerValidation,
     [
       DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {

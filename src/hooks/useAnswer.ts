@@ -7,18 +7,18 @@ export const useAnswer = (
 	defaultValues: string[],
 	identifiers?: string[]
 ) => {
-	const { getAnswer, onChange } = useFormContext();
+	const ctx = useFormContext();
 	const [values, setValues] = useState<string[]>(defaultValues);
 
 	const initializeAnswer = useCallback(() => {
-		const existingAnswer = getAnswer(questionId);
+		const existingAnswer = ctx?.getAnswer(questionId);
 
 		if (existingAnswer) {
 			setValues(existingAnswer.value);
 		} else if (!isEmpty(defaultValues)) {
-			onChange(questionId, defaultValues, identifiers);
+			ctx?.onChange(questionId, defaultValues, identifiers);
 		}
-	}, [getAnswer, questionId, defaultValues, onChange]);
+	}, [ctx?.getAnswer, questionId, defaultValues, ctx?.onChange]);
 
 	useEffect(() => {
 		if (!isEmpty(questionId)) {
@@ -28,7 +28,7 @@ export const useAnswer = (
 
 	const handleChange = (newValues: string[], identifiers: string[] = [""]) => {
 		setValues(newValues);
-		onChange(questionId, newValues, identifiers);
+		ctx?.onChange(questionId, newValues, identifiers);
 	};
 
 	return { values, handleChange };

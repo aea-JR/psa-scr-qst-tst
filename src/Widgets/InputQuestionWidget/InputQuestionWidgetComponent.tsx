@@ -13,6 +13,8 @@ import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
 import { DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
 import "./InputQuestionWidget.scss";
+import { useFormContext } from "../../contexts/FormContext";
+import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 
 provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const id = `questionnaire_input_widget_${widget.id()}`;
@@ -34,6 +36,11 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
       handleChange([defaultValue]);
     }
   }, [defaultValue]);
+
+  const ctx = useFormContext();
+  if (!ctx) {
+    return <QuestionnaireMessageBlock status="noContext" />
+  }
 
   const inputComponents = {
     string_single_line: StringSingleLineInput,

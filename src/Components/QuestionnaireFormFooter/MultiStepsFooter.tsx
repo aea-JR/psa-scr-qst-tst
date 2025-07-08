@@ -13,7 +13,7 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 	connect(
 		({ submitDisabled }) => {
 			const [show, setShow] = useState(false);
-			const { onSubmit } = useFormContext();
+			const { onSubmit } = useFormContext()!;
 			const { onPageChange, currentStep, isLastStep, stepsLength } = useQuestionnaireStepsContext();
 			const { backwardButtonText, forwardButtonText, submitButtonText, showReview, reviewButtonText } = useQuestionnaireWidgetAttributesContext();
 			const doShowReview = (isLastStep || isInPlaceEditingActive()) && showReview;

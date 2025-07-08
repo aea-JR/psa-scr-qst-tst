@@ -21,13 +21,8 @@ interface FormContextProps {
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
 const REPEATABLE = "PSA_QST_INP_TYP_REP";
 
-export const useFormContext = () => {
-  const context = React.useContext(FormContext);
-  if (!context) {
-    throw new Error("useFormContext must be used within a FormProvider");
-  }
-  return context;
-};
+export const useFormContext = () => React.useContext(FormContext);
+
 
 export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWidget: Widget }> = ({ children, qstContainerWidget }) => {
   const questionnaireId = qstContainerWidget.get(QUESTIONNAIRE_ID) as string;

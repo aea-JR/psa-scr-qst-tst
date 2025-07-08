@@ -1,6 +1,7 @@
 import { provideEditingConfig } from "scrivito";
 import { CONTENT, IS_SINGLE_STEP, STEP_NUMBER } from "../../constants/constants";
 import stepThumbnail from "../../assets/images/crm-questionnaire-step.svg";
+import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
 provideEditingConfig("QuestionnaireStepWidget", {
   thumbnail: stepThumbnail,
@@ -16,5 +17,8 @@ provideEditingConfig("QuestionnaireStepWidget", {
       title: "Content"
     }
   },
-  properties: [CONTENT]
+  properties: [CONTENT],
+  validations: [
+    insideQuestionnaireContainerValidation
+  ]
 });

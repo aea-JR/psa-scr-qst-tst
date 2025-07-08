@@ -4,6 +4,7 @@ import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE } from "
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import checkboxThumbnail from "../../assets/images/crm-questionnaire-checkbox.svg";
+import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
 Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
@@ -49,6 +50,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
   },
   validations: [
     ...defaultValidations,
+    insideQuestionnaireContainerValidation,
     [
       DEFAULT_VALUE,
       (defaultValue: string, { widget }: { widget: Scrivito.Widget }) => {

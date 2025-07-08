@@ -8,6 +8,8 @@ import { ConditionProvider } from "../../contexts/ConditionContext";
 import { useSelectQuestion } from "./useSelectQuestion";
 import "./SelectQuestionWidget.scss";
 import { OPTIONS, TEXT } from "../../constants/constants";
+import { useFormContext } from "../../contexts/FormContext";
+import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 
 provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
 
@@ -25,6 +27,10 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
     getConditionData,
   } = useSelectQuestion(widget);
 
+  const ctx = useFormContext();
+  if (!ctx) {
+    return <QuestionnaireMessageBlock status="noContext" />
+  }
   return (
     <ConditionProvider value={{ getConditionData }}>
       <>

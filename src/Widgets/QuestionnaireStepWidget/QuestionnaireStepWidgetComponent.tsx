@@ -4,12 +4,20 @@ import "./QuestionnaireStepWidget.scss";
 import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsContext";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
 import { CONTENT } from "../../constants/constants";
+import { useFormContext } from "../../contexts/FormContext";
+import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 
 provideComponent(QuestionnaireStepWidget, ({ widget }) => {
   const { getStepInfo } = useQuestionnaireStepsContext();
   const data = getStepInfo(widget.id());
   const isMultiStepsWithActiveEditing = isInPlaceEditingActive() && !data.isSingleStep;
   const titleBgColor = useDynamicBackground(".step-preview-count")
+
+  const ctx = useFormContext();
+  if (!ctx) {
+    return <QuestionnaireMessageBlock status="noContext" />
+  }
+
   //TODO: improve or remove step preview
   return (
     <>

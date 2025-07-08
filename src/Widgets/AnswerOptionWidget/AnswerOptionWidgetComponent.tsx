@@ -12,7 +12,7 @@ import { CONTENT, EXTERNAL_ID, QUESTION_ID, TEXT } from "../../constants/constan
 provideComponent(QuestionnaireAnswerOptionWidget, ({ widget }) => {
 
 	const { getConditionData } = useConditionContext();
-	const { setExcludedFromSubmit } = useFormContext();
+	const context = useFormContext();
 	const data = getConditionData(widget.get(EXTERNAL_ID));
 	const titleBgColor = useDynamicBackground(".condition-info");
 
@@ -20,10 +20,12 @@ provideComponent(QuestionnaireAnswerOptionWidget, ({ widget }) => {
 		const { questionWidgets } = extractQuestionsAndOptions(widget)
 		questionWidgets.forEach((question) => {
 			const questionId = question.get(QUESTION_ID) as string;
-			setExcludedFromSubmit(questionId, !data.isActive);
+			context?.setExcludedFromSubmit(questionId, !data.isActive);
 		});
 	}, [data.isActive]);
-
+	if (!context) {
+		return <QuestionnaireMessageBlock status="noContext" />
+	}
 	if (!data.isActive && !isInPlaceEditingActive()) {
 		return null;
 	}
