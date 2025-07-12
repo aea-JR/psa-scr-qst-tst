@@ -6,10 +6,10 @@ import { Dropdown } from "./Dropdown";
 import { Select } from "./Select";
 import { ConditionProvider } from "../../contexts/ConditionContext";
 import { useSelectQuestion } from "./useSelectQuestion";
-import "./SelectQuestionWidget.scss";
 import { OPTIONS, TEXT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import "./SelectQuestionWidget.scss";
 
 provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
 

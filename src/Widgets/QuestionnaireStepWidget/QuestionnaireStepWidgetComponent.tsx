@@ -1,11 +1,11 @@
 import { ContentTag, isInPlaceEditingActive, provideComponent } from "scrivito";
 import { QuestionnaireStepWidget } from "./QuestionnaireStepWidgetClass";
-import "./QuestionnaireStepWidget.scss";
 import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsContext";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
 import { CONTENT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import "./QuestionnaireStepWidget.scss";
 
 provideComponent(QuestionnaireStepWidget, ({ widget }) => {
   const { getStepInfo } = useQuestionnaireStepsContext();

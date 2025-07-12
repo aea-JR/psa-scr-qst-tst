@@ -4,22 +4,38 @@ import { Description } from "../QuestionnaireManagementTabDescription/Questionna
 import { useCreateQuestionnaire } from "./useCreateQuestionnaire";
 import { useUpdateQuestionnaire } from "./useUpdateQuestionnaire";
 import { QuestionnaireStatus } from "../../types/questionnaire";
-import "./QuestionnaireManagementTab.scss";
 import { QUESTIONNAIRE_ID, QUESTIONNAIRE_STATUS } from "../../constants/constants";
+import { PisaDataClassProvider } from "../../contexts/PisaDataClassContext";
+import "./QuestionnaireManagementTab.scss";
 
 
 interface QuestionnaireManagementTabProps {
 	widget: Widget;
+	status: QuestionnaireStatus;
 }
 //TODO: show error to user for creation/update failure?
 export const QuestionnaireManagementTab: FC<
 	QuestionnaireManagementTabProps
 > = ({ widget }) => {
+	const status = widget.get(QUESTIONNAIRE_STATUS) as QuestionnaireStatus;
+	const context = uiContext();
+
+	if (!context) return null;
+
+	return (
+		<PisaDataClassProvider>
+			<Tab widget={widget} status={status} />
+		</PisaDataClassProvider>
+	);
+};
+
+const Tab: FC<
+	QuestionnaireManagementTabProps
+> = ({ widget, status }) => {
 	const questionnaireId = widget.get(QUESTIONNAIRE_ID) as string;
 	const context = uiContext();
 	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
 	const { updateQuestionnaire } = useUpdateQuestionnaire(widget);
-	const status = widget.get(QUESTIONNAIRE_STATUS) as QuestionnaireStatus;
 
 	const isCreated = !!questionnaireId;
 

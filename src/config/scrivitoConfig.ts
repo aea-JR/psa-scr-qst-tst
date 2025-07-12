@@ -1,20 +1,22 @@
 import { isEmpty } from "../utils/lodashPolyfills";
 
 interface Options {
-  pisaApiUrl: string | null;
+  pisaApiUrl: string;
 }
 
 const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
-const API_SALESPORTAL = "api-salesportal";
+//TODO:CHECK
+const API_SALESPORTAL = "salesportal";
 
 /**
  * Initialize Pisa Questionnaire Widgets
  * @param options Configuration options including Pisa URL
  */
-export const initPisaQuestionnaireWidgets = async (options: Options): Promise<void> => {
-  setPisaUrl(options.pisaApiUrl);
-  loadDataClasses();
+export const initPisaQuestionnaireWidgets = async (options?: Options): Promise<void> => {
   loadWidgets();
+  if (!isEmpty(options?.pisaApiUrl)) {
+    setPisaSalesApiUrl(options!.pisaApiUrl);
+  }
 };
 
 const loadWidgets = (): void => {
@@ -37,25 +39,12 @@ const loadWidgets = (): void => {
   }
 
 };
+export const setPisaSalesApiUrl = async (pisaUrl: string | null) => {
+  setPisaUrl(pisaUrl);
 
-const loadDataClasses = (): void => {
-  if (isEmpty(import.meta)) {
-    const dataClassImportsContext = require.context(
-      "../Data",
-      true,
-      /DataClass.*\.ts$/
-    );
-    dataClassImportsContext.keys().forEach(dataClassImportsContext);
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (import.meta as any).glob(
-      ["../Data/**/*DataClass.ts"],
-      {
-        eager: true
-      }
-    );
-  }
-};
+  const event = new CustomEvent("pisaUrlChanged");
+  window.dispatchEvent(event);
+}
 
 const setPisaUrl = (pisaApiUrl: string | null): void => {
   if (!pisaApiUrl) {

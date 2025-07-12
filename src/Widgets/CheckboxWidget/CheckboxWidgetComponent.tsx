@@ -4,9 +4,9 @@ import { SingleCheckbox } from "./Checkboxes/SingleCheckbox";
 import { TriStateCheckbox } from "./Checkboxes/TriStateCheckbox";
 import { useExternalId } from "../../hooks/useExternalId";
 import { TYPE, MANDATORY, EXTERNAL_ID, QUESTION_ID, IDENTIFIER, HELP, DEFAULT_VALUE } from "../../constants/constants";
-import "./CheckboxWidget.scss";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import "./CheckboxWidget.scss";
 
 provideComponent(QuestionnaireCheckboxQuestionWidget, ({ widget }) => {
   const type = widget.get(TYPE) || "logic";

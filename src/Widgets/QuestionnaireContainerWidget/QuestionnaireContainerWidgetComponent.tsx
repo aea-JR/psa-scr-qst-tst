@@ -10,26 +10,30 @@ import "./QuestionnaireContainerWidget.scss";
 import { PisaConnectionStatusProvider, usePisaConnectionStatusContext } from "../../contexts/PisaConnectionStatusContext";
 import { QuestionnaireStepsProvider } from "../../contexts/QuestionnaireStepsContext";
 import { useEditModeSync } from "./useEditModeSync";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { isQuestionnaireStructureValid } from "../../utils/isQuestionnaireStructureValid";
 import { compareQuestionnaireMeta } from "../../utils/compareQuestionnaireMeta";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
 import { isNil } from "../../utils/lodashPolyfills";
+import { PisaDataClassProvider } from "../../contexts/PisaDataClassContext";
+import { QuestionnaireStatus } from "../../types/questionnaire";
 
 provideComponent(QuestionnaireContainerWidget, ({ widget }) => {
   const values = useQuestionnaireWidgetAttributes(widget);
   useEditModeSync(widget);
 
   return (
-    <QuestionnaireWidgetAttributesProvider values={values}>
-      <PisaConnectionStatusProvider>
-        <QuestionnaireStepsProvider qstContainerWidget={widget}>
-          <QuestionnaireContainerContent
-            widget={widget}
-          />
-        </QuestionnaireStepsProvider>
-      </PisaConnectionStatusProvider>
-    </QuestionnaireWidgetAttributesProvider>
+    <PisaDataClassProvider>
+      <QuestionnaireWidgetAttributesProvider values={values}>
+        <PisaConnectionStatusProvider>
+          <QuestionnaireStepsProvider qstContainerWidget={widget}>
+            <QuestionnaireContainerContent
+              widget={widget}
+            />
+          </QuestionnaireStepsProvider>
+        </PisaConnectionStatusProvider>
+      </QuestionnaireWidgetAttributesProvider>
+    </PisaDataClassProvider>
   );
 });
 
@@ -41,30 +45,37 @@ const QuestionnaireContainerContent: React.FC<{
   const hasChanges = compareQuestionnaireMeta(widget);
   const { isOnline } = usePisaConnectionStatusContext();
   const isCreated = !!questionnaireId;
+  const [internalStatus, setInternalStatus] = useState<QuestionnaireStatus>("void");
 
   useEffect(() => {
     if (isNil(isOnline)) {
       setQuestionnaireStatus("unconfiguredUrl", widget);
+      setInternalStatus("unconfiguredUrl");
       return;
     }
     if (!isOnline) {
       setQuestionnaireStatus("offline", widget);
+      setInternalStatus("offline");
       return;
     }
     if (!isValid) {
       setQuestionnaireStatus("invalid", widget);
+      setInternalStatus("invalid");
       return;
     }
     if (!isCreated) {
       setQuestionnaireStatus("creationPending", widget);
+      setInternalStatus("creationPending");
       return;
     }
     if (hasChanges) {
       setQuestionnaireStatus("pendingUpdate", widget);
+      setInternalStatus("pendingUpdate");
       return;
     }
     if (isCreated) {
       setQuestionnaireStatus("void", widget);
+      setInternalStatus("void");
       return;
     }
   }, [isValid, hasChanges, isCreated, isOnline]);
@@ -86,6 +97,7 @@ const QuestionnaireContainerContent: React.FC<{
       >
         <Questionnaire
           widget={widget}
+          status={internalStatus}
         />
       </div>
     </FormProvider>

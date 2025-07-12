@@ -1,8 +1,8 @@
 import { load } from "scrivito";
-import { QuestionDataClass } from "./QuestionDataClass";
+import { getQuestionDataClass } from "./QuestionDataClass";
 
 export const getQuestionItem = (questionId: string) => {
 	return load(() => {
-		return QuestionDataClass.get(questionId);
+		return getQuestionDataClass().get(questionId);
 	});
 }

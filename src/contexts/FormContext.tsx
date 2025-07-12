@@ -1,6 +1,6 @@
 import * as React from "react";
 import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
-import { AnswersDataClass } from "../Data/Answers/AnswersDataClass";
+import { getAnswersDataClass } from "../Data/Answers/AnswersDataClass";
 import { isEmpty } from "../utils/lodashPolyfills";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
@@ -42,6 +42,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
   const { isOnline } = usePisaConnectionStatusContext();
   const { validateCurrentStep } = useQuestionnaireStepsContext();
+  const AnswersDataClass = getAnswersDataClass();
+
   React.useEffect(() => {
     if (!isInPlaceEditingActive()) {
       return;

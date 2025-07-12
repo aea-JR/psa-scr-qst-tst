@@ -12,9 +12,9 @@ import { NumberInput } from "./Inputs/NumberInput";
 import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
 import { DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
-import "./InputQuestionWidget.scss";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import "./InputQuestionWidget.scss";
 
 provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const id = `questionnaire_input_widget_${widget.id()}`;

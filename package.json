@@ -1,11 +1,11 @@
 {
   "name": "psa-scr-qst-tst",
-  "version": "0.0.332",
+  "version": "0.0.426",
   "description": "PisaSales Questionnaire Widgets for Scrivito TEST PACKAGE",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev":   "webpack --mode development",
+    "dev": "webpack --mode development",
     "publish:build": "npm run build && cd build && npm publish && cd ..",
     "lint": "eslint src --ext .ts,.tsx",
     "format": "prettier --write src"

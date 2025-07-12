@@ -1,14 +1,14 @@
 import { useState } from "react";
 import * as Scrivito from "scrivito";
 
-import { QuestionnaireDataClass } from "../../Data/Questionnaire/QuestionnaireDataClass";
-import { QuestionDataClass } from "../../Data/Question/QuestionDataClass";
-import { AnswerOptionDataClass } from "../../Data/AnswerOption/AnswerOptionDataClass";
 import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
 import { EXTERNAL_ID } from "../../constants/constants";
+import { getQuestionnaireDataClass } from "../../Data/Questionnaire/QuestionnaireDataClass";
+import { getQuestionDataClass } from "../../Data/Question/QuestionDataClass";
+import { getAnswerOptionDataClass } from "../../Data/AnswerOption/AnswerOptionDataClass";
 
 export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 	const [isCreating, setIsCreating] = useState(false);
@@ -22,6 +22,9 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 		};
 
 		try {
+			const QuestionnaireDataClass = getQuestionnaireDataClass();
+			const QuestionDataClass = getQuestionDataClass();
+			const AnswerOptionDataClass = getAnswerOptionDataClass()
 			setIsCreating(true);
 			setQuestionnaireStatus("inCreation", widget);
 			const { questions, answerOptions, questionWidgets, optionWidgets } =

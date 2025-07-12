@@ -4,18 +4,17 @@ import { QuestionnaireMessageBlock } from "../QuestionnaireMessageBlock/Question
 import { SingleStepFooter } from "./SingleStepFooter";
 import { MultiStepsFooter } from "./MultiStepsFooter";
 import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsContext";
-import { getQuestionnaireStatus } from "../../utils/questionnaireStatus";
+import { QuestionnaireStatus } from "../../types/questionnaire";
 import "./QuestionnaireFormFooter.scss";
 
 interface QuestionnaireFooterProps {
 	widget: Scrivito.Widget;
-	isCreated: boolean;
+	status: QuestionnaireStatus;
 }
 
 export const QuestionnaireFooter: React.FC<QuestionnaireFooterProps> =
-	Scrivito.connect(({ widget, isCreated }) => {
+	Scrivito.connect(({ widget, status }) => {
 		const { isSingleStep } = useQuestionnaireStepsContext();
-		const status = getQuestionnaireStatus(widget);
 		return (
 			<div className="qst-footer-container">
 				{

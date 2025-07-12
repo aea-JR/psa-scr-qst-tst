@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Widget } from "scrivito";
 
-import { AnswerOptionDataClass } from "../../Data/AnswerOption/AnswerOptionDataClass";
-import { QuestionDataClass } from "../../Data/Question/QuestionDataClass";
 import { extractQuestionnaireMeta } from "../../utils/extractQuestionnaireMeta";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
 import { QuestionnaireMetaSnapshot } from "../../types/questionnaire";
@@ -13,6 +11,8 @@ import { getQuestionItem } from "../../Data/Question/QuestionDataClassUtils";
 import { getOptionItem } from "../../Data/AnswerOption/AnswerOptionDataClassUtils";
 import { setQuestionnaireStatus } from "../../utils/questionnaireStatus";
 import { ANSWER_OPTION_ID, CREATION_DATA, EXTERNAL_ID, OPTIONS, QUESTION_ID, QUESTIONNAIRE_ID } from "../../constants/constants";
+import { getQuestionDataClass } from "../../Data/Question/QuestionDataClass";
+import { getAnswerOptionDataClass } from "../../Data/AnswerOption/AnswerOptionDataClass";
 
 export const useUpdateQuestionnaire = (widget: Widget) => {
 	const [isUpdating, setIsUpdating] = useState(false);
@@ -142,7 +142,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			for (const widget of updates.createQuestions) {
 				try {
 					const question = convertWidgetToQuestion(widget);
-					const questionItem = await QuestionDataClass.create({
+					const questionItem = await getQuestionDataClass().create({
 						...question,
 						questionnaireId: qstId,
 					});
@@ -169,7 +169,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 				for (const widget of optionWidgets) {
 					try {
 						const option = convertWidgetToAnswerOption(widget);
-						const optionItem = await AnswerOptionDataClass.create({
+						const optionItem = await getAnswerOptionDataClass().create({
 							...option,
 							questionId,
 						});
@@ -227,6 +227,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			widget.update({ creationData: JSON.stringify(updatedQstMeta) });
 		} catch (error) {
 			//TODO: Add error status or show error?
+			hasFailures = true;
 			console.error("Error updating questionnaire:", error);
 		} finally {
 			setIsUpdating(false);

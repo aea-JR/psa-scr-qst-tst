@@ -1,10 +1,9 @@
-
-
-
 export interface Options {
-  pisaApiUrl: string | null;
+  pisaApiUrl: string;
 }
 
 export declare function initPisaQuestionnaireWidgets(
-  options: Options
+  options?: Options
 ): void;
+
+export declare function setPisaSalesApiUrl(pisaUrl: string | null): void;
