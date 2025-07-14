@@ -1,6 +1,4 @@
-# psa-scr-qst-tst (Proof of Concept)
-
-## 🚧 Proof of Concept (PoC): This package is currently in PoC mode. Use at your own risk, as changes and improvements are ongoing. It is not yet ready for production environments.
+# Scrivito PisaSales Questionnaire Builder
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -37,25 +35,32 @@ This package provides a collection of widgets for creating and using PisaSales q
 Install the package into your scrivito portal app:
 
 ```shell
-npm install psa-scr-qst-tst
+npm install scrivito-pisasales-questionnaire-builder
 ```
 
 ### Importing and Initializing
 
-Import the `initPisaQuestionnaireWidgets` function from the package and call it in your index.ts file found in the Widgets folder (e.g., in `src/Widgets/index.ts`). Make sure to provide the URL to your PisaSales REST API as the pisaUrl parameter:
+Import the `initPisaQuestionnaireWidgets` function from the package and call it in your `index.ts` file located in the `Widgets` folder (e.g., in `src/Widgets/index.ts`).
 
-```js
-import { initPisaQuestionnaireWidgets } from "psa-scr-qst-tst";
+You can provide the PisaSales REST API URL in two ways:
 
-// Replace "YOUR_PISA_API_URL" with the actual PisaSales REST API URL
-initPisaQuestionnaireWidgets({ pisaUrl: "YOUR_PISA_API_URL" });
+- **As a string**, if you have the URL directly:
+  ```ts
+  import { initPisaQuestionnaireWidgets } from "scrivito-pisasales-questionnaire-builder";
 
-```
+  initPisaQuestionnaireWidgets({ pisaApiUrl: "https://example.com/api" });
+  ```
+- **As a Promise**, if the URL needs to be resolved asynchronously (e.g. from a configuration or API):
+  ```ts
+  import { initPisaQuestionnaireWidgets } from "scrivito-pisasales-questionnaire-builder";
+
+  initPisaQuestionnaireWidgets({ pisaApiUrl: fetchDynamicPisaUrl() });
+  ```
 
 Import the `loadQuestionnaireEditingConfigs` function from the package and call it in your editingConfigs.ts file also found in the Widgets folder.
 
-```js
-import { loadQuestionnaireEditingConfigs } from "psa-scr-qst-tst/editing";
+```ts
+import { loadQuestionnaireEditingConfigs } from "scrivito-pisasales-questionnaire-builder/editing";
 
 loadQuestionnaireEditingConfigs();
 ```
@@ -64,19 +69,19 @@ Add the widget styles to your app.
 This can be done by either loading the CSS via `css-loader` (e.g. in `src/index.js` or `src/Widgets/index.js`):
 
 ```js
-import "psa-scr-qst-tst/index.css";
+import "scrivito-pisasales-questionnaire-builder/index.css";
 ```
 
 Or by importing the styles into your stylesheets (e.g. in `src/assets/stylesheets/index.scss`):
 
 ```scss
-@import "psa-scr-qst-tst/index.css";
+@import "scrivito-pisasales-questionnaire-builder/index.css";
 ```
 
 Add the editing styles in `scrivitoExtensions.scss`:
 
 ```scss
-@import "psa-scr-qst-tst/editing.css";
+@import "scrivito-pisasales-questionnaire-builder/editing.css";
 ```
 
 
@@ -110,7 +115,7 @@ Add the editing styles in `scrivitoExtensions.scss`:
 
 ## Supported Questionnaire Input Types (Response Mode)
 
-The `psa-scr-qst-tst` package supports multiple questionnaire input types, determining how answers are retrieved, submitted, and managed during usage. These modes are defined as follows:
+The package supports multiple questionnaire input types, determining how answers are retrieved, submitted, and managed during usage. These modes are defined as follows:
 
 ### **Multiple Submissions (`PSA_QST_INP_TYP_REP`)**
 - **Behavior**: A new set of answers is created every time the questionnaire is filled. Existing answers are not retrieved or edited.
@@ -251,6 +256,8 @@ The `Questionnaire Input Question` widget enables you to create input questions,
 
 
 ### PisaSales Questionnaire Checkbox Question Widget
+
+<img src="images/questionnaire_checkbox_question.png" width="350" alt="Screenshot"> 
 
 The `Questionnaire Checkbox Question` widget enables you to create single-select checkboxes, including standard checkboxes and tri-state checkboxes.
 
@@ -422,7 +429,7 @@ npm link
 - Navigate into the Portal App
 - Use the linked the package:
 ```shell
-npm link psa-scr-qst-tst
+npm link scrivito-pisasales-questionnaire-builder
 ```
 - If you have a previous version installed, remove or outcomment the imported styles from `index.scss` and `scrivitoExtensions.scss`.
 - follow [importing and initializing](#importing-and-initializing) instructions.
@@ -431,9 +438,9 @@ npm link psa-scr-qst-tst
 ```js
  resolve: {
       alias: {
-        'psa-scr-qst-tst': path.resolve(
+        'scrivito-pisasales-questionnaire-builder': path.resolve(
           __dirname,
-          '../psa-scr-qst-tst/src' 
+          '../scrivito-pisasales-questionnaire-builder/src' 
         ),
        
       },
@@ -443,14 +450,14 @@ npm link psa-scr-qst-tst
 - Add the following snippet to your tsconfig: 
 ```js
  "paths": {
-      "psa-scr-qst-tst": ["../psa-scr-qst-tst/src"],
-      "psa-scr-qst-tst/editing": ["../psa-scr-qst-tst/src/editing"]
+      "scrivito-pisasales-questionnaire-builder": ["../scrivito-pisasales-questionnaire-builder/src"],
+      "scrivito-pisasales-questionnaire-builder/editing": ["../scrivito-pisasales-questionnaire-builder/src/editing"]
     },
 ```
-- `getPisaUrl()` might not be initialized in time, causing issues with API requests. To avoid this, replace `getPisaUrl()` with a fixed URL in `pisaClient.ts`:
+- `getPisaUrl()` might not be initialized in time, causing issues with API requests. To avoid this, replace `getPisaUrl()` with the PisaSales REST API URL in `pisaClient.ts`:
 ```js
 export const clientConfig = async (subPath: string) => ({
-  url: `https://your-fixed-url.com/${subPath}`,
+  url: `https://YOUR_PISA_API_URL/${subPath}`,
   headers: { "Accept-Language": "de" },
 });
 ```

@@ -1,3 +1,3 @@
-import { initPisaQuestionnaireWidgets, setPisaSalesApiUrl } from "./config/scrivitoConfig";
+import { initPisaQuestionnaireWidgets } from "./config/scrivitoConfig";
 
-export { initPisaQuestionnaireWidgets, setPisaSalesApiUrl };
+export { initPisaQuestionnaireWidgets };

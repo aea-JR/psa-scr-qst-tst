@@ -1,22 +1,24 @@
 import { isEmpty } from "../utils/lodashPolyfills";
 
 interface Options {
-  pisaApiUrl: string;
+  pisaApiUrl: string | Promise<string | null>;
 }
 
 const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
-//TODO:CHECK
-const API_SALESPORTAL = "salesportal";
+const SALESPORTAL = "salesportal";
 
 /**
  * Initialize Pisa Questionnaire Widgets
  * @param options Configuration options including Pisa URL
  */
-export const initPisaQuestionnaireWidgets = async (options?: Options): Promise<void> => {
+export const initPisaQuestionnaireWidgets = async (options: Options): Promise<void> => {
   loadWidgets();
-  if (!isEmpty(options?.pisaApiUrl)) {
-    setPisaSalesApiUrl(options!.pisaApiUrl);
-  }
+  const url = await resolveUrl(options.pisaApiUrl);
+  await setPisaSalesApiUrl(url);
+};
+
+const resolveUrl = async (url: string | Promise<string | null>): Promise<string | null> => {
+  return typeof url === "string" ? url : await url;
 };
 
 const loadWidgets = (): void => {
@@ -39,19 +41,19 @@ const loadWidgets = (): void => {
   }
 
 };
-export const setPisaSalesApiUrl = async (pisaUrl: string | null) => {
-  setPisaUrl(pisaUrl);
+const setPisaSalesApiUrl = async (pisaUrl: string | null) => {
+  doSetPisaUrl(pisaUrl);
 
   const event = new CustomEvent("pisaUrlChanged");
   window.dispatchEvent(event);
 }
 
-const setPisaUrl = (pisaApiUrl: string | null): void => {
+const doSetPisaUrl = (pisaApiUrl: string | null): void => {
   if (!pisaApiUrl) {
     (GLOBAL_OBJ as any).pisaUrl = "";
     return
   }
-  (GLOBAL_OBJ as any).pisaUrl = pisaApiUrl.includes(API_SALESPORTAL) ? pisaApiUrl : `${pisaApiUrl}/${API_SALESPORTAL}` || "";
+  (GLOBAL_OBJ as any).pisaUrl = pisaApiUrl.includes(SALESPORTAL) ? pisaApiUrl : `${pisaApiUrl}/${SALESPORTAL}` || "";
 }
 
 /**
