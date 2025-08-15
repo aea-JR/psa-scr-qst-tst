@@ -20,7 +20,7 @@ export const registerAnswerOptionDataClass = async () => {
 
 export const getAnswerOptionDataClass = () => {
   if (!AnswerOptionDataClassInternal) {
-    throw new Error("AnswersDataClass not initialized yet.");
+    return null;
   }
   return AnswerOptionDataClassInternal;
 };

@@ -47,4 +47,4 @@ export interface QuestionnaireMetaSnapshot {
 	options: { [questionId: string]: { [optionId: string]: AnswerOption } };
 }
 
-export type QuestionnaireStatus = "unconfiguredUrl" | "offline" | "inCreation" | "invalid" | "pendingUpdate" | "creationPending" | "updating" | "void" | "noContext";
+export type QuestionnaireStatus = "unconfiguredUrl" | "offline" | "inCreation" | "invalid" | "pendingUpdate" | "creationPending" | "updating" | "void" | "noFormContext";

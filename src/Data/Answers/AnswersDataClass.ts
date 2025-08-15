@@ -4,7 +4,7 @@ import { clientConfig } from "../pisaClient";
 let AnswersDataClassInternal: DataClass;
 
 export const registerAnswersDataClass = async () => {
-	const config = await clientConfig("questionnaire-answer");
+	const config = await clientConfig("questionnaire-answer", true);
 
 	AnswersDataClassInternal = provideDataClass("QuestionnaireAnswer", {
 		restApi: config,
@@ -22,8 +22,7 @@ export const getAnswersDataClass = () => {
 	if (AnswersDataClassInternal) {
 		return AnswersDataClassInternal;
 	}
-
-	throw new Error("AnswersDataClass not initialized yet.");
+	return null;
 };
 
 

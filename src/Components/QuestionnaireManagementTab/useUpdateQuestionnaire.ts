@@ -142,7 +142,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 			for (const widget of updates.createQuestions) {
 				try {
 					const question = convertWidgetToQuestion(widget);
-					const questionItem = await getQuestionDataClass().create({
+					const questionItem = await getQuestionDataClass()!.create({
 						...question,
 						questionnaireId: qstId,
 					});
@@ -169,7 +169,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 				for (const widget of optionWidgets) {
 					try {
 						const option = convertWidgetToAnswerOption(widget);
-						const optionItem = await getAnswerOptionDataClass().create({
+						const optionItem = await getAnswerOptionDataClass()!.create({
 							...option,
 							questionId,
 						});

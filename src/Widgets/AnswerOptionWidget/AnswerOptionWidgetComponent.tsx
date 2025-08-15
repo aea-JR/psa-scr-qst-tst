@@ -24,7 +24,7 @@ provideComponent(QuestionnaireAnswerOptionWidget, ({ widget }) => {
 		});
 	}, [data.isActive]);
 	if (!context) {
-		return <QuestionnaireMessageBlock status="noContext" />
+		return <QuestionnaireMessageBlock status="noFormContext" />
 	}
 	if (!data.isActive && !isInPlaceEditingActive()) {
 		return null;

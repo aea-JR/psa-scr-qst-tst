@@ -13,7 +13,7 @@ const messages = {
 	updating: { prefix: EDITORS_INFO, content: "Updating questionnaire data. Please wait..." },
 	void: { prefix: EDITORS_INFO, content: "The questionnaire is ready for use." },
 	unconfiguredUrl: { prefix: EDITORS_INFO, content: "PisaSales is not configured yet. " },
-	noContext: { prefix: EDITORS_INFO, content: "This widget must be placed within a PisaSales Questionnaire! " },
+	noFormContext: { prefix: EDITORS_INFO, content: "This widget must be placed within a PisaSales Questionnaire! " },
 
 };
 interface Props {

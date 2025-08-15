@@ -22,7 +22,7 @@ provideComponent(QuestionnaireCheckboxQuestionWidget, ({ widget }) => {
   useExternalId(widget);
 
   if (!ctx) {
-    return <QuestionnaireMessageBlock status="noContext" />
+    return <QuestionnaireMessageBlock status="noFormContext" />
   }
 
   return type === "logic_tristate" ? (

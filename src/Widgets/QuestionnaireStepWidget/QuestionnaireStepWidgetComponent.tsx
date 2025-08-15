@@ -15,7 +15,7 @@ provideComponent(QuestionnaireStepWidget, ({ widget }) => {
 
   const ctx = useFormContext();
   if (!ctx) {
-    return <QuestionnaireMessageBlock status="noContext" />
+    return <QuestionnaireMessageBlock status="noFormContext" />
   }
 
   //TODO: improve or remove step preview

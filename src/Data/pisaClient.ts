@@ -1,14 +1,22 @@
 import { createRestApiClient } from "scrivito";
-import { getPisaUrl } from "../config/scrivitoConfig";
+import { getJwtToken, getPisaUrl } from "../config/scrivitoConfig";
 
-export const clientConfig = async (subPath: string) => {
-  // const language = await getCurrentLanguage()
+export const clientConfig = async (subPath: string, useToken = false) => {
+  // const language = await getCurrentLanguage();
+  const token = getJwtToken();
+
+  const headers: Record<string, string> = {
+    "Accept-Language": "de",
+  };
+
+  if (useToken && token) {
+    headers.Authorization = token;
+  }
+
   return {
     url: `${getPisaUrl()}/${subPath}`,
     //TODO: improve
-    headers: {
-      "Accept-Language": "de",
-    },
+    headers: headers
   };
 };
 

@@ -37,13 +37,13 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 
 			console.log("Creating questionnaire...");
 			const qstMeta = extractQuestionnaireMeta(widget);
-			const qstDataItem = await QuestionnaireDataClass.create(qstMeta);
+			const qstDataItem = await QuestionnaireDataClass!.create(qstMeta);
 			const qstId = qstDataItem.id();
 			createdItems.qstMeta = qstMeta;
 
 			for (const question of questions) {
 				try {
-					const questionItem = await QuestionDataClass.create({
+					const questionItem = await QuestionDataClass!.create({
 						...question,
 						questionnaireId: qstId,
 					});
@@ -62,7 +62,7 @@ export const useCreateQuestionnaire = (widget: Scrivito.Widget) => {
 					if (options && options.length > 0) {
 						for (const option of options) {
 							try {
-								const optionItem = await AnswerOptionDataClass.create({
+								const optionItem = await AnswerOptionDataClass!.create({
 									...option,
 									questionId,
 								});

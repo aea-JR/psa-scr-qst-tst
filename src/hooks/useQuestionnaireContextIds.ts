@@ -4,6 +4,10 @@ import { ACTIVITY_ID, ACTIVITY_ID_DATA_ITEM_FIELD, ACTIVITY_ID_SOURCE, CONTACT_I
 
 export const useQuestionnaireContextIds = (qstContainerWidget: Widget) => {
 	const dataItem = useDataItem();
+	const act = qstContainerWidget.get(ACTIVITY_ID) as string || "";
+	const con = qstContainerWidget.get(CONTACT_ID) as string || "";
+	const prj = qstContainerWidget.get(PROJECT_ID) as string || "";
+
 	const [contextIds, setContextIds] = useState({
 		activityId: "",
 		contactId: "",
@@ -32,7 +36,7 @@ export const useQuestionnaireContextIds = (qstContainerWidget: Widget) => {
 				qstContainerWidget.get(PROJECT_ID_DATA_ITEM_FIELD) as string
 			),
 		});
-	}, []);
+	}, [act, prj, con]);
 
 	return contextIds;
 };

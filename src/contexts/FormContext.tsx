@@ -84,6 +84,9 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       if (isEmpty(questionnaireId)) {
         return;
       }
+      if (!AnswersDataClass) {
+        return;
+      }
       if (!isOnline) {
         return;
       }
@@ -206,8 +209,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
         },
         data: preparedAnswers,
       };
-
-      await AnswersDataClass.create(payload);
+      await AnswersDataClass?.create(payload);
       indicateSuccess();
     } catch (error) {
       console.error(error)

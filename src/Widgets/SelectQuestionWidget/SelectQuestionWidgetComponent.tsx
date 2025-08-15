@@ -29,7 +29,7 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
 
   const ctx = useFormContext();
   if (!ctx) {
-    return <QuestionnaireMessageBlock status="noContext" />
+    return <QuestionnaireMessageBlock status="noFormContext" />
   }
   return (
     <ConditionProvider value={{ getConditionData }}>

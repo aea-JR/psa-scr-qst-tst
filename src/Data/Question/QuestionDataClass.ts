@@ -25,7 +25,7 @@ export const registerQuestionDataClass = async () => {
 
 export const getQuestionDataClass = () => {
   if (!QuestionDataClassInternal) {
-    throw new Error("QuestionDataClass not initialized yet.");
+    return null;
   }
   return QuestionDataClassInternal;
 };

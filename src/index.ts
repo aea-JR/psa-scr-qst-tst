@@ -1,3 +1,3 @@
-import { initPisaQuestionnaireWidgets } from "./config/scrivitoConfig";
+import { initPisaSalesQuestionnaireWidgets } from "./config/scrivitoConfig";
 
-export { initPisaQuestionnaireWidgets };
+export { initPisaSalesQuestionnaireWidgets };

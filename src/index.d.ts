@@ -1,7 +1,8 @@
 export interface Options {
-  pisaApiUrl: string | Promise<string | null>;
+  apiUrl: string | Promise<string | null>;
+  token: string | null;
 }
 
-export declare function initPisaQuestionnaireWidgets(
+export declare function initPisaSalesQuestionnaireWidgets(
   options: Options
 ): void;
