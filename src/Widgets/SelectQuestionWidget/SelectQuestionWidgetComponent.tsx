@@ -9,6 +9,7 @@ import { useSelectQuestion } from "./useSelectQuestion";
 import { OPTIONS, TEXT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import { ResetRadioInputsButton } from "./ResetRadioInputsButton";
 import "./SelectQuestionWidget.scss";
 
 provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
@@ -23,32 +24,47 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
     useAsConditionals,
     values,
     titleBgColor,
+    clearSelectionButtonText,
+    inlineView,
+    alignment,
+    validationText,
+    validator,
     onChangeSelect,
     getConditionData,
+    showReset,
+    onReset
   } = useSelectQuestion(widget);
 
   const ctx = useFormContext();
-  if (!ctx) {
+  if (!ctx || !validator) {
     return <QuestionnaireMessageBlock status="noFormContext" />
   }
+
+  const isInvalid = !validator.isLocallyValid;
+
   return (
     <ConditionProvider value={{ getConditionData }}>
       <>
         {useAsConditionals && isInPlaceEditingActive() && (
           <span className="header-info" style={{ backgroundColor: titleBgColor || "transparent" }}>Conditional Header</span>
         )}
-        <div className={`select-container mb-3 ${useAsConditionals ? "conditional-header-border" : ""}`} >
+        <div ref={validator.ref} className={`select-container mb-3 ${useAsConditionals ? "conditional-header-border" : ""}`} >
           {type == "string_dropdown" ?
-            (<Dropdown
-              widget={widget}
-              externalId={externalId}
-              required={required}
-              onChange={onChangeSelect}
-              title={text}
-              value={values[0]}
-            />)
+            (
+              <div className={alignment}>
+                <Dropdown
+                  widget={widget}
+                  externalId={externalId}
+                  required={required}
+                  isInvalid={isInvalid}
+                  onChange={onChangeSelect}
+                  title={text}
+                  value={values[0]}
+                />
+              </div>
+            )
             :
-            (<>
+            (<div className={alignment}>
               {text && <div className="select-title">
                 <ContentTag
                   attribute={TEXT}
@@ -63,12 +79,24 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
                 type={type}
                 options={options}
                 required={required}
+                isInvalid={isInvalid}
                 externalId={externalId}
                 values={values}
+                inlineView={inlineView}
                 onChange={onChangeSelect}
               />
-            </>)
+              {showReset() && (
+                <ResetRadioInputsButton
+                  onReset={onReset}
+                  text={clearSelectionButtonText}
+                  parentRef={validator.ref}
+                />
+              )}
+            </div>)
           }
+          {isInvalid && <div className={`invalid-feedback ${alignment}`}>
+            {validationText}
+          </div>}
         </div>
         {useAsConditionals &&
           <ContentTag content={widget} attribute={OPTIONS} />

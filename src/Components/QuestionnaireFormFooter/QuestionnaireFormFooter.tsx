@@ -15,16 +15,17 @@ interface QuestionnaireFooterProps {
 export const QuestionnaireFooter: React.FC<QuestionnaireFooterProps> =
 	Scrivito.connect(({ widget, status }) => {
 		const { isSingleStep } = useQuestionnaireStepsContext();
+		const isSubmitDisabled = !(status == "void" || status == "publicSiteEditMode");
 		return (
 			<div className="qst-footer-container">
 				{
 					isSingleStep ? (
 						<SingleStepFooter
-							submitDisabled={status != "void"}
+							submitDisabled={isSubmitDisabled}
 						/>
 					) : (
 						<MultiStepsFooter
-							submitDisabled={status != "void"}
+							submitDisabled={isSubmitDisabled}
 						/>
 					)
 				}

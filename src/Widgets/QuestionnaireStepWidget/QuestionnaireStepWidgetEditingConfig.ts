@@ -5,7 +5,7 @@ import { insideQuestionnaireContainerValidation } from "../../utils/validations/
 
 provideEditingConfig("QuestionnaireStepWidget", {
   thumbnail: stepThumbnail,
-  title: "PisaSales Questionnaire Step",
+  title: "Questionnaire Step",
   titleForContent: widget => {
     if (widget.get(IS_SINGLE_STEP)) {
       return "Single Step";

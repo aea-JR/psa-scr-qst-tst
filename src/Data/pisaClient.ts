@@ -1,5 +1,7 @@
 import { createRestApiClient } from "scrivito";
 import { getJwtToken, getPisaUrl } from "../config/scrivitoConfig";
+import { isTokenValid } from "../utils/tokenValidation";
+import { useWithToken } from "../utils/useWithToken";
 
 export const clientConfig = async (subPath: string, useToken = false) => {
   // const language = await getCurrentLanguage();
@@ -8,8 +10,8 @@ export const clientConfig = async (subPath: string, useToken = false) => {
   const headers: Record<string, string> = {
     "Accept-Language": "de",
   };
-
-  if (useToken && token) {
+  //TODO: uncomment when token validation is ready
+  if (token && useToken /*&& isTokenValid()*/ && useWithToken()) {
     headers.Authorization = token;
   }
 

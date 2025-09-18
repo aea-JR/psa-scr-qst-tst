@@ -1,3 +1,4 @@
+import { REPEATABLE } from "../../../constants/constants";
 import generateId from "../../../utils/idGenerator";
 import { QuestionnaireInputQuestionWidget } from "../../InputQuestionWidget/InputQuestionWidgetClass";
 import { QuestionnaireStepWidget } from "../../QuestionnaireStepWidget/QuestionnaireStepWidgetClass";
@@ -11,8 +12,8 @@ export const initialQuestionnaireContent = {
 	})],
 	externalId: () => generateId(),
 	questionnaireId: null,
-	title: "Scrivito PisaSales Questionnaire",
-	inputType: "PSA_QST_INP_TYP_REP",
+	title: "Scrivito Questionnaire",
+	inputType: REPEATABLE,
 	isBeingCopied: false,
 	singleSubmitButtonAlignment: "text-center",
 	forwardButtonText: "Forward",
@@ -48,5 +49,8 @@ export const initialQuestionnaireContent = {
 	activityIdSource: "manual",
 	contactIdSource: "manual",
 	projectIdSource: "manual",
-	questionnaireStatus: "void"
+	questionnaireStatus: "void",
+	location: "",
+	footerButtonsSize: "btn-md",
+	retryButtonSize: "btn-md",
 } 

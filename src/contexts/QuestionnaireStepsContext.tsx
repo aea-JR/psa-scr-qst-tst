@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import { isInPlaceEditingActive, Widget } from "scrivito";
 import { scrollIntoView } from "../utils/scrollIntoView";
-import { InputElements } from "../types/review";
 import { EXTERNAL_ID, FORM_TYPE, STEPS } from "../constants/constants";
+import { useValidationContext } from "./ValidationContext";
 
 interface QuestionnaireStepsContextProps {
 	currentStep: number;
@@ -15,7 +15,6 @@ interface QuestionnaireStepsContextProps {
 		isSingleStep: boolean;
 	};
 	onPageChange: (nextPage: boolean) => void;
-	validateCurrentStep: () => boolean;
 }
 
 const QuestionnaireStepsContext = createContext<QuestionnaireStepsContextProps | undefined>(undefined);
@@ -35,10 +34,11 @@ export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; q
 	const isLastStep = currentStep === steps.length;
 	const stepsLength = steps.length;
 	const externalId = qstContainerWidget.get(EXTERNAL_ID) as string;
+	const { validate } = useValidationContext()!;
 
-	const validateCurrentStep = useCallback((): boolean => {
-		return doValidate(externalId, currentStep);
-	}, [currentStep]);
+	const validateCurrentStep = (): boolean => {
+		return validate(externalId, currentStep);
+	}
 
 	const getStepInfo = (stepId: string) => {
 		let isActive = false;
@@ -77,77 +77,9 @@ export const QuestionnaireStepsProvider: React.FC<{ children: React.ReactNode; q
 
 	return (
 		<QuestionnaireStepsContext.Provider
-			value={{ currentStep, stepsLength, isLastStep, isSingleStep, getStepInfo, onPageChange, validateCurrentStep }}
+			value={{ currentStep, stepsLength, isLastStep, isSingleStep, getStepInfo, onPageChange }}
 		>
 			{children}
 		</QuestionnaireStepsContext.Provider>
 	);
-};
-
-const doValidate = (externalId: string, currentStep: number): boolean => {
-	let isValid = true;
-	const form = document.getElementById(externalId);
-	if (!form) return isValid;
-
-	const step = form.querySelector(`[data-step-number='${currentStep}']`);
-	if (!step) return isValid;
-
-
-	const allInputs: InputElements[] = Array.from(step.querySelectorAll("input, select, textarea") || []);
-	const processedGroups = new Set(); // to track validated checkbox groups
-
-	// iterate in order & validate accordingly
-	for (const input of allInputs) {
-		if (input.type === "checkbox") {
-			// handle grouped checkboxes
-			if (input.hasAttribute("data-group")) {
-				const group = input.getAttribute("data-group")!;
-				if (processedGroups.has(group)) continue; // skip already validated groups
-
-				const groupCheckboxes = allInputs.filter(el => el.getAttribute("data-group") === group) as HTMLInputElement[];
-				if (!groupCheckboxes.some(cb => cb.checked)) {
-					const message = getBrowserValidationMessage();
-					groupCheckboxes[0].setCustomValidity(message);
-					groupCheckboxes[0].reportValidity();
-					return (isValid = false);
-				} else {
-					groupCheckboxes.forEach(cb => cb.setCustomValidity(""));
-				}
-				processedGroups.add(group);
-			}
-			// handle tri-state checkboxes
-			else if (input.hasAttribute("data-tristate")) {
-				if (input.getAttribute("data-tristate") === "unset") {
-					input.reportValidity();
-					return (isValid = false);
-				}
-			} else {
-				// normal checkbox validation
-				if (!input.checkValidity()) {
-					input.reportValidity();
-					return (isValid = false);
-				}
-			}
-		} else {
-			// validate other inputs normally
-			if (!input.checkValidity()) {
-				input.reportValidity();
-				return (isValid = false);
-			}
-		}
-	}
-	return isValid;
-};
-
-const getBrowserValidationMessage = () => {
-	const testInput = document.createElement("input");
-	testInput.type = "radio";
-	testInput.required = true;
-	testInput.name = "fake-radio"
-	testInput.value = "";
-	document.body.appendChild(testInput)
-	const message = testInput.validationMessage;
-	document.body.removeChild(testInput);
-
-	return message;
 };

@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { isPisaDate } from "../../../utils/isPisaDate";
+import { convertPisaDate, formatUTCDate } from "./inputUtils";
 
 interface DateInputProps {
 	id: string;
@@ -7,47 +8,34 @@ interface DateInputProps {
 	placeholder: string;
 	value: string;
 	defaultValue: string;
-	required: boolean;
+	isInvalid: boolean;
 	onInputChange: (newValues: string[], identifiers?: string[]) => void;
 }
 
-export const DateInput: FC<DateInputProps> = ({ id, externalId, placeholder, value, defaultValue, required, onInputChange }) => {
+export const DateInput: FC<DateInputProps> = ({ id, externalId, placeholder, value, defaultValue, isInvalid, onInputChange }) => {
 	const [displayValue, setDisplayValue] = useState("");
 
 	useEffect(() => {
 		if (value == defaultValue) {
 			if (isPisaDate(value)) {
-				setDisplayValue(convertPisaDate(value));
+				setDisplayValue(convertPisaDate(value, "date"));
 			} else {
-				setDisplayValue(formatUTCDate(value));
+				setDisplayValue(formatUTCDate(value, "date"));
 			}
 			return;
 		}
-		const dateValue = value.slice(0, 10);
+		const dateValue = value ? value.slice(0, 10) : "";
 		setDisplayValue(dateValue);
 	}, [value])
-
-	const convertPisaDate = (pisaDate: string) => {
-		const year = pisaDate.substring(0, 4);
-		const month = pisaDate.substring(4, 6);
-		const day = pisaDate.substring(6, 8);
-		return `${year}-${month}-${day}`;
-	};
-
-
-
-	const formatUTCDate = (utcString: string) => {
-		const date = new Date(utcString);
-		if (isNaN(date.getTime())) { return ""; }
-		date.setUTCHours(12, 0, 0, 0);
-
-		return date.toISOString().split("T")[0];
-	};
 
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
 		setDisplayValue(inputValue);
+		if (!inputValue) {
+			onInputChange([]);
+			return;
+		}
 		const date = new Date(inputValue);
 		date.setUTCHours(12, 0, 0, 0);
 		const utc = date.toISOString();
@@ -57,12 +45,11 @@ export const DateInput: FC<DateInputProps> = ({ id, externalId, placeholder, val
 	return (
 
 		<input
-			className="form-control"
+			className={`form-control ${isInvalid ? "is-invalid" : ""}`}
 			id={id}
 			name={externalId}
 			placeholder={placeholder}
 			value={displayValue}
-			required={required}
 			onChange={onChange}
 			type={"date"}
 		/>

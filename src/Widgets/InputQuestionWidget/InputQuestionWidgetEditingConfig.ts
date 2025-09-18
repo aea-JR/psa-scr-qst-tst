@@ -4,7 +4,7 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
-import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE } from "../../constants/constants";
+import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import inputThumbnail from "../../assets/images/crm-questionnaire-input.svg";
 import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
@@ -26,7 +26,7 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
     child.update({ externalId: id, questionId: null });
   },
   thumbnail: inputThumbnail,
-  title: "PisaSales Input Field Question",
+  title: "Questionnaire Input Field Question",
   attributes: {
     ...defaultAttributes,
     externalId: { title: "External ID" },
@@ -43,17 +43,20 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
         { value: "date_time", title: "Date & Time (Date)" },
       ],
     },
+    alignment: { title: "Alignment" },
   },
   initialContent: {
     ...defaultInitialContent,
     type: "string_single_line",
-
+    validationText: "Please fill out this field",
   },
   properties: (widget) => {
     return [
       ...defaultProperties,
       PLACEHOLDER,
       TYPE,
+      ALIGNMENT,
+      VALIDATION_TEXT,
       [EXTERNAL_ID, { enabled: false }],
       [QUESTION_ID, { enabled: false }],
     ];

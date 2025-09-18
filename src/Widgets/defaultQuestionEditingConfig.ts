@@ -12,7 +12,10 @@ export const defaultAttributes = {
 	position: { title: "Position" },
 	externalId: { title: "External ID" },
 	questionId: { title: "Question ID (GID)" },
-
+	validationText: {
+		title: "Validation Message",
+		description: "This message appears when the input is invalid."
+	},
 } as const;
 
 export const defaultInitialContent = {
@@ -24,6 +27,7 @@ export const defaultInitialContent = {
 	help: "",
 	defaultValue: "",
 	identifier: "",
+	alignment: "left",
 } as const;
 
 export const defaultProperties = [

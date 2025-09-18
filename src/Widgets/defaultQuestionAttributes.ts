@@ -6,5 +6,11 @@ export const defaultQuestionAttributes = {
 	defaultValue: "string",
 	identifier: "string",
 	position: "integer",
-	questionId: "string"
+	questionId: "string",
+	alignment: [
+		"enum", {
+			values: ["left", "center", "right"]
+		}
+	],
+	validationText: "string",
 } as const;

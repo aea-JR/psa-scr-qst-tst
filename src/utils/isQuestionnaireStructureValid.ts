@@ -5,6 +5,7 @@ import { DEFAULT_VALUE, INPUT_TYPE, OPTIONS, TEXT, TITLE, TYPE } from "../consta
 import { getQuestionWidgets } from "./getQuestionWidgets";
 import { hasContext } from "./hasContext";
 import { isEmpty } from "./lodashPolyfills";
+import { isInputTypeRestricted } from "./isRestricted";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
   const title = qstMainWidget.get(TITLE) as string;
@@ -14,6 +15,9 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     return false;
   }
   if (!hasContext(qstMainWidget)) {
+    return false;
+  }
+  if (isInputTypeRestricted(qstMainWidget)) {
     return false;
   }
   const questions = getQuestionWidgets(qstMainWidget);

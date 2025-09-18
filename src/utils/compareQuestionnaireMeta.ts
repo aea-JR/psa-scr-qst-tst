@@ -4,6 +4,7 @@ import { QuestionnaireMetaSnapshot } from "../types/questionnaire";
 import { extractQuestionsAndOptions } from "./extractQuestionsAndOptions";
 import { ANSWER_OPTION_ID, CREATION_DATA, DEFAULT_VALUE, HELP, IDENTIFIER, INPUT_TYPE, MANDATORY, OPTIONS, POSITION, QUESTION_ID, QUESTIONNAIRE_ID, TEXT, TITLE, TYPE } from "../constants/constants";
 
+//TODO: add location check?
 export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 	const jsonMeta = widget.get(CREATION_DATA) as string;
 	const qstId = widget.get(QUESTIONNAIRE_ID) as string;

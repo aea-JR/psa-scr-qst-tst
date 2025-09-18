@@ -1,6 +1,6 @@
 import { Widget } from "scrivito";
 import { FAILED_MESSAGE, INPUT_TYPE, SUBMITTED_MESSAGE, SUBMITTING_MESSAGE, TITLE } from "../../../constants/constants";
-import { isUsageRestricted } from "../../../utils/isRestricted";
+import { isInputTypeRestricted } from "../../../utils/isRestricted";
 import { isEmpty } from "../../../utils/lodashPolyfills";
 import { getQuestionWidgets } from "../../../utils/getQuestionWidgets";
 import { getQuestionnaireContainerWidget } from "../../../utils/getQuestionnaireContainerWidget";
@@ -9,17 +9,17 @@ import { hasContext } from "../../../utils/hasContext";
 export const questionnaireContainerEditingValidations = [
 	(widget: Widget) => {
 		if (getQuestionnaireContainerWidget(widget)) {
-			return "Needs to be outside of a PisaSales form.";
+			return "Needs to be outside of a Questionnaire form.";
 		}
 		const questions = getQuestionWidgets(widget);
 		if (isEmpty(questions)) {
 			return "The questionnaie must include at least one question.";
 		}
-		if (isUsageRestricted(widget)) {
-			return "This questionnaire can not be used on a public site. Please move it to a restricted site.";
-		}
 		if (!hasContext(widget)) {
 			return 'Specify at least one activity, contact or project ID in the “Answer Context” properties tab.';
+		}
+		if (isInputTypeRestricted(widget)) {
+			return "Selected response mode is not supported on public sites. Please change the response mode to 'Multiple Submissions'";
 		}
 		return null;
 	},

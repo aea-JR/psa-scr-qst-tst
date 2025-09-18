@@ -1,9 +1,9 @@
+import { isUserLoggedIn } from "scrivito";
 import { isEmpty } from "../utils/lodashPolyfills";
 
-interface Options {
-  apiUrl: string | Promise<string | null>;
-  token: string | null;
-}
+type BackendConnection = Promise<{ apiUrl: string | null; token: string | null }>;
+
+type Options = { connection: BackendConnection };
 
 const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
 (GLOBAL_OBJ as any).pisaInitDispatched = null;
@@ -11,21 +11,24 @@ const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
 const SALESPORTAL = "salesportal";
 
 /**
- * Initialize Pisa Questionnaire Widgets
- * @param options Configuration options including Pisa URL
+ * Initialize Questionnaire Widgets
+ * @param options An object containing a `connection` property, which is a promise that resolves to an object with:
+ *   - `apiUrl`: The backend URL as a string, or `null` if unavailable.
+ *   - `token`: A JWT string for authentication, or `null` if unavailable.
  */
 export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promise<void> => {
-  if (options.token) {
-    (GLOBAL_OBJ as any).pisaJwtToken = options.token;
-  }
   loadWidgets();
-  const url = await resolveUrl(options.apiUrl);
+
+  const connection = await options.connection;
+  const url = connection.apiUrl;
+  const token = connection.token;
+
+  if (token && !isUserLoggedIn()) {
+    (GLOBAL_OBJ as any).pisaJwtToken = token;
+  }
+
   await setPisaSalesApiUrl(url);
   await register(url);
-};
-
-const resolveUrl = async (url: string | Promise<string | null>): Promise<string | null> => {
-  return typeof url === "string" ? url : await url;
 };
 
 const loadWidgets = (): void => {

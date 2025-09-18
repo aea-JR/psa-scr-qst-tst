@@ -10,11 +10,12 @@ interface DropdownProps {
 	title: string;
 	externalId: string;
 	required: boolean;
+	isInvalid: boolean;
 	value: string;
 	onChange: (externalIds: string[], newValues: string[], identifiers?: string[]) => void;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, required, onChange }) => {
+export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, required, isInvalid, onChange }) => {
 	const helpText = widget.get(HELP);
 	const options = widget.get(OPTIONS) as Widget[];
 
@@ -41,10 +42,9 @@ export const Dropdown: FC<DropdownProps> = ({ widget, value, title, externalId, 
 				</label>
 			)}
 			<select
-				className="dropdown-select form-select form-control"
+				className={`dropdown-select form-select ${isInvalid ? "is-invalid" : ""}`}
 				name={externalId}
 				id={externalId}
-				required={required}
 				onChange={onChangeDropdown}
 				value={value}
 			>

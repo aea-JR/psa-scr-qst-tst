@@ -5,7 +5,9 @@ import { isEmpty } from "../utils/lodashPolyfills";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
-import { INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
+import { EXTERNAL_ID, INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, REPEATABLE, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
+import { useWithToken } from "../utils/useWithToken";
+import { useValidationContext } from "./ValidationContext";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;
@@ -19,7 +21,6 @@ interface FormContextProps {
 }
 
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
-const REPEATABLE = "PSA_QST_INP_TYP_REP";
 
 export const useFormContext = () => React.useContext(FormContext);
 
@@ -30,6 +31,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
   const showSubmittingPreview = qstContainerWidget.get(PREVIEW_SUBMITTING_MESSAGE) || false;
   const showSubmittedPreview = qstContainerWidget.get(PREVIEW_SUBBMITTED_MESSAGE) || false;
   const showFailedPreview = qstContainerWidget.get(PREVIEW_FAILED_MESSAGE) || false;
+  const exernalId = qstContainerWidget.get(EXTERNAL_ID) as string;
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [successfullySent, setSuccessfullySent] = React.useState(false);
@@ -41,7 +43,8 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
   const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
   const { isOnline } = usePisaConnectionStatusContext();
-  const { validateCurrentStep } = useQuestionnaireStepsContext();
+  const { currentStep } = useQuestionnaireStepsContext();
+  const { validate } = useValidationContext()!;
   const AnswersDataClass = getAnswersDataClass();
 
   React.useEffect(() => {
@@ -186,7 +189,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
   const onSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    const isValid = validateCurrentStep();
+    const isValid = validate(exernalId as string, currentStep);
     if (!isValid) {
       return;
     }
@@ -201,14 +204,15 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
           valueIdentifier: excludedAnswers[questionId] ? [""] : valueIdentifier,
         }));
 
-      const payload = {
-        keys: {
-          activityId,
-          contactId,
-          projectId,
-        },
-        data: preparedAnswers,
-      };
+      const useContext = !useWithToken();
+      const payload = useContext
+        ? {
+          keys: { activityId, contactId, projectId },
+          data: preparedAnswers,
+        }
+        : {
+          data: preparedAnswers,
+        };
       await AnswersDataClass?.create(payload);
       indicateSuccess();
     } catch (error) {

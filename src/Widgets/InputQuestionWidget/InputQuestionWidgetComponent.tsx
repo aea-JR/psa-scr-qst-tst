@@ -11,9 +11,10 @@ import { StringMultiLineInput } from "./Inputs/StringMultiLineInput";
 import { NumberInput } from "./Inputs/NumberInput";
 import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
-import { DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
+import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
+import { useValidationField } from "../../hooks/useValidationField";
 import "./InputQuestionWidget.scss";
 
 provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
@@ -26,8 +27,12 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const defaultValue = widget.get(DEFAULT_VALUE);
   const type = widget.get(TYPE) || "string_single_line";
   const questionId = widget.get(QUESTION_ID);
+  const alignment = widget.get(ALIGNMENT) as string || "left";
+  const validationText = widget.get(VALIDATION_TEXT) || "Please fill out this field";
 
   const { values, handleChange } = useAnswer(questionId, [defaultValue]);
+  const validator = useValidationField(externalId, required);
+
 
   useExternalId(widget);
 
@@ -37,16 +42,23 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
     }
   }, [defaultValue]);
 
+
   const ctx = useFormContext();
-  if (!ctx) {
+  if (!ctx || !validator) {
     return <QuestionnaireMessageBlock status="noFormContext" />
   }
 
+  const isInvalid = !validator.isLocallyValid;
+
+  const onInputChange = (newValues: string[], identifiers?: string[]) => {
+    required && validator.setIsLocallyValid(!isEmpty(newValues[0]));
+    handleChange(newValues, identifiers)
+  }
   const inputComponents = {
     string_single_line: StringSingleLineInput,
     string_multi_line: StringMultiLineInput,
     integer: NumberInput,
-    float: NumberInput,
+    floating_point: NumberInput,
     date: DateInput,
     date_time: DateTimeInput,
   } as const;
@@ -56,7 +68,7 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const InputComponent = inputComponents[type as InputType] || StringSingleLineInput;
 
   return (
-    <div className={`mb-3 form-input-container ${type}`}>
+    <div ref={validator.ref} className={`mb-3 form-input-container ${type} ${alignment}`}>
       {!isEmpty(title) && (
         <label htmlFor={id} className="input-label">
           <ContentTag attribute={TEXT} content={widget} tag="span" />
@@ -71,9 +83,12 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
         value={values[0]}
         type={type}
         defaultValue={defaultValue}
-        required={required}
-        onInputChange={handleChange}
+        isInvalid={isInvalid}
+        onInputChange={onInputChange}
       />
+      {isInvalid && <div className={`invalid-feedback ${alignment}`}>
+        {validationText}
+      </div>}
     </div>
   );
 });

@@ -1,10 +1,12 @@
+import { ONCE_UPDATABLE, REPEATABLE } from "../../../constants/constants";
+
 export const questionnaireEditingAttributes = {
 	title: {
 		title: "Title",
 	},
 	externalId: {
 		title: "External ID",
-		description: "The external id reference to the PisaSales Questionnaire GID.",
+		description: "The external id reference to the Questionnaire GID.",
 	},
 	questionnaireId: {
 		title: "Questionnaire ID (GID)",
@@ -14,8 +16,8 @@ export const questionnaireEditingAttributes = {
 		title: "Response Mode",
 		description: "Defines how answers are handled. “Multiple Submissions” creates a new answer set for each submission, while “Single Submission with Edits” allows modifying a single answer set.",
 		values: [
-			{ value: "PSA_QST_INP_TYP_REP", title: "Multiple Submissions" },
-			{ value: "PSA_QST_INP_TYP_ONC_UPD", title: "Single Submission with Edits" },
+			{ value: REPEATABLE, title: "Multiple Submissions" },
+			{ value: ONCE_UPDATABLE, title: "Single Submission with Edits" },
 		],
 	},
 	activityId: { title: "Activity ID" },
@@ -190,5 +192,15 @@ export const questionnaireEditingAttributes = {
 	},
 	projectIdDataItemFieldValue: {
 		title: "Project ID data attribute value"
+	},
+	footerButtonsSize: {
+		title: "Button size",
+		description: "Default: Medium",
+		values: [{ value: "btn-sm", title: "Small" }, { value: "btn-md", title: "Medium" }, { value: "btn-lg", title: "Large" }]
+	},
+	retryButtonSize: {
+		title: "Retry button size",
+		description: "Default: Medium",
+		values: [{ value: "btn-sm", title: "Small" }, { value: "btn-md", title: "Medium" }, { value: "btn-lg", title: "Large" }]
 	},
 }

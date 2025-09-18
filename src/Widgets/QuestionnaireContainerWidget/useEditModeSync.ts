@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { isInPlaceEditingActive, useDataItem, Widget } from "scrivito";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
+import { getEffectiveUrl } from "../../utils/getUrl";
 import { ACTIVITY_ID_DATA_ITEM_FIELD, ACTIVITY_ID_DATA_ITEM_FIELD_VALUE, ACTIVITY_ID_SOURCE, CONTACT_ID_DATA_ITEM_FIELD, CONTACT_ID_DATA_ITEM_FIELD_VALUE, CONTACT_ID_SOURCE, POSITION, PROJECT_ID_DATA_ITEM_FIELD, PROJECT_ID_DATA_ITEM_FIELD_VALUE, PROJECT_ID_SOURCE, STEPS } from "../../constants/constants";
 
 export const useEditModeSync = (qstMainWidget: Widget) => {
@@ -15,6 +16,14 @@ export const useEditModeSync = (qstMainWidget: Widget) => {
 	const projectIdDataItemField = qstMainWidget.get(PROJECT_ID_DATA_ITEM_FIELD) as string;
 	const contactIdDataItemField = qstMainWidget.get(CONTACT_ID_DATA_ITEM_FIELD) as string;
 	const activityIdDataItemField = qstMainWidget.get(ACTIVITY_ID_DATA_ITEM_FIELD) as string;
+
+	// Sync URL
+	useEffect(() => {
+		if (!isEditing) { return; }
+
+		const url = getEffectiveUrl();
+		if (url) qstMainWidget.update({ location: url });
+	}, [])
 
 	// Sync Question Positions
 	useEffect(() => {

@@ -30,7 +30,7 @@ export const useUpdateQuestionnaire = (widget: Widget) => {
 
 		const updatedQstMeta: QuestionnaireMetaSnapshot = {
 			options: {},
-			qstMeta: { title: "", inputType: "", origin: "" },
+			qstMeta: { title: "", inputType: "", origin: "", url: "" },
 			questions: {},
 		};
 

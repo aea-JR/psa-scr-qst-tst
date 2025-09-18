@@ -21,12 +21,12 @@ Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
     child.update({ externalId: generateId(), answerOptionId: null });
   },
   thumbnail: answerOptionThumbnail,
-  title: "PisaSales Answer Option",
+  title: "Questionnaire Answer Option",
   titleForContent: (obj) => {
     if (obj.get(IS_CONDITION)) {
-      return "PisaSales Answer Option Condition";
+      return "Questionnaire Answer Option Condition";
     }
-    return "PisaSales Answer Option";
+    return "Questionnaire Answer Option";
   },
   attributes: {
     text: { title: "Answer" },

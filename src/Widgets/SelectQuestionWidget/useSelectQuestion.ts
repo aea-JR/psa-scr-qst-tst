@@ -5,7 +5,9 @@ import { useAnswer } from "../../hooks/useAnswer";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
 import { isInPlaceEditingActive, Widget } from "scrivito";
-import { DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, HELP, IDENTIFIER, MANDATORY, OPTIONS, POSITION, QUESTION_ID, TEXT, TYPE } from "../../constants/constants";
+import { ALIGNMENT, CLEAR_SELECTION_BUTTON_TEXT, DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, HELP, IDENTIFIER, INLINE_VIEW, MANDATORY, OPTIONS, POSITION, QUESTION_ID, SHOW_CLEAR_SELECTION_BUTTON, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { isAlignmentEnabled } from "./isSelectAlignmentEnabled";
+import { useValidationField } from "../../hooks/useValidationField";
 
 export const useSelectQuestion = (widget: Widget) => {
 	const externalId = widget.get(EXTERNAL_ID) as string;
@@ -17,10 +19,15 @@ export const useSelectQuestion = (widget: Widget) => {
 	const questionId = widget.get(QUESTION_ID) as string;
 	const type = widget.get(TYPE) as string || "string_dropdown";
 	const isMultiSelect = type === "string_checkboxes";
-	const useAsConditionals = widget.get(ENABLE_CONDITIONALS);
-
+	const useAsConditionals = widget.get(ENABLE_CONDITIONALS) as boolean;
+	const showClearButton = widget.get(SHOW_CLEAR_SELECTION_BUTTON) as boolean;
+	const clearSelectionButtonText = widget.get(CLEAR_SELECTION_BUTTON_TEXT) as string || "Clear selection";
+	const inlineView = widget.get(INLINE_VIEW) as boolean;
+	const alignment = isAlignmentEnabled(widget) ? widget.get(ALIGNMENT) as string || "left" : "left";
+	const validationText = widget.get(VALIDATION_TEXT) as string || "Please select an item";
 	const [selectedConditionIds, setSelectedConditionIds] = useState<string[]>([]);
 	const titleBgColor = useDynamicBackground(".header-info");
+	const validator = useValidationField(externalId, required);
 
 	useExternalId(widget);
 
@@ -71,6 +78,9 @@ export const useSelectQuestion = (widget: Widget) => {
 	}, [options]);
 
 	useEffect(() => {
+		if (!isInPlaceEditingActive()) {
+			return;
+		}
 		options.forEach((option) => option.update({ isCondition: useAsConditionals }));
 	}, [useAsConditionals]);
 
@@ -99,12 +109,26 @@ export const useSelectQuestion = (widget: Widget) => {
 
 	const onChangeSelect = (externalIds: string[], newValues: string[], identifiers?: string[]) => {
 		setSelectedConditionIds(externalIds);
+		validator?.setIsLocallyValid(!isEmpty(newValues[0]));
 		handleChange(newValues, identifiers);
 	};
 
 	const getConditionData = (externalId: string) => {
 		return { isActive: selectedConditionIds.includes(externalId) };
 	};
+
+	const showReset = (): boolean => {
+		return (
+			showClearButton &&
+			!isEmpty(values) &&
+			!required &&
+			type == "string_radio"
+		);
+	}
+
+	const onReset = () => {
+		onChangeSelect([], []);
+	}
 
 	return {
 		externalId,
@@ -116,7 +140,14 @@ export const useSelectQuestion = (widget: Widget) => {
 		useAsConditionals,
 		values,
 		titleBgColor,
+		clearSelectionButtonText,
+		inlineView,
+		alignment,
+		validationText,
+		validator,
 		onChangeSelect,
 		getConditionData,
+		showReset,
+		onReset
 	};
 };

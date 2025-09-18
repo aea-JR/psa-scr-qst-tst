@@ -8,6 +8,7 @@ interface FormSubmissionFailedProps {
 	widget: Scrivito.Widget;
 	retryButtonText: string;
 	showRetryButton: boolean;
+	retryButtonSize: string;
 	buttonAlignment: string;
 	fixedFormHeight: boolean;
 	formHeight: number;
@@ -20,6 +21,7 @@ export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
 	widget,
 	retryButtonText,
 	showRetryButton,
+	retryButtonSize,
 	buttonAlignment,
 	fixedFormHeight,
 	formHeight,
@@ -47,7 +49,7 @@ export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
 						: buttonAlignment
 						}`}>
 					<button
-						className={`btn btn-primary retry-button ${buttonAlignment === "block"
+						className={`btn btn-primary retry-button ${retryButtonSize} ${buttonAlignment === "block"
 							? " btn-block"
 							: ""
 							}`}

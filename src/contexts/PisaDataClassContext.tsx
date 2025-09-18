@@ -5,10 +5,9 @@ import { getAnswersDataClass, registerAnswersDataClass } from "../Data/Answers/A
 import { getAnswerOptionDataClass, registerAnswerOptionDataClass } from "../Data/AnswerOption/AnswerOptionDataClass";
 import { getQuestionDataClass, registerQuestionDataClass } from "../Data/Question/QuestionDataClass";
 import { getQuestionnaireDataClass, registerQuestionnaireDataClass } from "../Data/Questionnaire/QuestionnaireDataClass";
-import { getUserDataClass, registerUserDataClass } from "../Data/User/UserDataClass";
 import { connect, uiContext } from "scrivito";
 import { isNil } from "../utils/lodashPolyfills";
-import { validateToken } from "../Data/User/UserDataClassUtils";
+import { validateToken } from "../Data/validateToken";
 import { setIsTokenValid } from "../utils/tokenValidation";
 
 export const PisaDataClassProvider: React.FC<{ children: React.ReactNode }> = connect(({ children }) => {
@@ -24,7 +23,6 @@ export const PisaDataClassProvider: React.FC<{ children: React.ReactNode }> = co
 				!getAnswerOptionDataClass() && await registerAnswerOptionDataClass();
 				!getQuestionDataClass() && await registerQuestionDataClass();
 				!getQuestionnaireDataClass() && await registerQuestionnaireDataClass();
-				!getUserDataClass() && await registerUserDataClass();
 
 				if (getJwtToken()) {
 					const isTokenValid = await validateToken();

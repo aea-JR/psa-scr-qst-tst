@@ -1,6 +1,6 @@
 import * as Scrivito from "scrivito";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
-import { DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE } from "../../constants/constants";
+import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import checkboxThumbnail from "../../assets/images/crm-questionnaire-checkbox.svg";
@@ -26,7 +26,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
   },
 
   thumbnail: checkboxThumbnail,
-  title: "PisaSales Checkbox Question",
+  title: "Questionnaire Checkbox Question",
 
   attributes: {
     ...defaultAttributes,
@@ -35,18 +35,22 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
       values: [
         { value: "logic", title: "Default" },
         { value: "logic_tristate", title: "Tri-State" }
-      ]
+      ],
     },
+    alignment: { title: "Alignment" },
   },
   properties: (widget: Scrivito.Widget) =>
     [...defaultProperties,
       TYPE,
+      ALIGNMENT,
+      VALIDATION_TEXT,
     [EXTERNAL_ID, { enabled: false }],
     [QUESTION_ID, { enabled: false }]],
 
   initialContent: {
     ...defaultInitialContent,
     type: "logic",
+    validationText: "Please tick the box",
   },
   validations: [
     ...defaultValidations,

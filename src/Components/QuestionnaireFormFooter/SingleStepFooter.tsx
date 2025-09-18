@@ -11,7 +11,7 @@ interface SingleStepFooterProps {
 export const SingleStepFooter: FC<SingleStepFooterProps> =
 	connect(({ submitDisabled }) => {
 		const { onSubmit } = useFormContext()!;
-		const { singleSubmitButtonAlignment, submitButtonText } = useQuestionnaireWidgetAttributesContext();
+		const { singleSubmitButtonAlignment, submitButtonText, footerButtonsSize } = useQuestionnaireWidgetAttributesContext();
 		return (
 			<div
 				className={`${singleSubmitButtonAlignment === "block"
@@ -19,7 +19,7 @@ export const SingleStepFooter: FC<SingleStepFooterProps> =
 					: singleSubmitButtonAlignment
 					}`}>
 				<button
-					className={`btn btn-primary${singleSubmitButtonAlignment === "block"
+					className={`btn btn-primary ${footerButtonsSize} ${singleSubmitButtonAlignment === "block"
 						? " btn-block"
 						: ""
 						}`}

@@ -5,11 +5,11 @@ interface StringMultiLineInputProps {
 	externalId: string;
 	placeholder: string;
 	value: string;
-	required: boolean;
+	isInvalid: boolean;
 	onInputChange: (newValues: string[], identifiers?: string[]) => void;
 }
 
-export const StringMultiLineInput: FC<StringMultiLineInputProps> = ({ id, externalId, placeholder, value, required, onInputChange }) => {
+export const StringMultiLineInput: FC<StringMultiLineInputProps> = ({ id, externalId, placeholder, value, isInvalid, onInputChange }) => {
 
 	const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		onInputChange([e.target.value]);
@@ -17,12 +17,11 @@ export const StringMultiLineInput: FC<StringMultiLineInputProps> = ({ id, extern
 
 	return (
 		<textarea
-			className="form-control"
+			className={`form-control ${isInvalid ? "is-invalid" : ""}`}
 			id={id}
 			name={externalId}
 			placeholder={placeholder}
 			value={value}
-			required={required}
 			onChange={onChange}
 			rows={3}
 		/>

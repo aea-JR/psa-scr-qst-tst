@@ -12,7 +12,7 @@ export const identifierValidation = [
 		}
 
 		if (identifier && !/^[A-Z0-9_]+$/.test(identifier)) {
-			return "Specifiy a valid identifier! Follow the PisaSales Schema (A-Z0-9_)";
+			return "Specifiy a valid identifier! Follow the CRM Schema (A-Z0-9_)";
 		}
 		if (identifier.length > 32) {
 			return "Maximum identifier character length of 32 exceeded!";

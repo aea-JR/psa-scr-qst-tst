@@ -24,6 +24,7 @@ export const FormSubmissionStatesRenderer: FC<FormSubbmissionStatesRendererProps
 		submittedMessageType,
 		submittingMessage,
 		failedMessageType,
+		retryButtonSize
 	} = useQuestionnaireWidgetAttributesContext();
 
 	if (isSubmitting) {
@@ -58,6 +59,7 @@ export const FormSubmissionStatesRenderer: FC<FormSubbmissionStatesRendererProps
 				showRetryButton={showRetryButton}
 				retryButtonText={retryButtonText}
 				buttonAlignment={retryButtonAlignment}
+				retryButtonSize={retryButtonSize}
 				fixedFormHeight={fixedFormHeight}
 				formHeight={formHeight}
 				onReSubmit={onSubmit}

@@ -40,6 +40,8 @@ export interface QuestionnaireWidgetAttributes {
 	reviewButtonText: string,
 	reviewHeaderTitle: string,
 	reviewCloseButtonText: string,
+	footerButtonsSize: string,
+	retryButtonSize: string,
 }
 
 const QuestionnaireWidgetAttributesContext = createContext<QuestionnaireWidgetAttributes | null>(

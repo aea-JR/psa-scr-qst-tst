@@ -5,16 +5,18 @@ import { QuestionnaireStatus } from '../../types/questionnaire';
 const WARNING = "Warning:";
 const EDITORS_INFO = "Editor's info:";
 const messages = {
-	creationPending: { prefix: EDITORS_INFO, content: "This questionnaire has not been created in PisaSales yet." },
+	creationPending: { prefix: EDITORS_INFO, content: "This questionnaire has not been created in the backend yet." },
 	invalid: { prefix: EDITORS_INFO, content: "Some attributes are invalid. Please review and correct them." },
-	offline: { prefix: WARNING, content: "PisaSales is not reachable. Please check your configuration or contact your administrator." },
-	pendingUpdate: { prefix: EDITORS_INFO, content: "This questionnaire has unsaved local changes. To ensure all modifications are reflected in PisaSales, please push the updates from the properties tab." },
-	inCreation: { prefix: EDITORS_INFO, content: "Creating the questionnaire in PisaSales. Please wait..." },
+	offline: { prefix: WARNING, content: "The backend is not reachable. Please check your configuration or contact your administrator." },
+	pendingUpdate: { prefix: EDITORS_INFO, content: "This questionnaire has unsaved local changes. To ensure all modifications are reflected in the backend, please push the updates from the properties tab." },
+	inCreation: { prefix: EDITORS_INFO, content: "Creating the questionnaire in the backend. Please wait..." },
 	updating: { prefix: EDITORS_INFO, content: "Updating questionnaire data. Please wait..." },
 	void: { prefix: EDITORS_INFO, content: "The questionnaire is ready for use." },
-	unconfiguredUrl: { prefix: EDITORS_INFO, content: "PisaSales is not configured yet. " },
-	noFormContext: { prefix: EDITORS_INFO, content: "This widget must be placed within a PisaSales Questionnaire! " },
-
+	unconfiguredUrl: { prefix: EDITORS_INFO, content: "The backend connection is not configured yet." },
+	noFormContext: { prefix: EDITORS_INFO, content: "This widget must be placed within a Questionnaire widget! " },
+	publicSiteEditMode: { prefix: EDITORS_INFO, content: "This questionnaire is ready for use but is placed on a public site. Only logged-in users or users with a valid access token can access it." },
+	publicSiteNoContext: { prefix: EDITORS_INFO, content: "No valid login or access token found." },
+	invalidToken: { prefix: EDITORS_INFO, content: "The access token is invalid or has expired." },
 };
 interface Props {
 	className?: string;
@@ -27,10 +29,11 @@ export const QuestionnaireMessageBlock: FC<Props> = ({ className, status }) => {
 		return null;
 	}
 	const message = messages[status];
+	const alertClass = status == "publicSiteEditMode" ? "alert-success" : message.prefix == EDITORS_INFO ? "alert-warning" : "alert-error";
 
 	return (
 		<div className="qst-message-block-container">
-			<div className={`message-block alert fade show ${message.prefix == EDITORS_INFO ? "alert-warning" : "alert-error"} ${className || ''}`}>
+			<div className={`message-block alert fade show ${alertClass} ${className || ''}`}>
 				<p className='m-0'>
 					<strong>{message.prefix}</strong> {message.content}
 				</p>
@@ -38,4 +41,3 @@ export const QuestionnaireMessageBlock: FC<Props> = ({ className, status }) => {
 		</div>
 	);
 };
-

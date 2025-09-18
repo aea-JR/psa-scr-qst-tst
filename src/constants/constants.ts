@@ -1,3 +1,4 @@
+// Questionnaire
 export const EXTERNAL_ID = "externalId";
 export const QUESTIONNAIRE_ID = "questionnaireId";
 export const FORM_TYPE = "formType";
@@ -53,7 +54,12 @@ export const CONTACT_ID_DATA_ITEM_FIELD = "contactIdDataItemField";
 export const CONTACT_ID_DATA_ITEM_FIELD_VALUE = "contactIdDataItemFieldValue";
 export const STEP_NUMBER = "stepNumber";
 export const IS_SINGLE_STEP = "isSingleStep";
+export const LOCATION = "location";
+export const FOOTER_BUTTONS_SIZE = "footerButtonsSize";
+export const RETRY_BUTTON_SIZE = "retryButtonSize";
 
+
+// Questions
 export const QUESTION_ID = "questionId";
 export const TEXT = "text";
 export const HELP = "help";
@@ -68,12 +74,23 @@ export const DEFAULT_VALUE = "defaultValue";
 export const PLACEHOLDER = "placeholder";
 export const ENABLE_CONDITIONALS = "enableConditionals";
 export const IS_CONDITION = "isCondition";
+export const SHOW_CLEAR_SELECTION_BUTTON = "showClearSelectionButton";
+export const CLEAR_SELECTION_BUTTON_TEXT = "clearSelectionButtonText";
+export const INLINE_VIEW = "inlineView";
+export const ALIGNMENT = "alignment";
+export const VALIDATION_TEXT = "validationText";
 
+
+// Attributes
 export const VALUE = "value";
 export const VALUE_IDENTIFIER = "valueIdentifier";
 export const DATA = "data";
 export const UPDATED_AT = "updatedAt";
 
 export const QST_BUILDER_ORIGIN = "questionnaire-builder";
+
+// Input types
+export const REPEATABLE = "PSA_QST_INP_TYP_REP";
+export const ONCE_UPDATABLE = "PSA_QST_INP_TYP_ONC_UPD";
 
 

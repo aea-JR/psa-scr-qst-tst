@@ -12,17 +12,19 @@ export const Description: FC<DescriptionProps> = ({ status }) => {
 	const getMessage = (): string => {
 		switch (status) {
 			case "creationPending":
-				return "This questionnaire has not been created in PisaSales yet.";
+				return "This questionnaire has not been created in the backend yet.";
 			case "inCreation":
-				return "Creating the questionnaire in PisaSales. Please wait...";
+				return "Creating the questionnaire in the backend. Please wait...";
 			case "invalid":
 				return "This questionnaire contains invalid attributes. Please review and correct them.";
 			case "pendingUpdate":
-				return "Unsaved changes detected. Push these updates to PisaSales to keep your questionnaire up to date.";
+				return "Unsaved changes detected. Push these updates to the backend to keep your questionnaire up to date.";
 			case "updating":
 				return "Updating questionnaire data. Please wait...";
+			case "unconfiguredUrl":
+				return "The backend connection is not configured yet."
 			case "offline":
-				return "PisaSales is not reachable. Please check your configuration or contact your administrator."
+				return "The backend is not reachable. Please check your configuration or contact your administrator."
 			default:
 				return "The questionnaire is ready for use.";
 		}

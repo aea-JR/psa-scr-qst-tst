@@ -5,6 +5,7 @@ import { Mandatory } from "../../../Components/Mandatory/Mandatory";
 import { HelpText } from "../../../Components/HelpText/HelpText";
 import { useAnswer } from "../../../hooks/useAnswer";
 import { TEXT } from "../../../constants/constants";
+import { useValidationField } from "../../../hooks/useValidationField";
 
 interface TriStateCheckboxProps {
 	required: boolean;
@@ -14,6 +15,8 @@ interface TriStateCheckboxProps {
 	help: string;
 	widget: Widget;
 	defaultValue: string;
+	alignment: string;
+	validationText: string;
 }
 
 const TRUE = "true";
@@ -28,11 +31,17 @@ export const TriStateCheckbox: FC<TriStateCheckboxProps> = ({
 	identifier,
 	help,
 	widget,
-	defaultValue
+	defaultValue,
+	alignment,
+	validationText
 }) => {
 	const id = `form_checkbox_widget_${externalId}`;
 
 	const { values, handleChange } = useAnswer(questionId, [defaultValue], [identifier]);
+
+	const { isLocallyValid, setIsLocallyValid, ref } = useValidationField(externalId, required)!;
+	const isInvalid = !isLocallyValid;
+
 
 	const getInitialState = (): CheckboxState => {
 		if (values[0] === TRUE) return TRUE;
@@ -62,26 +71,29 @@ export const TriStateCheckbox: FC<TriStateCheckboxProps> = ({
 	const onChangeCheckbox = () => {
 		const newState = getNextState(checkboxState);
 		setCheckboxState(newState);
+		required && setIsLocallyValid(newState != UNSET);
 		handleChange([newState]);
 	};
 
 	return (
-		<div className="mb-3">
+		<div ref={ref} className={`mb-3 checkbox-container ${alignment}`}>
 			<input
-				className={`form-check-input ${checkboxState === UNSET ? "unset" : ""}`}
+				className={`form-check-input ${checkboxState === UNSET ? "unset" : ""} ${isInvalid ? "is-invalid" : ""}`}
 				id={id}
 				type="checkbox"
 				data-tristate={checkboxState}
 				name={externalId}
-				required={required}
 				checked={checkboxState === TRUE}
 				onChange={onChangeCheckbox}
 			/>
 			<label className="form-check-label" htmlFor={id}>
-				<ContentTag attribute={TEXT} content={widget} tag="span" />
+				<ContentTag attribute={TEXT} content={widget} tag="p" />
 				{required && <Mandatory />}
 				{help && <HelpText widget={widget} />}
 			</label>
+			{isInvalid && <div className={`invalid-feedback ${alignment}`}>
+				{validationText}
+			</div>}
 		</div>
 	);
 };

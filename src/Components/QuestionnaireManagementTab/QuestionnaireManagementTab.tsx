@@ -34,11 +34,10 @@ const Tab: FC<
 > = ({ widget, status }) => {
 	const questionnaireId = widget.get(QUESTIONNAIRE_ID) as string;
 	const context = uiContext();
-	const { createQuestionnaire, isCreating } = useCreateQuestionnaire(widget);
+	const { createQuestionnaire } = useCreateQuestionnaire(widget);
 	const { updateQuestionnaire } = useUpdateQuestionnaire(widget);
 
-	const isCreated = !!questionnaireId;
-
+	const showCreateButton = !questionnaireId && status == "creationPending";
 
 	if (!context) return null;
 
@@ -49,9 +48,8 @@ const Tab: FC<
 			<div className="detail-content">
 				<div className="detail-content-inner">
 					<Description status={status} />
-					{!isCreated && <button
+					{showCreateButton && <button
 						className="btn btn-primary"
-						disabled={status == "invalid" || status == "offline" || isCreating}
 						onClick={createQuestionnaire}
 					>
 						Create
@@ -62,7 +60,7 @@ const Tab: FC<
 								className="btn btn-primary"
 								onClick={updateQuestionnaire}
 							>
-								PUSH CHANGES TO PISASALES
+								PUSH CHANGES TO BACKEND
 							</button>
 							<div className="notice-body note">
 							</div>

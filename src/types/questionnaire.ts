@@ -42,9 +42,10 @@ export interface QuestionnaireMetaSnapshot {
 		title: string;
 		inputType: string;
 		origin: string;
+		url: string;
 	};
 	questions: { [key: string]: Question };
 	options: { [questionId: string]: { [optionId: string]: AnswerOption } };
 }
 
-export type QuestionnaireStatus = "unconfiguredUrl" | "offline" | "inCreation" | "invalid" | "pendingUpdate" | "creationPending" | "updating" | "void" | "noFormContext";
+export type QuestionnaireStatus = "unconfiguredUrl" | "offline" | "inCreation" | "invalid" | "pendingUpdate" | "creationPending" | "updating" | "void" | "noFormContext" | "publicSiteEditMode" | "publicSiteNoContext" | "invalidToken";

@@ -1,4 +1,5 @@
 import { provideWidgetClass } from "scrivito";
+import { ONCE_UPDATABLE, REPEATABLE } from "../../constants/constants";
 
 export const QuestionnaireContainerWidget = provideWidgetClass(
   "QuestionnaireContainerWidget",
@@ -11,7 +12,7 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
       inputType: [
         "enum",
         {
-          values: ["PSA_QST_INP_TYP_REP", "PSA_QST_INP_TYP_ONC_UPD"],
+          values: [REPEATABLE, ONCE_UPDATABLE],
         },
       ],
       activityIdSource: [
@@ -117,7 +118,20 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
       ],
       creationData: "string",
       questionnaireStatus: "string",
+      location: "string",
 
+      footerButtonsSize: [
+        "enum",
+        {
+          values: ["btn-sm", "btn-md", "btn-lg"]
+        }
+      ],
+      retryButtonSize: [
+        "enum",
+        {
+          values: ["btn-sm", "btn-md", "btn-lg"]
+        }
+      ],
     },
     extractTextAttributes: ["steps"],
   },

@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { isPisaDate } from "../../../utils/isPisaDate";
+import { convertPisaDate, formatUTCDate } from "./inputUtils";
 
 interface DateTimeInputProps {
 	id: string;
@@ -7,59 +8,54 @@ interface DateTimeInputProps {
 	placeholder: string;
 	value: string;
 	defaultValue: string;
-	required: boolean;
+	isInvalid: boolean;
 	onInputChange: (newValues: string[], identifiers?: string[]) => void;
 }
 
-export const DateTimeInput: FC<DateTimeInputProps> = ({ id, externalId, placeholder, value, defaultValue, required, onInputChange }) => {
+export const DateTimeInput: FC<DateTimeInputProps> = ({
+	id,
+	externalId,
+	placeholder,
+	value,
+	defaultValue,
+	isInvalid,
+	onInputChange,
+}) => {
 	const [displayValue, setDisplayValue] = useState("");
 
 	useEffect(() => {
 		if (value == defaultValue) {
-			setDisplayValue(isPisaDate(value) ? convertPisaDate(value) : formatUTCDate(value));
+			setDisplayValue(isPisaDate(value) ? convertPisaDate(value, "datetime") : formatUTCDate(value, "datetime"));
 			return;
 		}
-		setDisplayValue(value);
-	}, [value])
-
-	const convertPisaDate = (pisaDate: string) => {
-		const year = pisaDate.substring(0, 4);
-		const month = pisaDate.substring(4, 6);
-		const day = pisaDate.substring(6, 8);
-		const hours = pisaDate.substring(8, 10) || "12";
-		const minutes = pisaDate.substring(10, 12) || "00";
-		return `${year}-${month}-${day}T${hours}:${minutes}`;
-	};
-
-
-
-	const formatUTCDate = (utcString: string) => {
-		const date = new Date(utcString);
-		if (isNaN(date.getTime())) return "";
-		return date.toISOString().slice(0, 16);
-	};
+		setDisplayValue(formatUTCDate(value, "datetime"));
+	}, [value]);
 
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
 		setDisplayValue(inputValue);
+		if (!inputValue) {
+			onInputChange([]);
+			return;
+		}
 		const date = new Date(inputValue);
-		const utc = date.toISOString();
-		onInputChange([utc]);
-	}
+		if (isNaN(date.getTime())) {
+			onInputChange([]);
+			return;
+		}
+		onInputChange([date.toISOString()], [externalId]);
+	};
 
 	return (
-
 		<input
-			className="form-control"
+			className={`form-control ${isInvalid ? "is-invalid" : ""}`}
 			id={id}
 			name={externalId}
 			placeholder={placeholder}
 			value={displayValue}
-			required={required}
 			onChange={onChange}
 			type="datetime-local"
 		/>
-	)
-
+	);
 };

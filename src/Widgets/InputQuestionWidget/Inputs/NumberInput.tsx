@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC } from "react";
+import { sanitizeFloat, sanitizeInteger, toParentFormat } from "./inputUtils";
 
 interface NumberInputProps {
 	id: string;
@@ -6,42 +7,76 @@ interface NumberInputProps {
 	placeholder: string;
 	value: string;
 	defaultValue: string;
-	required: boolean;
+	isInvalid: boolean;
 	type: string;
 	onInputChange: (newValues: string[], identifiers?: string[]) => void;
 }
 
-export const NumberInput: FC<NumberInputProps> = ({ id, externalId, placeholder, value, required, type, onInputChange }) => {
+export const NumberInput: FC<NumberInputProps> = ({
+	id,
+	externalId,
+	placeholder,
+	value,
+	isInvalid,
+	type,
+	onInputChange,
+}) => {
+
+	const isInteger = type === "integer";
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const newValue = event.target.value;
-		onInputChange([newValue]);
+		const raw = event.target.value;
+		const cleaned =
+			isInteger ? sanitizeInteger(raw) : sanitizeFloat(raw);
+		// Always send dot to parent
+		const parentValue = toParentFormat(cleaned, type);
+		onInputChange([parentValue], [externalId]);
 
 	};
 
-	const handleBlur = (e: ChangeEvent<HTMLInputElement>) => {
-		let value = e.target.value;
+	const handleBlur = (event: ChangeEvent<HTMLInputElement>) => {
+		let v = event.target.value;
+
+		if (!v) {
+			onInputChange([""], [externalId]);
+			return;
+		}
+
 		if (type === "integer") {
-			value = value.split(/[.,]/)[0];
-			onInputChange([value]);
+			v = sanitizeInteger(v);
+			// If it's just '-', clear it on blur
+			if (v === "-") {
+				onInputChange([""], [externalId]);
+				return;
+			}
+			onInputChange([v], [externalId]);
+		} else {
+			v = sanitizeFloat(v).replace(",", ".");
+			// remove trailing dot or lone '-'
+			if (v === "-" || v.endsWith(".")) v = v.replace(/\.$/, "");
+			if (!v || v === "-") {
+				onInputChange([""], [externalId]);
+				return;
+			}
+			onInputChange([v], [externalId]);
 		}
 	};
 
-	return (
+	const inputMode = isInteger ? "numeric" : "decimal";
+	const pattern = isInteger ? "-?[0-9]*" : "-?[0-9]*[.,]?[0-9]*";
 
+	return (
 		<input
-			className="form-control"
+			className={`form-control ${isInvalid ? "is-invalid" : ""}`}
 			id={id}
 			name={externalId}
 			placeholder={placeholder}
 			value={value}
-			required={required}
 			onChange={handleChange}
 			onBlur={handleBlur}
-			type={"number"}
-			inputMode="decimal"
-			pattern={type === "integer" ? "[0-9]*" : "[0-9]*[.,]?[0-9]*"}
+			type="number"
+			inputMode={inputMode}
+			pattern={pattern}
 		/>
-	)
-
+	);
 };

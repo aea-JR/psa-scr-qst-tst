@@ -10,7 +10,7 @@ import questionnaireThumbnail from "../../assets/images/crm-questionnaire.svg";
 
 Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
   initializeCopy: (container) => initializeQstContainerCopy(container),
-  title: "PisaSales Questionnaire",
+  title: "Questionnaire",
   thumbnail: questionnaireThumbnail,
   attributes: questionnaireEditingAttributes,
   properties: (widget) => questionnaieEditingProperties(widget) as any,
