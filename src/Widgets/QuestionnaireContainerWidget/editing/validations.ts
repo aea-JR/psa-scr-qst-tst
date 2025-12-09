@@ -1,6 +1,5 @@
 import { Widget } from "scrivito";
-import { FAILED_MESSAGE, INPUT_TYPE, SUBMITTED_MESSAGE, SUBMITTING_MESSAGE, TITLE } from "../../../constants/constants";
-import { isInputTypeRestricted } from "../../../utils/isRestricted";
+import { INPUT_TYPE, TITLE } from "../../../constants/constants";
 import { isEmpty } from "../../../utils/lodashPolyfills";
 import { getQuestionWidgets } from "../../../utils/getQuestionWidgets";
 import { getQuestionnaireContainerWidget } from "../../../utils/getQuestionnaireContainerWidget";
@@ -18,9 +17,6 @@ export const questionnaireContainerEditingValidations = [
 		if (!hasContext(widget)) {
 			return 'Specify at least one activity, contact or project ID in the “Answer Context” properties tab.';
 		}
-		if (isInputTypeRestricted(widget)) {
-			return "Selected response mode is not supported on public sites. Please change the response mode to 'Multiple Submissions'";
-		}
 		return null;
 	},
 	[
@@ -28,30 +24,6 @@ export const questionnaireContainerEditingValidations = [
 		(title: string) => {
 			if (isEmpty(title)) { return "Title can not be empty."; }
 			return null;
-		},
-	],
-	[
-		SUBMITTING_MESSAGE,
-		(submittingMessage: string) => {
-			if (!submittingMessage) {
-				return "Specify the message to be displayed during form submission.";
-			}
-		},
-	],
-	[
-		SUBMITTED_MESSAGE,
-		(submittedMessage: string) => {
-			if (!submittedMessage) {
-				return "Specify the message to be displayed after successful form submission.";
-			}
-		},
-	],
-	[
-		FAILED_MESSAGE,
-		(failedMessage: string) => {
-			if (!failedMessage) {
-				return "Specify the message to be displayed after form submission failed.";
-			}
 		},
 	],
 	[

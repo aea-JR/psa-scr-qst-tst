@@ -1,11 +1,10 @@
 import { Widget } from "scrivito";
 import { isUTCDate } from "./isUTCDate";
 import { isPisaDate } from "./isPisaDate";
-import { DEFAULT_VALUE, INPUT_TYPE, OPTIONS, TEXT, TITLE, TYPE } from "../constants/constants";
+import { DATE, DATE_TIME, DEFAULT_VALUE, FLOATING_POINT, INPUT_TYPE, INTEGER, OPTIONS, QUESTIONNNAIRE_INPUT_QUESTION_WIDGET, QUESTIONNNAIRE_SELECT_QUESTION_WIDGET, STRING_MULTI_LINE, STRING_SINGLE_LINE, TEXT, TITLE, TYPE } from "../constants/constants";
 import { getQuestionWidgets } from "./getQuestionWidgets";
 import { hasContext } from "./hasContext";
 import { isEmpty } from "./lodashPolyfills";
-import { isInputTypeRestricted } from "./isRestricted";
 
 export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean => {
   const title = qstMainWidget.get(TITLE) as string;
@@ -15,9 +14,6 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     return false;
   }
   if (!hasContext(qstMainWidget)) {
-    return false;
-  }
-  if (isInputTypeRestricted(qstMainWidget)) {
     return false;
   }
   const questions = getQuestionWidgets(qstMainWidget);
@@ -34,7 +30,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
     if (isEmpty(question.get(TYPE))) {
       return false;
     }
-    if (question.objClass() == "QuestionnaireSelectQuestionWidget") {
+    if (question.objClass() == QUESTIONNNAIRE_SELECT_QUESTION_WIDGET) {
       const options = question.get(OPTIONS) as Widget[];
 
       const hasEmptyOption = options.some((option) =>
@@ -45,7 +41,7 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
         return false;
       }
       //TODO: check default value against identifier
-    } else if (question.objClass() == "QuestionnaireInputQuestionWidget") {
+    } else if (question.objClass() == QUESTIONNNAIRE_INPUT_QUESTION_WIDGET) {
 
       // check defaultValue
       const type = question.get(TYPE) as string;
@@ -53,20 +49,20 @@ export const isQuestionnaireStructureValid = (qstMainWidget: Widget): boolean =>
       if (isEmpty((defaultValue.trim()))) {
         continue;
       }
-      if (type == "string_single_line" || type == "string_multi_line") {
+      if (type == STRING_SINGLE_LINE || type == STRING_MULTI_LINE) {
         continue;
       }
-      if (type == "date" || type == "date_time") {
+      if (type == DATE || type == DATE_TIME) {
         if (!(isUTCDate(defaultValue) || isPisaDate(defaultValue))) {
           return false;
         }
       }
-      if (type == "integer") {
+      if (type == INTEGER) {
         if (!/^-?\d+$/.test(defaultValue)) {
           return false;
         }
       }
-      if (type == "floating_point") {
+      if (type == FLOATING_POINT) {
         if (!/^-?\d+(\.\d+)?$/.test(defaultValue)) {
           return false;
         }

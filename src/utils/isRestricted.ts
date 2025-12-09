@@ -16,6 +16,7 @@ export const isUsageRestricted = (qstMainWidget: Widget): boolean => {
  * The type is only allowed on **restricted sites**. 
  * @param qstMainWidget 
  * @returns `true`, if type is restricted for the current site, otherwise `false`.
+ * @deprecated Not used anymore
  */
 export const isInputTypeRestricted = (qstMainWidget: Widget): boolean => {
 	const inputType = qstMainWidget.get(INPUT_TYPE);

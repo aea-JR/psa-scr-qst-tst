@@ -11,7 +11,7 @@ import { StringMultiLineInput } from "./Inputs/StringMultiLineInput";
 import { NumberInput } from "./Inputs/NumberInput";
 import { DateInput } from "./Inputs/DateInput";
 import { DateTimeInput } from "./Inputs/DateTimeInput";
-import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, HELP, MANDATORY, PLACEHOLDER, QUESTION_ID, STRING_SINGLE_LINE, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import { useValidationField } from "../../hooks/useValidationField";
@@ -25,7 +25,7 @@ provideComponent(QuestionnaireInputQuestionWidget, ({ widget }) => {
   const title = widget.get(TEXT);
   const helpText = widget.get(HELP);
   const defaultValue = widget.get(DEFAULT_VALUE);
-  const type = widget.get(TYPE) || "string_single_line";
+  const type = widget.get(TYPE) || STRING_SINGLE_LINE;
   const questionId = widget.get(QUESTION_ID);
   const alignment = widget.get(ALIGNMENT) as string || "left";
   const validationText = widget.get(VALIDATION_TEXT) || "Please fill out this field";

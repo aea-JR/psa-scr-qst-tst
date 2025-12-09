@@ -1,4 +1,4 @@
-import { ClientError, createRestApiClient, load } from "scrivito";
+import { createRestApiClient, load } from "scrivito";
 import { clientConfig } from "./pisaClient";
 
 export const validateToken = () => {

@@ -1,3 +1,4 @@
+import { FLOATING_POINT } from "../../../constants/constants";
 import { DateMode } from "../../../types/types";
 
 /**
@@ -99,7 +100,7 @@ export const toParentFormat = (s: string, kind: string) => {
 	let out = s;
 
 	// unify decimal to dot
-	if (kind === "floating_point") out = out.replace(",", ".");
+	if (kind === FLOATING_POINT) out = out.replace(",", ".");
 
 	// strip any trailing dot (user half-typed)
 	if (out.endsWith(".")) out = out.slice(0, -1);

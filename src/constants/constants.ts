@@ -55,8 +55,9 @@ export const CONTACT_ID_DATA_ITEM_FIELD_VALUE = "contactIdDataItemFieldValue";
 export const STEP_NUMBER = "stepNumber";
 export const IS_SINGLE_STEP = "isSingleStep";
 export const LOCATION = "location";
-export const FOOTER_BUTTONS_SIZE = "footerButtonsSize";
-export const RETRY_BUTTON_SIZE = "retryButtonSize";
+export const BUTTONS_SIZE = "buttonsSize";
+export const ANONYMOUS = "anonymous";
+export const BUTTONS_STYLE = "buttonsStyle";
 
 
 // Questions
@@ -79,6 +80,13 @@ export const CLEAR_SELECTION_BUTTON_TEXT = "clearSelectionButtonText";
 export const INLINE_VIEW = "inlineView";
 export const ALIGNMENT = "alignment";
 export const VALIDATION_TEXT = "validationText";
+export const SELECT_BUTTON_TEXT = "selectButtonText";
+export const FILE_ACCEPT = "fileAccept";
+export const FILE_TOO_LARGE_TEXT_SINGLE = "fileTooLargeTextSingle";
+export const FILE_TOO_LARGE_TEXT_MULTI = "fileTooLargeTextMulti";
+export const FILE_TYPE_REJECT_TEXT_SINGLE = "fileTypeRejectTextSingle";
+export const FILE_TYPE_REJECT_TEXT_MULTI = "fileTypeRejectTextMulti";
+
 
 
 // Attributes
@@ -93,4 +101,31 @@ export const QST_BUILDER_ORIGIN = "questionnaire-builder";
 export const REPEATABLE = "PSA_QST_INP_TYP_REP";
 export const ONCE_UPDATABLE = "PSA_QST_INP_TYP_ONC_UPD";
 
+// Question types
+// file
+export const DOCUMENT_SINGLE = "document_single";
+export const DOCUMENT_MULTI = "document_multi";
+// checkbox
+export const LOGIC = "logic";
+export const LOGIC_TRISTATE = "logic_tristate";
+// input
+export const STRING_SINGLE_LINE = "string_single_line";
+export const STRING_MULTI_LINE = "string_multi_line";
+export const INTEGER = "integer";
+export const FLOATING_POINT = "floating_point";
+export const DATE = "date";
+export const DATE_TIME = "date_time";
+// select
+export const STRING_DROPDOWN = "string_dropdown";
+export const STRING_RADIO = "string_radio";
+export const STRING_CHECKBOXES = "string_checkboxes";
 
+
+// Obj classnames
+export const QUESTIONNNAIRE_CONTAINER_WIDGET = "QuestionnaireContainerWidget";
+export const QUESTIONNNAIRE_STEP_WIDGET = "QuestionnaireStepWidget";
+export const QUESTIONNNAIRE_CHECKBOX_QUESTION_WIDGET = "QuestionnaireCheckboxQuestionWidget";
+export const QUESTIONNNAIRE_FILE_QUESTION_WIDGET = "QuestionnaireFileQuestionWidget";
+export const QUESTIONNNAIRE_INPUT_QUESTION_WIDGET = "QuestionnaireInputQuestionWidget";
+export const QUESTIONNNAIRE_SELECT_QUESTION_WIDGET = "QuestionnaireSelectQuestionWidget";
+export const QUESTIONNNAIRE_ANSWER_OPTION_WIDGET = "QuestionnaireAnswerOptionWidget";

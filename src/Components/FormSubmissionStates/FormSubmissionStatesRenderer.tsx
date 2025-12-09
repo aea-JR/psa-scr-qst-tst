@@ -3,8 +3,9 @@ import { useQuestionnaireWidgetAttributesContext } from "../../contexts/Question
 import { FormSubmissionFailed } from "./FormSubmissionFailed";
 import { FormSubmissionSucceeded } from "./FormSubmissionSucceeded";
 import { FormSubmitting } from "./FormSubmitting";
-import { Widget } from "scrivito";
+import { isInPlaceEditingActive, Widget } from "scrivito";
 import { useFormContext } from "../../contexts/FormContext";
+import { QuestionnaireMessageBlock } from "../QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 
 interface FormSubbmissionStatesRendererProps {
 	widget: Widget
@@ -13,10 +14,6 @@ interface FormSubbmissionStatesRendererProps {
 export const FormSubmissionStatesRenderer: FC<FormSubbmissionStatesRendererProps> = ({ widget }) => {
 	const { onSubmit, isSubmitting, successfullySent, submissionFailed } = useFormContext()!;
 	const {
-		submissionFailureText,
-		retryButtonText,
-		showRetryButton,
-		retryButtonAlignment,
 		fixedFormHeight,
 		formHeight,
 		submittingMessageType,
@@ -24,47 +21,54 @@ export const FormSubmissionStatesRenderer: FC<FormSubbmissionStatesRendererProps
 		submittedMessageType,
 		submittingMessage,
 		failedMessageType,
-		retryButtonSize
+		showFailedPreview,
+		showSubmittedPreview,
+		showSubmittingPreview
 	} = useQuestionnaireWidgetAttributesContext();
+
+	const editMode = isInPlaceEditingActive();
 
 	if (isSubmitting) {
 		return (
-			<FormSubmitting
-				submittingText={submittingMessage}
-				type={submittingMessageType}
-				fixedFormHeight={fixedFormHeight}
-				formHeight={formHeight}
-				widget={widget}
-			/>
+			<>
+				<FormSubmitting
+					submittingText={submittingMessage}
+					type={submittingMessageType}
+					fixedFormHeight={fixedFormHeight}
+					formHeight={formHeight}
+					widget={widget}
+				/>
+				{(showSubmittingPreview && editMode) && <QuestionnaireMessageBlock status="submittingPreview" />}
+			</>
 		);
 	}
 
 	if (successfullySent) {
 		return (
-			<FormSubmissionSucceeded
-				submissionSuccessText={submittedMessage}
-				type={submittedMessageType}
-				fixedFormHeight={fixedFormHeight}
-				formHeight={formHeight}
-				widget={widget}
-			/>
+			<>
+				<FormSubmissionSucceeded
+					submissionSuccessText={submittedMessage}
+					type={submittedMessageType}
+					fixedFormHeight={fixedFormHeight}
+					formHeight={formHeight}
+					widget={widget}
+				/>
+				{(showSubmittedPreview && editMode) && <QuestionnaireMessageBlock status="submittedPreview" />}
+			</>
 		);
 	}
 
 	if (submissionFailed) {
 		return (
-			<FormSubmissionFailed
-				submissionFailureText={submissionFailureText}
-				type={failedMessageType}
-				showRetryButton={showRetryButton}
-				retryButtonText={retryButtonText}
-				buttonAlignment={retryButtonAlignment}
-				retryButtonSize={retryButtonSize}
-				fixedFormHeight={fixedFormHeight}
-				formHeight={formHeight}
-				onReSubmit={onSubmit}
-				widget={widget}
-			/>
+			<>
+				<FormSubmissionFailed
+					type={failedMessageType}
+					fixedFormHeight={fixedFormHeight}
+					onReSubmit={onSubmit}
+					widget={widget}
+				/>
+				{(showFailedPreview && editMode) && <QuestionnaireMessageBlock status="failedPreview" />}
+			</>
 		);
 	}
 

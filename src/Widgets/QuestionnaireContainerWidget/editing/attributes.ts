@@ -193,14 +193,13 @@ export const questionnaireEditingAttributes = {
 	projectIdDataItemFieldValue: {
 		title: "Project ID data attribute value"
 	},
-	footerButtonsSize: {
-		title: "Button size",
-		description: "Default: Medium",
+	buttonsSize: {
+		title: "Buttons size",
+		description: "Select the size of all buttons. Default: Medium",
 		values: [{ value: "btn-sm", title: "Small" }, { value: "btn-md", title: "Medium" }, { value: "btn-lg", title: "Large" }]
 	},
-	retryButtonSize: {
-		title: "Retry button size",
-		description: "Default: Medium",
-		values: [{ value: "btn-sm", title: "Small" }, { value: "btn-md", title: "Medium" }, { value: "btn-lg", title: "Large" }]
+	buttonsStyle: {
+		title: "Buttons style",
+		values: [{ value: "btn-primary", title: "Primary" }, { value: "btn-secondary", title: "Secondary" }]
 	},
 }

@@ -1,7 +1,8 @@
 import { Widget } from "scrivito";
 import { isEmpty, uniq } from "./lodashPolyfills";
 import { InputElements, ReviewContent } from "../types/review";
-import { EXTERNAL_ID, STEP_NUMBER, TEXT, TITLE, TYPE } from "../constants/constants";
+import { DATE, DATE_TIME, EXTERNAL_ID, STEP_NUMBER, TEXT, TITLE, TYPE } from "../constants/constants";
+import { getFileIconByName } from "../Widgets/FileWidget/fileUtils";
 
 
 export function prepareReviewContent(externalId: string, steps: Widget[], includeEmptyAnswers: boolean): ReviewContent {
@@ -10,10 +11,17 @@ export function prepareReviewContent(externalId: string, steps: Widget[], includ
   ) as HTMLFormElement;
   const data = new FormData(form);
   const joinedFormData = new FormData();
-  // show all field-names with equal name as a comma separated string
+  // determine which names should be rendered as a list (file answers)
+  const showAsListNames = new Set(
+    Array.from(form.querySelectorAll("input.show-as-list"))
+      .map((el) => (el as HTMLInputElement).name)
+  );
+  // aggregate values; keep arrays for list-enabled names
   for (const [name] of data) {
-    if (joinedFormData.has(name)) {
-      continue;
+    if (joinedFormData.has(name)) continue;
+    if (showAsListNames.has(name)) {
+      // keep as array
+      joinedFormData.set(name, JSON.stringify(data.getAll(name)));
     } else {
       joinedFormData.set(name, data.getAll(name).join(", "));
     }
@@ -27,8 +35,8 @@ export function prepareReviewContent(externalId: string, steps: Widget[], includ
   const reviewData: ReviewContent = [];
 
   for (const key of inputNames) {
-    const answer = joinedFormData.get(key) as string;
-    if (isEmpty(answer) && !includeEmptyAnswers) {
+    const raw = joinedFormData.get(key) as string;
+    if (isEmpty(raw) && !includeEmptyAnswers) {
       // do not show empty answers
       continue;
     }
@@ -57,9 +65,12 @@ export function prepareReviewContent(externalId: string, steps: Widget[], includ
       if (!reviewData[stepNumber]) {
         reviewData[stepNumber] = [];
       }
+      const value = showAsListNames.has(key)
+        ? getListHtml(raw)
+        : getAnswerValue(raw, widget);
       reviewData[stepNumber].push({
         title: title,
-        value: getAnswerValue(answer, widget)
+        value
       });
     }
   }
@@ -73,10 +84,33 @@ function getAnswerValue(answer: string, widget: Widget): string {
   if (isEmpty(answer)) {
     return emptyValue;
   }
-  if (type == "date") {
+  if (type == DATE) {
     return new Date(answer).toLocaleDateString();
-  } else if (type == "datetime-local") {
+  } else if (type == DATE_TIME) {
     return new Date(answer).toLocaleString();
   }
   return answer;
+}
+
+function getListHtml(serialized: string): string {
+  try {
+    const arr = JSON.parse(serialized) as string[];
+    const items = arr.filter(Boolean);
+    if (items.length === 0) return "-";
+    const li = items
+      .map((n) => `<li><i class=\"bi ${getFileIconByName(n)}\"></i> ${escapeHtml(n)}</li>`)
+      .join("");
+    return `<ul class=\"qst-file-list\">${li}</ul>`;
+  } catch {
+    return serialized;
+  }
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }

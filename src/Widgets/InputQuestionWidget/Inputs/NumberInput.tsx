@@ -1,5 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import { sanitizeFloat, sanitizeInteger, toParentFormat } from "./inputUtils";
+import { INTEGER } from "../../../constants/constants";
 
 interface NumberInputProps {
 	id: string;
@@ -22,7 +23,7 @@ export const NumberInput: FC<NumberInputProps> = ({
 	onInputChange,
 }) => {
 
-	const isInteger = type === "integer";
+	const isInteger = type === INTEGER;
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const raw = event.target.value;
@@ -42,7 +43,7 @@ export const NumberInput: FC<NumberInputProps> = ({
 			return;
 		}
 
-		if (type === "integer") {
+		if (type === INTEGER) {
 			v = sanitizeInteger(v);
 			// If it's just '-', clear it on blur
 			if (v === "-") {

@@ -1,14 +1,14 @@
 import * as Scrivito from "scrivito";
 import { isEmpty } from "../../utils/lodashPolyfills";
 import generateId from "../../utils/idGenerator";
-import { QUESTIONNAIRE_ID } from "../../constants/constants";
+import { QUESTIONNAIRE_ID, QUESTIONNNAIRE_CONTAINER_WIDGET } from "../../constants/constants";
 import { initialQuestionnaireContent } from "./editing/initialContent";
 import { questionnaireContainerEditingValidations } from "./editing/validations";
 import { questionnaireEditingAttributes } from "./editing/attributes";
 import { questionnaieEditingProperties, questionnaireEditingPropertiesGroups } from "./editing/properties";
 import questionnaireThumbnail from "../../assets/images/crm-questionnaire.svg";
 
-Scrivito.provideEditingConfig("QuestionnaireContainerWidget", {
+Scrivito.provideEditingConfig(QUESTIONNNAIRE_CONTAINER_WIDGET, {
   initializeCopy: (container) => initializeQstContainerCopy(container),
   title: "Questionnaire",
   thumbnail: questionnaireThumbnail,

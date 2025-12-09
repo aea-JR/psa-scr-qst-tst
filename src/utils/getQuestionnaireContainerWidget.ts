@@ -1,4 +1,5 @@
 import { Widget } from "scrivito";
+import { QUESTIONNNAIRE_CONTAINER_WIDGET } from "../constants/constants";
 
 export function getQuestionnaireContainerWidget(
   childWidget: Widget,
@@ -6,7 +7,7 @@ export function getQuestionnaireContainerWidget(
   let candidate = childWidget.container();
   while (candidate instanceof Widget) {
     const objClass = candidate.objClass();
-    if (objClass === "QuestionnaireContainerWidget") {
+    if (objClass === QUESTIONNNAIRE_CONTAINER_WIDGET) {
       return candidate;
     }
     candidate = candidate.container();

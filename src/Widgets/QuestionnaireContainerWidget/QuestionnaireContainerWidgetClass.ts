@@ -1,12 +1,12 @@
 import { provideWidgetClass } from "scrivito";
-import { ONCE_UPDATABLE, REPEATABLE } from "../../constants/constants";
+import { ONCE_UPDATABLE, QUESTIONNNAIRE_CONTAINER_WIDGET, QUESTIONNNAIRE_STEP_WIDGET, REPEATABLE } from "../../constants/constants";
 
 export const QuestionnaireContainerWidget = provideWidgetClass(
-  "QuestionnaireContainerWidget",
+  QUESTIONNNAIRE_CONTAINER_WIDGET,
   {
     attributes: {
       title: "string",
-      steps: ["widgetlist", { only: "QuestionnaireStepWidget" }],
+      steps: ["widgetlist", { only: QUESTIONNNAIRE_STEP_WIDGET }],
       externalId: "string",
       questionnaireId: "string",
       inputType: [
@@ -120,16 +120,16 @@ export const QuestionnaireContainerWidget = provideWidgetClass(
       questionnaireStatus: "string",
       location: "string",
 
-      footerButtonsSize: [
+      buttonsSize: [
         "enum",
         {
           values: ["btn-sm", "btn-md", "btn-lg"]
         }
       ],
-      retryButtonSize: [
+      buttonsStyle: [
         "enum",
         {
-          values: ["btn-sm", "btn-md", "btn-lg"]
+          values: ["btn-primary", "btn-secondary"]
         }
       ],
     },

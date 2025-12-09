@@ -6,6 +6,7 @@ import { MultiStepsFooter } from "./MultiStepsFooter";
 import { useQuestionnaireStepsContext } from "../../contexts/QuestionnaireStepsContext";
 import { QuestionnaireStatus } from "../../types/questionnaire";
 import "./QuestionnaireFormFooter.scss";
+import { useFormContext } from "../../contexts/FormContext";
 
 interface QuestionnaireFooterProps {
 	widget: Scrivito.Widget;
@@ -15,7 +16,8 @@ interface QuestionnaireFooterProps {
 export const QuestionnaireFooter: React.FC<QuestionnaireFooterProps> =
 	Scrivito.connect(({ widget, status }) => {
 		const { isSingleStep } = useQuestionnaireStepsContext();
-		const isSubmitDisabled = !(status == "void" || status == "publicSiteEditMode");
+		const formCtx = useFormContext();
+		const isSubmitDisabled = !(status == "void" || status == "publicSiteEditMode") || !!formCtx?.hasPendingUploads;
 		return (
 			<div className="qst-footer-container">
 				{

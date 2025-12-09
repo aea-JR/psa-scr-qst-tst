@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { connect, uiContext } from "scrivito";
 import { getPisaUrl, getPisaInitDispatched, getJwtToken } from "../config/scrivitoConfig";
 import { Loading } from "../Components/Loading/Loading";
 import { getAnswersDataClass, registerAnswersDataClass } from "../Data/Answers/AnswersDataClass";
 import { getAnswerOptionDataClass, registerAnswerOptionDataClass } from "../Data/AnswerOption/AnswerOptionDataClass";
 import { getQuestionDataClass, registerQuestionDataClass } from "../Data/Question/QuestionDataClass";
 import { getQuestionnaireDataClass, registerQuestionnaireDataClass } from "../Data/Questionnaire/QuestionnaireDataClass";
-import { connect, uiContext } from "scrivito";
+import { getDocumentDataClass, registerDocumentDataClass } from "../Data/Document/DocumentDataClass";
 import { isNil } from "../utils/lodashPolyfills";
 import { validateToken } from "../Data/validateToken";
-import { setIsTokenValid } from "../utils/tokenValidation";
+import { setTokenAuthActive } from "../utils/tokenValidation";
 
 export const PisaDataClassProvider: React.FC<{ children: React.ReactNode }> = connect(({ children }) => {
 	const [isReady, setIsReady] = useState<boolean | null>(null);
@@ -23,10 +24,11 @@ export const PisaDataClassProvider: React.FC<{ children: React.ReactNode }> = co
 				!getAnswerOptionDataClass() && await registerAnswerOptionDataClass();
 				!getQuestionDataClass() && await registerQuestionDataClass();
 				!getQuestionnaireDataClass() && await registerQuestionnaireDataClass();
+				!getDocumentDataClass() && await registerDocumentDataClass();
 
 				if (getJwtToken()) {
 					const isTokenValid = await validateToken();
-					setIsTokenValid(isTokenValid);
+					setTokenAuthActive(isTokenValid);
 				}
 				setIsReady(true);
 			}

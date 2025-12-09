@@ -1,32 +1,22 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
 import { FAILED_MESSAGE_WIDGETS } from "../../constants/constants";
+import { useQuestionnaireWidgetAttributesContext } from "../../contexts/QuestionnaireWidgetAttributesContext";
 
 interface FormSubmissionFailedProps {
-	submissionFailureText: string;
 	type: string;
 	widget: Scrivito.Widget;
-	retryButtonText: string;
-	showRetryButton: boolean;
-	retryButtonSize: string;
-	buttonAlignment: string;
 	fixedFormHeight: boolean;
-	formHeight: number;
 	onReSubmit: React.MouseEventHandler;
 }
 //TODO: Use OWN text-center styles
 export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
-	submissionFailureText,
 	type,
 	widget,
-	retryButtonText,
-	showRetryButton,
-	retryButtonSize,
-	buttonAlignment,
 	fixedFormHeight,
-	formHeight,
 	onReSubmit
 }) => {
+	const { formHeight, showRetryButton, buttonsStyle, retryButtonAlignment, retryButtonText, failedMessage, buttonsSize } = useQuestionnaireWidgetAttributesContext();
 	return (
 		<div className={`form-submission-failed`} style={fixedFormHeight ? { height: `${formHeight}px` } : {}}>
 			{type == "default" ?
@@ -34,7 +24,7 @@ export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
 					<i
 						className="bi bi-exclamation-triangle-fill bi-2x"
 						aria-hidden="true"></i>{" "}
-					<span >{submissionFailureText}</span>
+					<span >{failedMessage}</span>
 				</div>
 				:
 				<Scrivito.ContentTag
@@ -44,12 +34,12 @@ export const FormSubmissionFailed: React.FC<FormSubmissionFailedProps> = ({
 			}
 			{showRetryButton &&
 				<div
-					className={`${buttonAlignment === "block"
+					className={`${retryButtonAlignment === "block"
 						? ""
-						: buttonAlignment
+						: retryButtonAlignment
 						}`}>
 					<button
-						className={`btn btn-primary retry-button ${retryButtonSize} ${buttonAlignment === "block"
+						className={`btn ${buttonsStyle} retry-button ${buttonsSize} ${retryButtonAlignment === "block"
 							? " btn-block"
 							: ""
 							}`}

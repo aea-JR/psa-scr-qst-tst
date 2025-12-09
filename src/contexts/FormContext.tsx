@@ -1,13 +1,14 @@
 import * as React from "react";
-import { DataItem, isInPlaceEditingActive, load, Widget } from "scrivito";
+import { DataItem, isInPlaceEditingActive, isUserLoggedIn, load, Widget } from "scrivito";
 import { getAnswersDataClass } from "../Data/Answers/AnswersDataClass";
 import { isEmpty } from "../utils/lodashPolyfills";
 import { usePisaConnectionStatusContext } from "./PisaConnectionStatusContext";
 import { useQuestionnaireStepsContext } from "./QuestionnaireStepsContext";
 import { useQuestionnaireContextIds } from "../hooks/useQuestionnaireContextIds";
 import { EXTERNAL_ID, INPUT_TYPE, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTION_ID, QUESTIONNAIRE_ID, REPEATABLE, UPDATED_AT, VALUE, VALUE_IDENTIFIER } from "../constants/constants";
-import { useWithToken } from "../utils/useWithToken";
 import { useValidationContext } from "./ValidationContext";
+import { isTokenAuthActive } from "../utils/tokenValidation";
+import { isQuestionnaireAnonymous } from "../Data/isQuestionnaireAnonymous";
 
 interface FormContextProps {
   answers: Map<string, { value: string[]; valueIdentifier: string[]; updatedAt: string }>;
@@ -18,6 +19,10 @@ interface FormContextProps {
   submissionFailed: boolean;
   getAnswer: (questionId: string) => { value: string[]; valueIdentifier: string[]; updatedAt: string } | undefined;
   setExcludedFromSubmit: (questionId: string, isExcluded: boolean) => void;
+  // Upload coordination
+  beginUpload: (count?: number) => void;
+  finishUpload: (count?: number) => void;
+  hasPendingUploads: boolean;
 }
 
 const FormContext = React.createContext<FormContextProps | undefined>(undefined);
@@ -40,6 +45,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     new Map()
   );
   const [excludedAnswers, setExcludedAnswers] = React.useState<Record<string, boolean>>({});
+  const [pendingUploads, setPendingUploads] = React.useState(0);
 
   const { activityId, contactId, projectId } = useQuestionnaireContextIds(qstContainerWidget);
   const { isOnline } = usePisaConnectionStatusContext();
@@ -82,6 +88,14 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
     setSubmissionFailed(true);
   }, []);
 
+  const beginUpload = React.useCallback((count: number = 1) => {
+    setPendingUploads((n) => n + Math.max(0, count));
+  }, []);
+  const finishUpload = React.useCallback((count: number = 1) => {
+    setPendingUploads((n) => Math.max(0, n - Math.max(0, count)));
+  }, []);
+  const hasPendingUploads = pendingUploads > 0;
+
   React.useEffect(() => {
     const loadAnswers = async () => {
       if (isEmpty(questionnaireId)) {
@@ -96,34 +110,50 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       if (inputType == REPEATABLE) {
         return;
       }
-      if (isEmpty(activityId) && isEmpty(contactId) && isEmpty(projectId)) {
+      // Load answers if token is valid, or if token is not valid
+      // but the user is logged in and we have at least one context id
+      const hasContext = !isEmpty(activityId) || !isEmpty(contactId) || !isEmpty(projectId);
+      if (!isTokenAuthActive() && (!isUserLoggedIn() || !hasContext)) {
         return;
       }
-      const answers = await load(() => {
-        return AnswersDataClass.all()
-          // limit with question count + 1 ? 
-          .transform({
-            limit: 999,
-            filters: {
-              questionnaireId: {
-                operator: 'equals',
-                value: questionnaireId,
-              },
-              activityId: {
-                operator: 'equals',
-                value: activityId,
-              },
-              projectId: {
-                operator: 'equals',
-                value: projectId,
-              },
-              contactId: {
-                operator: 'equals',
-                value: contactId,
-              },
-            },
-          }).take()
+      // respect anonymous flag!
+      const isAnonym = await isQuestionnaireAnonymous(questionnaireId);
+      if (isAnonym) {
+        return;
+      }
 
+      const answers = await load(() => {
+        const scope = AnswersDataClass.all();
+        const transformParams: {
+          limit: number;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          filters?: any;
+        } = { limit: 999 };
+
+        // If token is valid, let the backend derive context entirely from the token
+        // and do not apply any filters.
+        if (!isTokenAuthActive()) {
+          transformParams.filters = {
+            questionnaireId: {
+              operator: 'equals',
+              value: questionnaireId,
+            },
+            activityId: {
+              operator: 'equals',
+              value: activityId,
+            },
+            projectId: {
+              operator: 'equals',
+              value: projectId,
+            },
+            contactId: {
+              operator: 'equals',
+              value: contactId,
+            },
+          };
+        }
+
+        return scope.transform(transformParams).take();
       })
       convertAndSetAnswers(answers);
     }
@@ -189,6 +219,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
 
   const onSubmit = async (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
+    if (hasPendingUploads) {
+      // Avoid submitting while uploads are in progress
+      return;
+    }
     const isValid = validate(exernalId as string, currentStep);
     if (!isValid) {
       return;
@@ -204,7 +238,7 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
           valueIdentifier: excludedAnswers[questionId] ? [""] : valueIdentifier,
         }));
 
-      const useContext = !useWithToken();
+      const useContext = !isTokenAuthActive();
       const payload = useContext
         ? {
           keys: { activityId, contactId, projectId },
@@ -228,7 +262,10 @@ export const FormProvider: React.FC<{ children: React.ReactNode, qstContainerWid
       successfullySent,
       submissionFailed,
       getAnswer,
-      setExcludedFromSubmit
+      setExcludedFromSubmit,
+      beginUpload,
+      finishUpload,
+      hasPendingUploads,
     }}>
       {children}
     </FormContext.Provider>

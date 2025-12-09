@@ -9,12 +9,14 @@ export const useAnswer = (
 ) => {
 	const ctx = useFormContext();
 	const [values, setValues] = useState<string[]>(defaultValues);
+	const [idns, setIdns] = useState<string[]>(identifiers || []);
 
 	const initializeAnswer = useCallback(() => {
 		const existingAnswer = ctx?.getAnswer(questionId);
 
 		if (existingAnswer) {
 			setValues(existingAnswer.value);
+			setIdns(existingAnswer.valueIdentifier);
 		} else if (!isEmpty(defaultValues)) {
 			ctx?.onChange(questionId, defaultValues, identifiers);
 		}
@@ -28,8 +30,9 @@ export const useAnswer = (
 
 	const handleChange = (newValues: string[], identifiers: string[] = [""]) => {
 		setValues(newValues);
+		setIdns(identifiers);
 		ctx?.onChange(questionId, newValues, identifiers);
 	};
 
-	return { values, handleChange };
+	return { values, idns, handleChange };
 };

@@ -4,7 +4,7 @@ import { clientConfig } from "../pisaClient";
 let QuestionnaireDataClassInternal: DataClass;
 
 export const registerQuestionnaireDataClass = async () => {
-  const config = await clientConfig("questionnaire");
+  const config = await clientConfig("questionnaire", true);
 
   QuestionnaireDataClassInternal = provideDataClass("Questionnaire", {
     restApi: config,

@@ -6,7 +6,7 @@ import { Dropdown } from "./Dropdown";
 import { Select } from "./Select";
 import { ConditionProvider } from "../../contexts/ConditionContext";
 import { useSelectQuestion } from "./useSelectQuestion";
-import { OPTIONS, TEXT } from "../../constants/constants";
+import { OPTIONS, STRING_DROPDOWN, TEXT } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import { ResetRadioInputsButton } from "./ResetRadioInputsButton";
@@ -40,7 +40,7 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
     return <QuestionnaireMessageBlock status="noFormContext" />
   }
 
-  const isInvalid = !validator.isLocallyValid;
+  const isInvalid = required && !validator.isLocallyValid;
 
   return (
     <ConditionProvider value={{ getConditionData }}>
@@ -49,7 +49,7 @@ provideComponent(QuestionnaireSelectQuestionWidget, ({ widget }) => {
           <span className="header-info" style={{ backgroundColor: titleBgColor || "transparent" }}>Conditional Header</span>
         )}
         <div ref={validator.ref} className={`select-container mb-3 ${useAsConditionals ? "conditional-header-border" : ""}`} >
-          {type == "string_dropdown" ?
+          {type == STRING_DROPDOWN ?
             (
               <div className={alignment}>
                 <Dropdown

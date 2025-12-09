@@ -3,13 +3,13 @@ import { QuestionnaireCheckboxQuestionWidget } from "./CheckboxWidgetClass";
 import { SingleCheckbox } from "./Checkboxes/SingleCheckbox";
 import { TriStateCheckbox } from "./Checkboxes/TriStateCheckbox";
 import { useExternalId } from "../../hooks/useExternalId";
-import { TYPE, MANDATORY, EXTERNAL_ID, QUESTION_ID, IDENTIFIER, HELP, DEFAULT_VALUE, ALIGNMENT, VALIDATION_TEXT } from "../../constants/constants";
+import { TYPE, MANDATORY, EXTERNAL_ID, QUESTION_ID, IDENTIFIER, HELP, DEFAULT_VALUE, ALIGNMENT, VALIDATION_TEXT, LOGIC, LOGIC_TRISTATE } from "../../constants/constants";
 import { useFormContext } from "../../contexts/FormContext";
 import { QuestionnaireMessageBlock } from "../../Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock";
 import "./CheckboxWidget.scss";
 
 provideComponent(QuestionnaireCheckboxQuestionWidget, ({ widget }) => {
-  const type = widget.get(TYPE) || "logic";
+  const type = widget.get(TYPE) || LOGIC;
   const required = widget.get(MANDATORY);
   const externalId = widget.get(EXTERNAL_ID);
   const questionId = widget.get(QUESTION_ID);
@@ -27,7 +27,7 @@ provideComponent(QuestionnaireCheckboxQuestionWidget, ({ widget }) => {
     return <QuestionnaireMessageBlock status="noFormContext" />
   }
 
-  return type === "logic_tristate" ? (
+  return type === LOGIC_TRISTATE ? (
     <TriStateCheckbox
       required={required}
       externalId={externalId}

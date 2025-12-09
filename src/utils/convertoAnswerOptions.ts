@@ -1,7 +1,7 @@
 import { Widget } from "scrivito";
 import { AnswerOption } from "../types/questionnaire";
 import { isEmpty } from "./lodashPolyfills";
-import { EXTERNAL_ID, IDENTIFIER, POSITION, TEXT } from "../constants/constants";
+import { EXTERNAL_ID, IDENTIFIER, POSITION, QUESTIONNNAIRE_ANSWER_OPTION_WIDGET, TEXT } from "../constants/constants";
 
 export const convertWidgetsToAnswerOptions = (
   widgets: Widget[],
@@ -11,7 +11,7 @@ export const convertWidgetsToAnswerOptions = (
   }
   const answerOptions: AnswerOption[] = [];
   for (const widget of widgets) {
-    if (widget.objClass() !== "QuestionnaireAnswerOptionWidget") {
+    if (widget.objClass() !== QUESTIONNNAIRE_ANSWER_OPTION_WIDGET) {
       console.warn(
         `${widget.objClass()} with ID ${widget.id()} can not be converted to an AnswerOption.`,
       );

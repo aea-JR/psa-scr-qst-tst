@@ -17,7 +17,7 @@ export const Review: FC<ReviewProps> = ({
 }) => {
   const [show, setShow] = useState(false);
   const previousOverflowRef = useRef<string | null>(null);
-  const { showReviewHeader, showStepsInReview, showReviewFooter, reviewHeaderTitle, reviewButtonText, reviewCloseButtonText } = useQuestionnaireWidgetAttributesContext();
+  const { showReviewHeader, showStepsInReview, showReviewFooter, reviewHeaderTitle, reviewCloseButtonText, buttonsSize, buttonsStyle } = useQuestionnaireWidgetAttributesContext();
 
   useEffect(() => {
     setShow(true);
@@ -71,7 +71,7 @@ export const Review: FC<ReviewProps> = ({
           </div>
           {showReviewFooter && (
             <div className="review-modal-footer">
-              <button className="" onClick={handleClose}>
+              <button className={`btn ${buttonsStyle} ${buttonsSize}`} onClick={handleClose}>
                 {reviewCloseButtonText}
               </button>
             </div>
@@ -88,7 +88,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ item }) => {
       <div className="review-item-title">
         <span>{item.title}</span>
       </div>
-      <div className="review-item-value">{item.value}</div>
+      <div className="review-item-value" dangerouslySetInnerHTML={{ __html: item.value }}></div>
     </div>
   );
 };

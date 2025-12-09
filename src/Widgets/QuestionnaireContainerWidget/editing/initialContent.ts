@@ -51,6 +51,6 @@ export const initialQuestionnaireContent = {
 	projectIdSource: "manual",
 	questionnaireStatus: "void",
 	location: "",
-	footerButtonsSize: "btn-md",
-	retryButtonSize: "btn-md",
+	buttonsSize: "btn-md",
+	buttonsStyle: "btn-primary",
 } 

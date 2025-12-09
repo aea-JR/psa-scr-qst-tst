@@ -3,7 +3,7 @@ import { isEmpty } from "./lodashPolyfills";
 import { Question, AnswerOption } from "../types/questionnaire";
 import { convertWidgetsToAnswerOptions } from "./convertoAnswerOptions";
 import { convertWidgetToQuestion } from "./convertoQuestion";
-import { OPTIONS } from "../constants/constants";
+import { OPTIONS, QUESTIONNNAIRE_SELECT_QUESTION_WIDGET } from "../constants/constants";
 import { getQuestionWidgets } from "./getQuestionWidgets";
 
 export const extractQuestionsAndOptions = (widget: Widget) => {
@@ -24,7 +24,7 @@ export const extractQuestionsAndOptions = (widget: Widget) => {
 		const question = convertWidgetToQuestion(questionWidget);
 		questionsAndOptions.questions.push(question);
 
-		if (questionWidget.objClass() == "QuestionnaireSelectQuestionWidget") {
+		if (questionWidget.objClass() == QUESTIONNNAIRE_SELECT_QUESTION_WIDGET) {
 			const optionWidgets = questionWidget.get(OPTIONS) as Widget[];
 			const options = convertWidgetsToAnswerOptions(optionWidgets)
 			if (!isEmpty(options)) {

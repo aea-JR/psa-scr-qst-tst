@@ -103,19 +103,20 @@ body .questionnaire-review-form-modal {
         border-top: 1px solid #dee2e6;
         border-bottom-right-radius: calc(.3rem - 1px);
         border-bottom-left-radius: calc(.3rem - 1px);
+      }
 
-        button {
-          color: #fff;
-          background-color: var(--bs-primary, #5c9dcd);
-          border-color: var(--bs-primary, #5c9dcd);
-          margin: .25rem;
-          padding: .375rem .75rem;
-          font-size: 1rem;
-          border-radius: .25rem;
+      .qst-file-list {
+        margin: 0;
+        padding: 0;
 
-          &:hover {
-            background-color: var(--bs-btn-hover-bg, #395aa5);
-          }
+        li {
+          line-height: normal;
+          list-style: none;
+          border-bottom: 1px dotted #c8c8c8;
+          padding: 4px 0;
+          display: flex;
+          align-items: center;
+          gap: 6px;
         }
       }
     }

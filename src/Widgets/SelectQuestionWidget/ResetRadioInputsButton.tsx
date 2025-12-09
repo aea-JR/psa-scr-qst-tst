@@ -12,7 +12,6 @@ export const ResetRadioInputsButton: React.FC<ResetRadioInputsProps> = ({
   onReset
 }) => {
   const doReset = () => {
-    console.log("reset")
     if (parentRef.current) {
       const inputs = parentRef.current.getElementsByTagName("input");
       const inputArray = Array.from(inputs);

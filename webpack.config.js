@@ -49,8 +49,25 @@ module.exports = (_env, argv) => {
     },
     target: "web",
     externals: [
+      // Keep peer and direct deps external
       ...Object.keys(DEPENDENCIES),
-      ...Object.keys(PEER_DEPENDENCIES)
+      ...Object.keys(PEER_DEPENDENCIES),
+      // Also externalize JSX runtimes so we don't bundle a dev runtime
+      // that references removed React internals on React 19.
+      {
+        'react/jsx-runtime': {
+          commonjs: 'react/jsx-runtime',
+          commonjs2: 'react/jsx-runtime',
+          amd: 'react/jsx-runtime',
+          root: ['react', 'jsx-runtime']
+        },
+        'react/jsx-dev-runtime': {
+          commonjs: 'react/jsx-dev-runtime',
+          commonjs2: 'react/jsx-dev-runtime',
+          amd: 'react/jsx-dev-runtime',
+          root: ['react', 'jsx-dev-runtime']
+        }
+      }
     ],
     plugins,
 
@@ -74,7 +91,14 @@ module.exports = (_env, argv) => {
               loader: "babel-loader",
               options: {
                 presets: [
-                  "@babel/preset-react",
+                  [
+                    "@babel/preset-react",
+                    {
+                      runtime: "automatic",
+                      development: false,
+                      importSource: "react"
+                    }
+                  ],
                   [
                     "@babel/preset-env",
                     {

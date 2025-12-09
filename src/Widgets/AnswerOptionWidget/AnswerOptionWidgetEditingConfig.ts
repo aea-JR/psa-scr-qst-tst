@@ -1,12 +1,12 @@
 import * as Scrivito from "scrivito";
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
-import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, TEXT } from "../../constants/constants";
+import { ANSWER_OPTION_ID, CONTENT, EXTERNAL_ID, IDENTIFIER, IS_BEING_COPIED, IS_CONDITION, POSITION, QUESTIONNNAIRE_ANSWER_OPTION_WIDGET, TEXT } from "../../constants/constants";
 import { identifierValidation } from "../../utils/validations/identifierValidation";
 import answerOptionThumbnail from "../../assets/images/crm-questionnaire-select-option.svg";
 import { isEmpty } from "../../utils/lodashPolyfills";
 
-Scrivito.provideEditingConfig("QuestionnaireAnswerOptionWidget", {
+Scrivito.provideEditingConfig(QUESTIONNNAIRE_ANSWER_OPTION_WIDGET, {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       obj.update({ externalId: generateId() });

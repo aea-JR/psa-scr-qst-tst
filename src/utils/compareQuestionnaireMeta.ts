@@ -2,7 +2,7 @@ import { Widget } from "scrivito";
 import { isEmpty, isString } from "./lodashPolyfills";
 import { QuestionnaireMetaSnapshot } from "../types/questionnaire";
 import { extractQuestionsAndOptions } from "./extractQuestionsAndOptions";
-import { ANSWER_OPTION_ID, CREATION_DATA, DEFAULT_VALUE, HELP, IDENTIFIER, INPUT_TYPE, MANDATORY, OPTIONS, POSITION, QUESTION_ID, QUESTIONNAIRE_ID, TEXT, TITLE, TYPE } from "../constants/constants";
+import { ANSWER_OPTION_ID, CREATION_DATA, DEFAULT_VALUE, HELP, IDENTIFIER, INPUT_TYPE, MANDATORY, OPTIONS, POSITION, QUESTION_ID, QUESTIONNAIRE_ID, QUESTIONNNAIRE_SELECT_QUESTION_WIDGET, TEXT, TITLE, TYPE } from "../constants/constants";
 
 //TODO: add location check?
 export const compareQuestionnaireMeta = (widget: Widget): boolean => {
@@ -72,7 +72,7 @@ export const compareQuestionnaireMeta = (widget: Widget): boolean => {
 		}
 
 		// Compare associated answer options if there are some
-		if (question.objClass() != "QuestionnaireSelectQuestionWidget") {
+		if (question.objClass() != QUESTIONNNAIRE_SELECT_QUESTION_WIDGET) {
 			continue;
 		}
 		const currentOptions = question.get(OPTIONS) as Widget[];

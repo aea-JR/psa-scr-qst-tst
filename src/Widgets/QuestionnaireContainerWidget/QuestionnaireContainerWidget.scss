@@ -62,7 +62,7 @@
     display: inline-block;
     animation: rotate-form-submitting-icon 2s linear 0s infinite;
   }
-  
+
   .form-submission-failed .retry-button {
     margin-top: 1em;
   }
@@ -125,6 +125,14 @@
       line-height: 1;
     }
   }
+
+  .invalid-feedback {
+    background: white;
+    width: fit-content;
+    padding: 0.1em 0.3em;
+    border-radius: var(--bs-border-radius, .375rem);
+  }
+
 }
 
 @keyframes rotate-form-submitting-icon {

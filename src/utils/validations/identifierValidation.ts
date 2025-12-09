@@ -1,11 +1,11 @@
 import { Widget } from "scrivito";
-import { IDENTIFIER } from "../../constants/constants";
+import { IDENTIFIER, QUESTIONNNAIRE_ANSWER_OPTION_WIDGET } from "../../constants/constants";
 import { isIdentifierUnique } from "../isIdentifierUnique";
 
 export const identifierValidation = [
 	IDENTIFIER,
 	(identifier: string, { widget }: { widget: Widget }) => {
-		const isAnswerOption = widget.objClass() === "QuestionnaireAnswerOptionWidget";
+		const isAnswerOption = widget.objClass() === QUESTIONNNAIRE_ANSWER_OPTION_WIDGET;
 
 		if (!isIdentifierUnique(widget, isAnswerOption ? "option" : "question")) {
 			return `Specify a unique Identifier. There is at least one other ${isAnswerOption ? "option" : "question"} with the same Identfier.`;

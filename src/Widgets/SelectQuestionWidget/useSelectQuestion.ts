@@ -5,7 +5,7 @@ import { useAnswer } from "../../hooks/useAnswer";
 import { useExternalId } from "../../hooks/useExternalId";
 import { useDynamicBackground } from "../../hooks/useDynamicBackground";
 import { isInPlaceEditingActive, Widget } from "scrivito";
-import { ALIGNMENT, CLEAR_SELECTION_BUTTON_TEXT, DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, HELP, IDENTIFIER, INLINE_VIEW, MANDATORY, OPTIONS, POSITION, QUESTION_ID, SHOW_CLEAR_SELECTION_BUTTON, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { ALIGNMENT, CLEAR_SELECTION_BUTTON_TEXT, DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, HELP, IDENTIFIER, INLINE_VIEW, MANDATORY, OPTIONS, POSITION, QUESTION_ID, SHOW_CLEAR_SELECTION_BUTTON, STRING_CHECKBOXES, STRING_DROPDOWN, STRING_RADIO, TEXT, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import { isAlignmentEnabled } from "./isSelectAlignmentEnabled";
 import { useValidationField } from "../../hooks/useValidationField";
 
@@ -17,8 +17,8 @@ export const useSelectQuestion = (widget: Widget) => {
 	const defaultValue = widget.get(DEFAULT_VALUE) as string;
 	const options = widget.get(OPTIONS) as Widget[];
 	const questionId = widget.get(QUESTION_ID) as string;
-	const type = widget.get(TYPE) as string || "string_dropdown";
-	const isMultiSelect = type === "string_checkboxes";
+	const type = widget.get(TYPE) as string || STRING_DROPDOWN;
+	const isMultiSelect = type === STRING_CHECKBOXES;
 	const useAsConditionals = widget.get(ENABLE_CONDITIONALS) as boolean;
 	const showClearButton = widget.get(SHOW_CLEAR_SELECTION_BUTTON) as boolean;
 	const clearSelectionButtonText = widget.get(CLEAR_SELECTION_BUTTON_TEXT) as string || "Clear selection";
@@ -68,7 +68,7 @@ export const useSelectQuestion = (widget: Widget) => {
 		}
 		options.forEach((option, index) => {
 			if (!option.get(TYPE)) {
-				const realType = type === "string_dropdown" ? "dropdown" : isMultiSelect ? "checkbox" : "radio";
+				const realType = type === STRING_DROPDOWN ? "dropdown" : isMultiSelect ? "checkbox" : "radio";
 				option.update({ type: realType });
 			}
 			if (option.get(POSITION) !== (index + 1) * 10) {
@@ -122,7 +122,7 @@ export const useSelectQuestion = (widget: Widget) => {
 			showClearButton &&
 			!isEmpty(values) &&
 			!required &&
-			type == "string_radio"
+			type == STRING_RADIO
 		);
 	}
 

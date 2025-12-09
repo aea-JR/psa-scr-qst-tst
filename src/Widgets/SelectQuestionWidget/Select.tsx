@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Scrivito from "scrivito";
-import { EXTERNAL_ID, IDENTIFIER, TEXT } from "../../constants/constants";
+import { EXTERNAL_ID, IDENTIFIER, STRING_RADIO, TEXT } from "../../constants/constants";
 interface SelectProps {
 	type: string;
 	required: boolean;
@@ -83,7 +83,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
 				name={externalQuestionId}
 				id={externalId}
 				type={
-					type == "string_radio"
+					type == STRING_RADIO
 						? "radio"
 						: "checkbox"
 				}
@@ -92,7 +92,7 @@ const SelectItem: React.FC<SelectItemProps> = ({
 				onChange={onChange}
 
 				data-identifier={identifier}
-				data-group={type == "string_radio"
+				data-group={type == STRING_RADIO
 					? null
 					: externalQuestionId}
 			/>

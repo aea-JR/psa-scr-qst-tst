@@ -15,7 +15,7 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 			const [show, setShow] = useState(false);
 			const { onSubmit } = useFormContext()!;
 			const { onPageChange, currentStep, isLastStep, stepsLength } = useQuestionnaireStepsContext();
-			const { backwardButtonText, forwardButtonText, submitButtonText, showReview, reviewButtonText, footerButtonsSize } = useQuestionnaireWidgetAttributesContext();
+			const { backwardButtonText, forwardButtonText, submitButtonText, showReview, reviewButtonText, buttonsSize, buttonsStyle } = useQuestionnaireWidgetAttributesContext();
 			const doShowReview = (isLastStep || isInPlaceEditingActive()) && showReview;
 			function onShowReview(setShow: (show: boolean) => void) {
 				setShow(true);
@@ -24,7 +24,7 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 				<>
 					<div className="buttons-container">
 						<button
-							className={`btn btn-primary backward-button ${footerButtonsSize}`}
+							className={`btn ${buttonsStyle} backward-button ${buttonsSize}`}
 							onClick={() => onPageChange(false)}
 							hidden={currentStep == 1 && !isInPlaceEditingActive()}>
 							{backwardButtonText}
@@ -35,13 +35,13 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 
 						{doShowReview && (
 							<button
-								className={`btn btn-primary review-button ${footerButtonsSize}`}
+								className={`btn ${buttonsStyle} review-button ${buttonsSize}`}
 								onClick={() => onShowReview(setShow)}>
 								{reviewButtonText}
 							</button>
 						)}
 						<button
-							className={`btn btn-primary forward-button ${footerButtonsSize} ${isInPlaceEditingActive() ? "edit-mode-margin" : ""}`}
+							className={`btn ${buttonsStyle} forward-button ${buttonsSize} ${isInPlaceEditingActive() ? "edit-mode-margin" : ""}`}
 							onClick={() => onPageChange(true)}
 							hidden={isLastStep}
 						>
@@ -49,7 +49,7 @@ export const MultiStepsFooter: FC<MultiStepsFooterProps> =
 						</button>
 
 						<button
-							className={`btn btn-primary submit-button ${footerButtonsSize}`}
+							className={`btn ${buttonsStyle} submit-button ${buttonsSize}`}
 							onClick={onSubmit}
 							disabled={submitDisabled}
 							hidden={!(isLastStep || isInPlaceEditingActive())}

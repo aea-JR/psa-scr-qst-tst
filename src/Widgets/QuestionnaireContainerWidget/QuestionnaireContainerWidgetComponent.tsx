@@ -17,7 +17,7 @@ import { PisaDataClassProvider } from "../../contexts/PisaDataClassContext";
 import { QuestionnaireStatus } from "../../types/questionnaire";
 import { isUsageRestricted } from "../../utils/isRestricted";
 import { getJwtToken } from "../../config/scrivitoConfig";
-import { isTokenValid } from "../../utils/tokenValidation";
+import { isTokenAuthActive } from "../../utils/tokenValidation";
 import "./QuestionnaireContainerWidget.scss";
 import { ValidationProvider } from "../../contexts/ValidationContext";
 
@@ -54,7 +54,7 @@ const QuestionnaireContainerContent: React.FC<{
   const usageRestricted = isUsageRestricted(widget);
   const loggedIn = isUserLoggedIn();
   const jwt = getJwtToken();
-  const tokenValid = isTokenValid();
+  const tokenValid = isTokenAuthActive();
 
   const nextStatus: QuestionnaireStatus = useMemo(() => {
     // order is important

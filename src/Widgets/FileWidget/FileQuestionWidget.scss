@@ -1,0 +1,131 @@
+.pisa-questionnaire-widgets {
+  .file-widget-container {
+    width: 100%;
+    position: relative;
+
+    .file-label {
+      p {
+        display: inline;
+      }
+    }
+
+    .invalid-feedback {
+      display: block;
+    }
+
+    // alignment
+    &.left {
+      text-align: left;
+    }
+
+    &.center {
+      text-align: center;
+    }
+
+    &.right {
+      text-align: right;
+    }
+
+    i.bi-upload,
+    .clear-all i.bi-trash {
+      color: var(--bs-primary-text-color, white);
+    }
+
+    .upload-button {
+      display: flex;
+      margin-left: 0px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .delete-button {
+      align-self: flex-end;
+
+      i {
+        color: red;
+      }
+    }
+
+    .single-upload {
+      display: flex;
+      align-items: center;
+    }
+
+    .multi-upload {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+
+      .upload-box {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .clear-all {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .file-row {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0 0 0;
+      line-height: normal;
+      flex: 1;
+      overflow: hidden;
+
+      .file-name {
+        text-decoration: none;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-bottom: 1px dotted #c8c8c8;
+      }
+
+      .file-name.placeholder {
+        color: #999;
+      }
+
+      .remove {
+        margin-left: auto;
+      }
+
+      .remove i {
+        color: red;
+      }
+    }
+
+    .single-upload .file-row {
+      margin-left: 0.5em;
+      height: 38px;
+    }
+
+    .file-list {
+      margin: 10px 0 0;
+    }
+
+    @media (max-width: 600px) {
+
+      .pick-btn span,
+      .multi-upload .upload-box span {
+        display: none;
+      }
+
+      .upload-button i.bi-upload {
+        padding: 0;
+      }
+    }
+  }
+}

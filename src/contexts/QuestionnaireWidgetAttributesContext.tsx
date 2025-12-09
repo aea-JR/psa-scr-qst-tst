@@ -2,11 +2,10 @@ import React, { createContext, useContext, ReactNode } from "react";
 import { Widget } from "scrivito";
 
 export interface QuestionnaireWidgetAttributes {
-	externalId: string,
-	questionnaireId: string,
-	steps: Widget[],
+	externalId: string;
+	questionnaireId: string;
+	steps: Widget[];
 	formType: string;
-	submissionFailureText: string;
 	retryButtonText: string;
 	showRetryButton: boolean;
 	retryButtonAlignment: string;
@@ -20,28 +19,28 @@ export interface QuestionnaireWidgetAttributes {
 	containerClassNames: string;
 	formScrollbarWidth: string;
 	formOverscrollBehavior: string;
-	submittingMessage: string,
-	submittedMessage: string,
-	failedMessage: string,
-	submittedMessageType: string,
-	failedMessageType: string,
-	failedMessageWidgets: Widget[],
-	submittedMessageWidgets: Widget[],
-	submittingMessageWidgets: Widget[],
-	submitButtonText: string,
-	forwardButtonText: string,
-	backwardButtonText: string,
-	singleSubmitButtonAlignment: string,
-	showReview: boolean,
-	includeEmptyAnswers: boolean,
-	showStepsInReview: boolean,
-	showReviewHeader: boolean,
-	showReviewFooter: boolean,
-	reviewButtonText: string,
-	reviewHeaderTitle: string,
-	reviewCloseButtonText: string,
-	footerButtonsSize: string,
-	retryButtonSize: string,
+	submittingMessage: string;
+	submittedMessage: string;
+	failedMessage: string;
+	submittedMessageType: string;
+	failedMessageType: string;
+	failedMessageWidgets: Widget[];
+	submittedMessageWidgets: Widget[];
+	submittingMessageWidgets: Widget[];
+	submitButtonText: string;
+	forwardButtonText: string;
+	backwardButtonText: string;
+	singleSubmitButtonAlignment: string;
+	showReview: boolean;
+	includeEmptyAnswers: boolean;
+	showStepsInReview: boolean;
+	showReviewHeader: boolean;
+	showReviewFooter: boolean;
+	reviewButtonText: string;
+	reviewHeaderTitle: string;
+	reviewCloseButtonText: string;
+	buttonsSize: string;
+	buttonsStyle: string;
 }
 
 const QuestionnaireWidgetAttributesContext = createContext<QuestionnaireWidgetAttributes | null>(

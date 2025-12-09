@@ -1,6 +1,6 @@
 import { Widget } from "scrivito";
 import { QuestionnaireWidgetAttributes } from "../contexts/QuestionnaireWidgetAttributesContext";
-import { BACKWARD_BUTTON_TEXT, CUSTOM_CLASS_NAMES, EXTERNAL_ID, FAILED_MESSAGE, FAILED_MESSAGE_TYPE, FAILED_MESSAGE_WIDGETS, FIXED_FORM_HEIGHT, FOOTER_BUTTONS_SIZE, FORM_HEIGHT, FORM_TYPE, FORWARD_BUTTON_TEXT, INCLUDE_EMPTY_ANSWERS, OVERSCROLL_BEHAVIOR, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTIONNAIRE_ID, RETRY_BUTTON_ALIGNMENT, RETRY_BUTTON_SIZE, RETRY_BUTTON_TEXT, REVIEW_BUTTON_TEXT, REVIEW_CLOSE_BUTTON_TEXT, REVIEW_HEADER_TITLE, SCROLLBAR_WIDTH, SHOW_RETRY_BUTTON, SHOW_REVIEW, SHOW_REVIEW_FOOTER, SHOW_REVIEW_HEADER, SHOW_STEPS_IN_REVIEW, SINGLE_SUBMIT_BUTTON_ALIGNMENT, STEPS, SUBMIT_BUTTON_TEXT, SUBMITTED_MESSAGE, SUBMITTED_MESSAGE_TYPE, SUBMITTED_MESSAGE_WIDGETS, SUBMITTING_MESSAGE, SUBMITTING_MESSAGE_TYPE, SUBMITTING_MESSAGE_WIDGETS } from "../constants/constants";
+import { BACKWARD_BUTTON_TEXT, CUSTOM_CLASS_NAMES, EXTERNAL_ID, FAILED_MESSAGE, FAILED_MESSAGE_TYPE, FAILED_MESSAGE_WIDGETS, FIXED_FORM_HEIGHT, BUTTONS_SIZE, FORM_HEIGHT, FORM_TYPE, FORWARD_BUTTON_TEXT, INCLUDE_EMPTY_ANSWERS, OVERSCROLL_BEHAVIOR, PREVIEW_FAILED_MESSAGE, PREVIEW_SUBBMITTED_MESSAGE, PREVIEW_SUBMITTING_MESSAGE, QUESTIONNAIRE_ID, RETRY_BUTTON_ALIGNMENT, RETRY_BUTTON_TEXT, REVIEW_BUTTON_TEXT, REVIEW_CLOSE_BUTTON_TEXT, REVIEW_HEADER_TITLE, SCROLLBAR_WIDTH, SHOW_RETRY_BUTTON, SHOW_REVIEW, SHOW_REVIEW_FOOTER, SHOW_REVIEW_HEADER, SHOW_STEPS_IN_REVIEW, SINGLE_SUBMIT_BUTTON_ALIGNMENT, STEPS, SUBMIT_BUTTON_TEXT, SUBMITTED_MESSAGE, SUBMITTED_MESSAGE_TYPE, SUBMITTED_MESSAGE_WIDGETS, SUBMITTING_MESSAGE, SUBMITTING_MESSAGE_TYPE, SUBMITTING_MESSAGE_WIDGETS, BUTTONS_STYLE } from "../constants/constants";
 
 export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireWidgetAttributes => ({
 	externalId: widget.get(EXTERNAL_ID) as string || "",
@@ -11,7 +11,6 @@ export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireW
 	showSubmittedPreview: widget.get(PREVIEW_SUBBMITTED_MESSAGE) as boolean || false,
 	showSubmittingPreview: widget.get(PREVIEW_SUBMITTING_MESSAGE) as boolean || false,
 	showFailedPreview: widget.get(PREVIEW_FAILED_MESSAGE) as boolean || false,
-	submissionFailureText: widget.get(FAILED_MESSAGE) as string || "",
 	showRetryButton: widget.get(SHOW_RETRY_BUTTON) as boolean || false,
 	retryButtonText: widget.get(RETRY_BUTTON_TEXT) as string || "Retry",
 	retryButtonAlignment: widget.get(RETRY_BUTTON_ALIGNMENT) as string || "text-center",
@@ -21,10 +20,10 @@ export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireW
 	containerClassNames: widget.get(CUSTOM_CLASS_NAMES) as string || "",
 	formScrollbarWidth: widget.get(SCROLLBAR_WIDTH) as string || "default",
 	formOverscrollBehavior: widget.get(OVERSCROLL_BEHAVIOR) as string || "default",
-	failedMessage: widget.get(FAILED_MESSAGE) as string,
-	submittedMessage: widget.get(SUBMITTED_MESSAGE) as string,
+	failedMessage: widget.get(FAILED_MESSAGE) as string || "We are sorry, your request could not be completed. Please try again later.",
+	submittedMessage: widget.get(SUBMITTED_MESSAGE) as string || "Your message has been successfully sent. Thank you for your request. We will get back to you as soon as possible.",
 	submittedMessageType: widget.get(SUBMITTED_MESSAGE_TYPE) as string || "default",
-	submittingMessage: widget.get(SUBMITTING_MESSAGE) as string,
+	submittingMessage: widget.get(SUBMITTING_MESSAGE) as string || "Submitting...",
 	failedMessageType: widget.get(FAILED_MESSAGE_TYPE) as string || "default",
 	failedMessageWidgets: widget.get(FAILED_MESSAGE_WIDGETS) as Widget[],
 	submittedMessageWidgets: widget.get(SUBMITTED_MESSAGE_WIDGETS) as Widget[],
@@ -41,6 +40,6 @@ export const useQuestionnaireWidgetAttributes = (widget: Widget): QuestionnaireW
 	reviewButtonText: widget.get(REVIEW_BUTTON_TEXT) as string || "Review",
 	reviewHeaderTitle: widget.get(REVIEW_HEADER_TITLE) as string || "Review",
 	reviewCloseButtonText: widget.get(REVIEW_CLOSE_BUTTON_TEXT) as string || "Close",
-	footerButtonsSize: widget.get(FOOTER_BUTTONS_SIZE) as string || "btn-md",
-	retryButtonSize: widget.get(RETRY_BUTTON_SIZE) as string || "btn-md",
+	buttonsSize: widget.get(BUTTONS_SIZE) as string || "btn-md",
+	buttonsStyle: widget.get(BUTTONS_STYLE) as string || "btn-primary",
 });

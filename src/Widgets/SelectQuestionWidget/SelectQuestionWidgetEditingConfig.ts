@@ -7,12 +7,12 @@ import { QuestionnaireAnswerOptionWidget } from "../AnswerOptionWidget/AnswerOpt
 import { compact, isEmpty } from "../../utils/lodashPolyfills";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { extractQuestionsAndOptions } from "../../utils/extractQuestionsAndOptions";
-import { ALIGNMENT, CLEAR_SELECTION_BUTTON_TEXT, DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, INLINE_VIEW, IS_BEING_COPIED, MANDATORY, OPTIONS, QUESTION_ID, SHOW_CLEAR_SELECTION_BUTTON, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { ALIGNMENT, CLEAR_SELECTION_BUTTON_TEXT, DEFAULT_VALUE, ENABLE_CONDITIONALS, EXTERNAL_ID, IDENTIFIER, INLINE_VIEW, IS_BEING_COPIED, MANDATORY, OPTIONS, QUESTION_ID, QUESTIONNNAIRE_SELECT_QUESTION_WIDGET, SHOW_CLEAR_SELECTION_BUTTON, STRING_CHECKBOXES, STRING_DROPDOWN, STRING_RADIO, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 import { isAlignmentEnabled } from "./isSelectAlignmentEnabled";
 import selectThumbnail from "../../assets/images/crm-questionnaire-select.svg";
 
-Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
+Scrivito.provideEditingConfig(QUESTIONNNAIRE_SELECT_QUESTION_WIDGET, {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       obj.update({ externalId: generateId() });
@@ -41,9 +41,9 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
     type: {
       title: "Input Type",
       values: [
-        { title: "Dropdown", value: "string_dropdown" },
-        { title: "Radio", value: "string_radio" },
-        { title: "Checkboxes", value: "string_checkboxes" }
+        { title: "Dropdown", value: STRING_DROPDOWN },
+        { title: "Radio", value: STRING_RADIO },
+        { title: "Checkboxes", value: STRING_CHECKBOXES }
       ],
     },
     enableConditionals: {
@@ -66,7 +66,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
   },
   initialContent: {
     ...defaultInitialContent,
-    type: "string_dropdown",
+    type: STRING_DROPDOWN,
     enableConditionals: false,
     options: [
       new QuestionnaireAnswerOptionWidget({ text: "First Option" }),
@@ -81,9 +81,9 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
     const isMandatory = widget.get(MANDATORY) as boolean;
     const type = widget.get(TYPE) as string;
     const showClearSelectionButton = widget.get(SHOW_CLEAR_SELECTION_BUTTON) as boolean;
-    const enableClearSelectionButton = !isMandatory && type == "string_radio";
+    const enableClearSelectionButton = !isMandatory && type == STRING_RADIO;
     const enableClearSelectionButtonText = enableClearSelectionButton && showClearSelectionButton;
-    const enableInlineView = type != "string_dropdown";
+    const enableInlineView = type != STRING_DROPDOWN;
     return [
       ...defaultProperties,
       TYPE,
@@ -122,7 +122,7 @@ Scrivito.provideEditingConfig("QuestionnaireSelectQuestionWidget", {
           return "Default value must start with #.";
         }
         const type = widget.get(TYPE);
-        const isMultiCheckboxes = type == "string_checkboxes";
+        const isMultiCheckboxes = type == STRING_CHECKBOXES;
         const options = widget.get(OPTIONS) as Widget[];
         const allowedValues = compact(
           options.map((option) => option.get(IDENTIFIER) as string),

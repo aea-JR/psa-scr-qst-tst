@@ -1,6 +1,5 @@
 import { createRestApiClient } from "scrivito";
 import { getJwtToken, getPisaUrl } from "../config/scrivitoConfig";
-import { isTokenValid } from "../utils/tokenValidation";
 import { useWithToken } from "../utils/useWithToken";
 
 export const clientConfig = async (subPath: string, useToken = false) => {
@@ -10,14 +9,14 @@ export const clientConfig = async (subPath: string, useToken = false) => {
   const headers: Record<string, string> = {
     "Accept-Language": "de",
   };
-  //TODO: uncomment when token validation is ready
-  if (token && useToken /*&& isTokenValid()*/ && useWithToken()) {
+  // Fill token even if its invalid, real validation takes place elsewhere.
+  // Token won`t be used if user is logged-in anyway
+  if (token && useToken && useWithToken()) {
     headers.Authorization = token;
   }
 
   return {
     url: `${getPisaUrl()}/${subPath}`,
-    //TODO: improve
     headers: headers
   };
 };

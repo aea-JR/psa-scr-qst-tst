@@ -4,11 +4,11 @@ import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireCon
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
 import { isPisaDate } from "../../utils/isPisaDate";
 import { isUTCDate } from "../../utils/isUTCDate";
-import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { ALIGNMENT, DATE, DATE_TIME, DEFAULT_VALUE, EXTERNAL_ID, FLOATING_POINT, INTEGER, IS_BEING_COPIED, PLACEHOLDER, QUESTION_ID, QUESTIONNNAIRE_INPUT_QUESTION_WIDGET, STRING_MULTI_LINE, STRING_SINGLE_LINE, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import inputThumbnail from "../../assets/images/crm-questionnaire-input.svg";
 import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
-Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
+Scrivito.provideEditingConfig(QUESTIONNNAIRE_INPUT_QUESTION_WIDGET, {
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
       const id = generateId();
@@ -35,19 +35,19 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
     type: {
       title: "Input type",
       values: [
-        { value: "string_single_line", title: "Single-line (String)" },
-        { value: "string_multi_line", title: "Multi-line (String)" },
-        { value: "integer", title: "Integer (Number)" },
-        { value: "floating_point", title: "Float (Number)" },
-        { value: "date", title: "Date only (Date)" },
-        { value: "date_time", title: "Date & Time (Date)" },
+        { value: STRING_SINGLE_LINE, title: "Single-line (String)" },
+        { value: STRING_MULTI_LINE, title: "Multi-line (String)" },
+        { value: INTEGER, title: "Integer (Number)" },
+        { value: FLOATING_POINT, title: "Float (Number)" },
+        { value: DATE, title: "Date only (Date)" },
+        { value: DATE_TIME, title: "Date & Time (Date)" },
       ],
     },
     alignment: { title: "Alignment" },
   },
   initialContent: {
     ...defaultInitialContent,
-    type: "string_single_line",
+    type: STRING_SINGLE_LINE,
     validationText: "Please fill out this field",
   },
   properties: (widget) => {
@@ -71,7 +71,7 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
         if (!defaultValue) {
           return null;
         }
-        if (type == "date" || type == "date_time") {
+        if (type == DATE || type == DATE_TIME) {
           if (isPisaDate(defaultValue)) {
             return null;
           }
@@ -80,13 +80,13 @@ Scrivito.provideEditingConfig("QuestionnaireInputQuestionWidget", {
           }
           return "Specify a valid date in UTC format (YYYY-MM-DDTHH:MM:SSZ) or ISO 8601 compact format (YYYYMMDDHHMMSS). Example: 2024-02-17T15:30:00Z or 20240217153000.";
         }
-        if (type === "integer") {
+        if (type === INTEGER) {
           if (/^-?\d+$/.test(defaultValue)) {
             return null;
           }
           return "Specify a valid integer value. Must be a whole number (e.g., -10, 0, 42).";
         }
-        if (type == "floating_point") {
+        if (type == FLOATING_POINT) {
           if (/^-?\d+(\.\d+)?$/.test(defaultValue)) {
             return null;
           }

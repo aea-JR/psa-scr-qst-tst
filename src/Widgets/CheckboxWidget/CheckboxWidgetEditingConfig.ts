@@ -1,12 +1,12 @@
 import * as Scrivito from "scrivito";
 import { defaultAttributes, defaultInitialContent, defaultProperties, defaultValidations } from "../defaultQuestionEditingConfig";
-import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, QUESTION_ID, TYPE, VALIDATION_TEXT } from "../../constants/constants";
+import { ALIGNMENT, DEFAULT_VALUE, EXTERNAL_ID, IS_BEING_COPIED, LOGIC, LOGIC_TRISTATE, QUESTION_ID, QUESTIONNNAIRE_CHECKBOX_QUESTION_WIDGET, TYPE, VALIDATION_TEXT } from "../../constants/constants";
 import generateId from "../../utils/idGenerator";
 import { getQuestionnaireContainerWidget } from "../../utils/getQuestionnaireContainerWidget";
 import checkboxThumbnail from "../../assets/images/crm-questionnaire-checkbox.svg";
 import { insideQuestionnaireContainerValidation } from "../../utils/validations/insideQuestionnaireContainerValidation";
 
-Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
+Scrivito.provideEditingConfig(QUESTIONNNAIRE_CHECKBOX_QUESTION_WIDGET, {
 
   initialize: (obj) => {
     if (!obj.get(EXTERNAL_ID)) {
@@ -33,8 +33,8 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
     type: {
       title: "Input Type",
       values: [
-        { value: "logic", title: "Default" },
-        { value: "logic_tristate", title: "Tri-State" }
+        { value: LOGIC, title: "Default" },
+        { value: LOGIC_TRISTATE, title: "Tri-State" }
       ],
     },
     alignment: { title: "Alignment" },
@@ -49,7 +49,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
 
   initialContent: {
     ...defaultInitialContent,
-    type: "logic",
+    type: LOGIC,
     validationText: "Please tick the box",
   },
   validations: [
@@ -62,7 +62,7 @@ Scrivito.provideEditingConfig("QuestionnaireCheckboxQuestionWidget", {
         if (!defaultValue) {
           return null;
         }
-        const validValues = type === "logic_tristate"
+        const validValues = type === LOGIC_TRISTATE
           ? ["true", "false", "unset"]
           : ["true", "false"];
 

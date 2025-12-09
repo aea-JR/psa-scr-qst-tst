@@ -1,6 +1,6 @@
 {
   "name": "psa-scr-qst-tst",
-  "version": "0.0.429",
+  "version": "0.0.430",
   "description": "PisaSales Questionnaire Widgets for Scrivito TEST PACKAGE",
   "main": "index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "nanoid": "^5.1.5"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": ">=18.0.0 <20.0.0",
+    "react-dom": ">=18.0.0 <20.0.0",
     "scrivito": "*",
     "scrivito-icon-editor": "^0.0.2"
   },
