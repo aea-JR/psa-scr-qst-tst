@@ -21,8 +21,8 @@ export const questionnaireEditingAttributes = {
 		],
 	},
 	activityId: { title: "Activity ID" },
-	projectId: { title: "Project ID" },
-	contactId: { title: "Contact ID" },
+	projectId: { title: "Project ID", description: "Can be either a project GID or a project number" },
+	contactId: { title: "Contact ID", description: "Can be either a contact GID or a contact number" },
 
 	customClassNames: {
 		title: "Additional CSS Classes",

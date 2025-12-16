@@ -1,5 +1,5 @@
 import { Widget } from "scrivito";
-import { INPUT_TYPE, TITLE } from "../../../constants/constants";
+import { INPUT_TYPE, QUESTIONNAIRE_STATUS, TITLE } from "../../../constants/constants";
 import { isEmpty } from "../../../utils/lodashPolyfills";
 import { getQuestionWidgets } from "../../../utils/getQuestionWidgets";
 import { getQuestionnaireContainerWidget } from "../../../utils/getQuestionnaireContainerWidget";
@@ -33,6 +33,20 @@ export const questionnaireContainerEditingValidations = [
 				return "Specify the Response Mode.";
 			}
 
+		},
+	],
+	[
+		QUESTIONNAIRE_STATUS,
+		(questionnaireStatus: string) => {
+			if (questionnaireStatus == "creationPending") {
+				return "This questionnaire has not been created in the backend yet.";
+			}
+			if (questionnaireStatus == "invalid") {
+				return "Some attributes are invalid. Please review and correct them.";
+			}
+			if (questionnaireStatus == "pendingUpdate") {
+				return "This questionnaire has unsaved local changes, please push the updates from the properties tab.";
+			}
 		},
 	],
 ] as const;

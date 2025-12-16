@@ -132,12 +132,12 @@ provideComponent(QuestionnaireFileQuestionWidget, ({ widget }) => {
         <div className={`invalid-feedback ${alignment}`}>{validationText}</div>
       )}
       {sizeRejected.length > 0 && (
-        <div className="text-danger small mt-1">
+        <div className="text-danger invalid-feedback small mt-1">
           {isMultiple ? `${tooLargeTextMulti} ${sizeRejected.join(", ")}.` : tooLargeTextSingle}
         </div>
       )}
       {typeRejected.length > 0 && (
-        <div className="text-danger small mt-1">
+        <div className="text-danger invalid-feedback small mt-1">
           {isMultiple
             ? `${typeRejectTextMulti} ${typeRejected.join(", ")}.`
             : typeRejectTextSingle}

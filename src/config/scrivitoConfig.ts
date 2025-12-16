@@ -1,23 +1,31 @@
 import { isUserLoggedIn } from "scrivito";
 import { isEmpty } from "../utils/lodashPolyfills";
 
-type BackendConnection = Promise<{ apiUrl: string | null; token: string | null }>;
+export type BackendConnectionData = { apiUrl: string | null; token: string | null };
 
-type Options = { connection: BackendConnection };
+export type BackendConnection = BackendConnectionData | Promise<BackendConnectionData>;
 
-const GLOBAL_OBJ = typeof window !== "undefined" ? window : global;
+export type Options = { connection: BackendConnection };
+
+const GLOBAL_OBJ: typeof globalThis = globalThis;
 (GLOBAL_OBJ as any).pisaInitDispatched = null;
 (GLOBAL_OBJ as any).pisaJwtToken = null;
 const SALESPORTAL = "salesportal";
 
 /**
  * Initialize Questionnaire Widgets
- * @param options An object containing a `connection` property, which is a promise that resolves to an object with:
- *   - `apiUrl`: The backend URL as a string, or `null` if unavailable.
- *   - `token`: A JWT string for authentication, or `null` if unavailable.
+ * @param options Configuration options.
+ * @param options.connection Connection data (or a promise resolving to it).
+ *   Use an `async` function on the consumer side and pass `connection: yourFn()`.
+ *   - `apiUrl`: The PisaSales backend URL, or `null` if unavailable.
+ *   - `token`: Optional JWT token for public/token access, or `null`.
+ *
+ * Notes:
+ * - If a `token` is provided but the user is logged in, the token is ignored.
+ * - `apiUrl` is normalized to include `/salesportal`.
  */
 export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promise<void> => {
-  loadWidgets();
+  await loadWidgets();
 
   const connection = await options.connection;
   const url = connection.apiUrl;
@@ -31,26 +39,11 @@ export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promi
   await register(url);
 };
 
-const loadWidgets = (): void => {
-
-  if (isEmpty(import.meta)) {
-    const widgetImportsContext = require.context(
-      "../Widgets",
-      true,
-      /Widget(Class|Component)\.tsx?$/
-    );
-    widgetImportsContext.keys().forEach(widgetImportsContext);
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (import.meta as any).glob(
-      ["../Widgets/**/*WidgetClass.ts", "../Widgets/**/*WidgetComponent.tsx"],
-      {
-        eager: true
-      }
-    );
-  }
-
+const loadWidgets = async (): Promise<void> => {
+  const modules = import.meta.glob(["../Widgets/**/*WidgetClass.ts", "../Widgets/**/*WidgetComponent.tsx"]);
+  await Promise.all(Object.values(modules).map((load) => load()));
 };
+
 const setPisaSalesApiUrl = async (pisaUrl: string | null) => {
   doSetPisaUrl(pisaUrl);
   if (typeof window !== "undefined") {

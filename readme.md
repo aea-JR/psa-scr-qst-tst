@@ -413,57 +413,33 @@ For Multi-Select Checkboxes, multiple conditions can be triggered simultaneously
 
 ## Local Development
 
-To develop and test the package locally, follow these steps:
+To work on the package and test it inside the Scrivito Portal App:
 
-- Copy or clone the repository
-- Navigate into the package directory.
-- Install the package dependencies:
+1. Clone this repository and install dependencies:
+   ```shell
+   npm install
+   ```
+2. Link the package locally:
+   ```shell
+   npm link
+   ```
+3. In the Portal App, use the linked package:
+   ```shell
+   npm link scrivito-pisasales-questionnaire-builder
+   ```
+4. Start the watcher so the `dist/` output stays up to date while you edit:
+   ```shell
+   npm run watch
+   ```
+   Keep this running in the background and simply refresh the portal after each change. (Use `npm run dev` only if you want to see the placeholder app bundled with this repository.)
+5. Follow the [importing and initializing](#importing-and-initializing) steps in the portal, including the CSS imports.
 
-```shell
-npm install
-```
-- Link the package locally: 
-```shell
-npm link
-```
-- Navigate into the Portal App
-- Use the linked the package:
-```shell
-npm link scrivito-pisasales-questionnaire-builder
-```
-- If you have a previous version installed, remove or outcomment the imported styles from `index.scss` and `scrivitoExtensions.scss`.
-- follow [importing and initializing](#importing-and-initializing) instructions.
-- Add the following snippet to your vite.config:
+If you need to work with a fixed Pisa URL during development, temporarily adjust `clientConfig` in `src/Data/pisaClient.ts`:
 
-```js
- resolve: {
-      alias: {
-        'scrivito-pisasales-questionnaire-builder': path.resolve(
-          __dirname,
-          '../scrivito-pisasales-questionnaire-builder/src' 
-        ),
-       
-      },
-      dedupe: ['react', 'react-dom', 'scrivito'],
-    }, 
-```
-- Add the following snippet to your tsconfig: 
-```js
- "paths": {
-      "scrivito-pisasales-questionnaire-builder": ["../scrivito-pisasales-questionnaire-builder/src"],
-      "scrivito-pisasales-questionnaire-builder/editing": ["../scrivito-pisasales-questionnaire-builder/src/editing"]
-    },
-```
-- `getPisaUrl()` might not be initialized in time, causing issues with API requests. To avoid this, replace `getPisaUrl()` with the PisaSales REST API URL in `pisaClient.ts`:
-```js
+```ts
 export const clientConfig = async (subPath: string) => ({
   url: `https://YOUR_PISA_API_URL/${subPath}`,
   headers: { "Accept-Language": "de" },
 });
 ```
-**⚠️ Don’t forget to switch back to getPisaUrl() for production!**
-
-
-**Note:**
-The Scrivito Portal App is built using Vite and will automatically compile the package, so there's no need to run `npm run build` or `npm run start` for local development.
-
+**⚠️ Remember to restore `getPisaUrl()` before committing or publishing.**

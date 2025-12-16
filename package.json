@@ -1,12 +1,39 @@
 {
   "name": "psa-scr-qst-tst",
-  "version": "0.0.430",
+  "version": "0.0.431",
   "description": "PisaSales Questionnaire Widgets for Scrivito TEST PACKAGE",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./index.css": "./dist/index.css",
+    "./editing": {
+      "types": "./dist/editing.d.ts",
+      "import": "./dist/editing.js",
+      "default": "./dist/editing.js"
+    },
+    "./editing.css": "./dist/editing.css",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
+    }
+  },
+  "files": [
+    "dist",
+    "editing.js",
+    "editing.d.ts"
+  ],
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development",
-    "publish:build": "npm run build && cd build && npm publish && cd ..",
+    "build": "vite build && node scripts/postbuild.mjs",
+    "dev": "vite dev",
+    "watch": "vite build --watch",
+    "publish:build": "npm run build && npm publish",
     "lint": "eslint src --ext .ts,.tsx",
     "format": "prettier --write src"
   },
@@ -20,23 +47,16 @@
     "scrivito-icon-editor": "^0.0.2"
   },
   "devDependencies": {
+    "@types/node": "^22.9.0",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.21",
     "@types/scrivito": "^1.22.7",
-    "babel-loader": "^9.2.1",
-    "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^12.0.2",
-    "css-loader": "^7.1.2",
+    "@vitejs/plugin-react-swc": "^3.11.0",
     "eslint": "^9.18.0",
-    "mini-css-extract-plugin": "^2.9.2",
     "prettier": "^3.4.2",
     "sass": "^1.83.4",
-    "sass-loader": "^16.0.4",
-    "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.2",
     "typescript": "^5.7.2",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1"
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

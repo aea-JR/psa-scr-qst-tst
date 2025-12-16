@@ -2,7 +2,12 @@
 	.alert-error {
 		border-top: 5px solid var(--bs-danger) !important;
 	}
+
 	.alert-success {
 		border-top: 5px solid var(--bs-success) !important;
+	}
+
+	p {
+		color: black;
 	}
 }

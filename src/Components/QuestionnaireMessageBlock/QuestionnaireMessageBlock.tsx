@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import './QuestionnaireMessageBlock.scss';
 import { QuestionnaireStatus } from '../../types/questionnaire';
+import { isInPlaceEditingActive } from 'scrivito';
 
 const WARNING = "Warning:";
 const EDITORS_INFO = "Editor's info:";
@@ -32,6 +33,15 @@ export const QuestionnaireMessageBlock: FC<Props> = ({ className, status }) => {
 	if (status == "void") {
 		return null;
 	}
+	const showInEditOnly: QuestionnaireStatus[] = ["fileUploadsDisabled", "unconfiguredUrl", "pendingUpdate", "creationPending", "invalid"];
+
+	if (
+		!isInPlaceEditingActive() &&
+		showInEditOnly.includes(status)
+	) {
+		return null;
+	}
+
 	const message = messages[status];
 	const alertClass = status == "publicSiteEditMode" ? "alert-success" : message.prefix == EDITORS_INFO ? "alert-warning" : "alert-error";
 
