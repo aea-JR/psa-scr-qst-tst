@@ -1,6 +1,6 @@
 {
   "name": "psa-scr-qst-tst",
-  "version": "0.0.431",
+  "version": "0.0.436",
   "description": "PisaSales Questionnaire Widgets for Scrivito TEST PACKAGE",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,14 +9,12 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js"
     },
     "./index.css": "./dist/index.css",
     "./editing": {
       "types": "./dist/editing.d.ts",
-      "import": "./dist/editing.js",
-      "default": "./dist/editing.js"
+      "import": "./dist/editing.js"
     },
     "./editing.css": "./dist/editing.css",
     "./*": {
@@ -27,7 +25,8 @@
   "files": [
     "dist",
     "editing.js",
-    "editing.d.ts"
+    "editing.d.ts",
+    "editing"
   ],
   "scripts": {
     "build": "vite build && node scripts/postbuild.mjs",
