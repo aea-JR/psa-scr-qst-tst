@@ -40,8 +40,10 @@ export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promi
 };
 
 const loadWidgets = async (): Promise<void> => {
-  const modules = import.meta.glob(["../Widgets/**/*WidgetClass.ts", "../Widgets/**/*WidgetComponent.tsx"]);
-  await Promise.all(Object.values(modules).map((load) => load()));
+  import.meta.glob(
+    ["../Widgets/**/*WidgetClass.ts", "../Widgets/**/*WidgetComponent.tsx"],
+    { eager: true },
+  );
 };
 
 const setPisaSalesApiUrl = async (pisaUrl: string | null) => {
