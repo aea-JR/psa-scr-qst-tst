@@ -48,18 +48,16 @@ const QuestionnaireContainerContentInner: React.FC<{ widget: Widget }> = ({ widg
 
   const nextStatus: QuestionnaireStatus = useMemo(() => {
     // order is important
-    if (isNil(isOnline)) return "unconfiguredUrl"
     if (isNil(isOnline)) return "unconfiguredUrl";
     if (!isOnline) return "offline";
     if (!isValid) return "invalid";
     if (!isCreated) return "creationPending";
     if (hasChanges) return "pendingUpdate";
-    if (usageRestricted && editMode) return "publicSiteEditMode";
+    if (usageRestricted && editMode) return "publicSiteEditMode"; // info only in edit mode
 
     // public site runtime cases
-    if (usageRestricted && !editMode && !loggedIn && !jwt) return "publicSiteNoContext"; // no token && no logi
-    if (usageRestricted && !editMode && !loggedIn && !jwt) return "publicSiteNoContext";
-    if (usageRestricted && !editMode && !loggedIn && jwt && !tokenValid) return "invalidToken";
+    if (usageRestricted && !editMode && !loggedIn && !jwt) return "publicSiteNoContext"; // no token && no login
+    if (usageRestricted && !editMode && !loggedIn && jwt && !tokenValid) return "invalidToken"; // token present but invalid
 
     if (isCreated) return "void";
     return "void";

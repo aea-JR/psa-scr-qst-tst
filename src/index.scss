@@ -1,0 +1,16 @@
+// Aggregates package SCSS for Vite dev so HMR picks up source changes.
+@import "./Components/HelpText/HelpText.scss";
+@import "./Components/Mandatory/Mandatory.scss";
+@import "./Components/QuestionnaireExternalId/QuestionnaireExternalId.scss";
+@import "./Components/QuestionnaireFormFooter/QuestionnaireFormFooter.scss";
+@import "./Components/QuestionnaireManagementTab/QuestionnaireManagementTab.scss";
+@import "./Components/QuestionnaireManagementTabDescription/QuestionnaireManagementTabDescription.scss";
+@import "./Components/QuestionnaireMessageBlock/QuestionnaireMessageBlock.scss";
+@import "./Components/Review/Review.scss";
+@import "./Widgets/AnswerOptionWidget/AnswerOptionWidget.scss";
+@import "./Widgets/CheckboxWidget/CheckboxWidget.scss";
+@import "./Widgets/FileWidget/FileQuestionWidget.scss";
+@import "./Widgets/InputQuestionWidget/InputQuestionWidget.scss";
+@import "./Widgets/QuestionnaireContainerWidget/QuestionnaireContainerWidget.scss";
+@import "./Widgets/QuestionnaireStepWidget/QuestionnaireStepWidget.scss";
+@import "./Widgets/SelectQuestionWidget/SelectQuestionWidget.scss";

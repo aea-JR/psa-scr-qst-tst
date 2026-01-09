@@ -25,7 +25,7 @@ const SALESPORTAL = "salesportal";
  * - `apiUrl` is normalized to include `/salesportal`.
  */
 export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promise<void> => {
-  await loadWidgets();
+  loadWidgets();
 
   const connection = await options.connection;
   const url = connection.apiUrl;
@@ -39,7 +39,7 @@ export const initPisaSalesQuestionnaireWidgets = async (options: Options): Promi
   await register(url);
 };
 
-const loadWidgets = async (): Promise<void> => {
+const loadWidgets = (): void => {
   import.meta.glob(
     ["../Widgets/**/*WidgetClass.ts", "../Widgets/**/*WidgetComponent.tsx"],
     { eager: true },
